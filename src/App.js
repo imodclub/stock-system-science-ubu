@@ -15,7 +15,6 @@ function App() {
     })
   }, [])
   
-  console.log(user)
   return (
     <>
     {user ? <Home user={user} /> : <Login />}
