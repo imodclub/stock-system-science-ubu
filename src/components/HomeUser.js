@@ -1,7 +1,7 @@
 import React from 'react'
 import { auth } from '../services/firebase'
-
 import { Container, Nav, Navbar,Button } from 'react-bootstrap';
+import ProfileUser from './ProfileUser';
 
 function Home({ user }) {
    console.log(user);
@@ -20,19 +20,27 @@ function Home({ user }) {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">More deets</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
-                <Button className='btn btn-warning' onClick={() => auth.signOut()}>Sign Out</Button>
+              <Nav.Link href="#deets">
+                <Button
+                  className="btn btn-success"
+                  onClick={<ProfileUser user={user} />}
+                >
+                  Edit Profile
+                </Button>
+              </Nav.Link>
+              <Nav.Link eventKey={2} href="">
+                <Button
+                  className="btn btn-warning"
+                  onClick={() => auth.signOut()}
+                >
+                  Sign Out
+                </Button>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <h1>Hello, {user.displayName} </h1>
-      <p>Your have email : {user.email}</p>
-      <img src={user.photoURL} alt="profile image" />
-      <button onClick={() => auth.signOut()}>Sign Out</button>
     </div>
   );
 }

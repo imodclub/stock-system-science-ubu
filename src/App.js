@@ -1,11 +1,11 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
 import Login from './components/Login'
 import HomeUser from './components/HomeUser'
 import firebase from './services/firebase';
+import ProfileUser from './components/ProfileUser'
 
-
-
+const UserContext = createContext()
 
 function App() {
   const [user, setUser] = useState(null)
@@ -18,9 +18,12 @@ function App() {
   }, [])
   
   return (
-    <>
-    {user ? <HomeUser user={user} /> : <Login />}
-    </>
+      <>
+      {user ? <HomeUser user={user} /> : <Login />}
+      <UserContext.Provider value={user}>
+        <ProfileUser />
+      </UserContext.Provider>
+      </>
   );
 }
 
