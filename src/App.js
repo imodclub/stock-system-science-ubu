@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import Login from './components/Login'
-import Home from './components/Home'
+import HomeUser from './components/HomeUser'
 import firebase from './services/firebase';
 
 
@@ -9,6 +9,8 @@ import firebase from './services/firebase';
 
 function App() {
   const [user, setUser] = useState(null)
+  
+  //check user local storage
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       setUser(user)
@@ -17,7 +19,7 @@ function App() {
   
   return (
     <>
-    {user ? <Home user={user} /> : <Login />}
+    {user ? <HomeUser user={user} /> : <Login />}
     </>
   );
 }
