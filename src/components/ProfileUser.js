@@ -1,7 +1,8 @@
-import {useContext} from 'react'
+import { useContext } from 'react'
+import UserContext from '../dataContext/userContext'
 
-function ProfileUser(props) {
-    const user = useContext(props)
+function ProfileUser() {
+    const user = useContext(UserContext)
   return (
     <div>Hello : {user}</div>
   )
