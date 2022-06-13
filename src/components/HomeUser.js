@@ -2,7 +2,7 @@ import React from 'react'
 import { auth } from '../services/firebase'
 import { Container, Nav, Navbar,Button } from 'react-bootstrap';
 import ProfileUser from './ProfileUser';
-import { BrowserRouter, Link, Router, Routes,Route,Switch } from 'react-router-dom'
+
 
 function Home({ user }) {
    console.log(user);
@@ -21,16 +21,7 @@ function Home({ user }) {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link eventKey={2} href="">
-                <Button
-                  className="btn btn-success"
-                  onClick={() => <ProfileUser />}
-                >
-                  Edit Profile
-                </Button>
-              </Nav.Link>
-
-              <Nav.Link eventKey={2} href="">
+               <Nav.Link eventKey={2} href="">
                 <Button
                   className="btn btn-warning"
                   onClick={() => auth.signOut()}
@@ -42,16 +33,6 @@ function Home({ user }) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container className="mt-3">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/profileuser" element={<ProfileUser />}></Route>
-          </Routes>
-
-          <h1>Hello</h1>
-          <Link to="profileuser">คลิ๊ก</Link>
-        </BrowserRouter>
-      </Container>
     </div>
   );
 }
