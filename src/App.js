@@ -22,7 +22,6 @@ function App() {
   return (
      <UserContext.Provider value={user}>
       {user ? <HomeUser user={user} /> : <Login />}
-      <ProfileUser />
       </UserContext.Provider>
        );
 }

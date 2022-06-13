@@ -2,7 +2,7 @@ import React from 'react'
 import { auth } from '../services/firebase'
 import { Container, Nav, Navbar,Button } from 'react-bootstrap';
 import ProfileUser from './ProfileUser';
-import { BrowserRouter, Link, Router, Routes,Route,Switch } from 'react-router-dom'
+import { BrowserRouter, Link, Router, Routes,Route } from 'react-router-dom'
 
 function Home({ user }) {
    console.log(user);
@@ -42,16 +42,15 @@ function Home({ user }) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container className="mt-3">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/profileuser" element={<ProfileUser />}></Route>
-          </Routes>
-
-          <h1>Hello</h1>
-          <Link to="profileuser">คลิ๊ก</Link>
-        </BrowserRouter>
-      </Container>
+        <Container className="mt-3">
+          <BrowserRouter>
+            <Routes>
+            <Route path="profileuser" element={<ProfileUser />}></Route>
+            </Routes>
+            <h1>Hello</h1>
+            <Link to="profileuser">คลิ๊ก</Link>
+          </BrowserRouter>
+        </Container>
     </div>
   );
 }
