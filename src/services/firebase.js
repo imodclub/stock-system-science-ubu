@@ -19,7 +19,6 @@ export const auth = firebase.auth()
 const provider = new firebase.auth.GoogleAuthProvider()
 provider.setCustomParameters({ prompt: "select_account" })
 
-//สร้าง sign in with google
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
 
 export default firebase
