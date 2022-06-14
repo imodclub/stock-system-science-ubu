@@ -22,17 +22,23 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} excat></Route>
-          <Route
-            path="homeuser"
-            element={user ? <HomeUser user={user} /> : <Login />}
-          ></Route>
-          <Route path="profileuser" element={<ProfileUser />}></Route>
-          <Route path="Login" element={<Login />}></Route>
-        </Routes>
-
-        <UserContext.Provider value={user}>{}</UserContext.Provider>
+        <UserContext.Provider value={user}>
+          <Routes>
+            <Route path="/" element={<Index />} excat></Route>
+            <Route
+              path="homeuser"
+              element={user ? <HomeUser user={user} /> : <Login />}
+            ></Route>
+            <Route
+              path="profileuser"
+              element={<ProfileUser />}
+            ></Route>
+            <Route
+              path="Login"
+              element={user ? <HomeUser user={user} /> : <Login />}
+            ></Route>
+          </Routes>
+        </UserContext.Provider>
       </BrowserRouter>
     </div>
   );
