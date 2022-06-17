@@ -20,7 +20,7 @@ function App() {
   }, [])
   
   return (
-    <div>
+    <>
       <BrowserRouter>
         <UserContext.Provider value={user}>
           <Routes>
@@ -29,10 +29,7 @@ function App() {
               path="homeuser"
               element={user ? <HomeUser user={user} /> : <Login />}
             ></Route>
-            <Route
-              path="profileuser"
-              element={<ProfileUser />}
-            ></Route>
+            <Route path="profileuser" element={<ProfileUser />}></Route>
             <Route
               path="Login"
               element={user ? <HomeUser user={user} /> : <Login />}
@@ -40,7 +37,7 @@ function App() {
           </Routes>
         </UserContext.Provider>
       </BrowserRouter>
-    </div>
+    </>
   );
       
 }

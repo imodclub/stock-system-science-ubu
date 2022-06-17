@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app'
-import "firebase/compat/auth" 
+import "firebase/compat/auth"
+
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBpNsE6wgG-qESsRUsNibo9Lu1tCFPWAq4',
@@ -14,6 +15,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+
 export const auth = firebase.auth()
 
 const provider = new firebase.auth.GoogleAuthProvider()
@@ -22,4 +24,4 @@ provider.setCustomParameters({ prompt: "select_account" })
 //สร้าง sign in with google
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
 
-export default firebase
+export default firebase 
