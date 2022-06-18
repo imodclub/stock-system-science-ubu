@@ -3,13 +3,13 @@ import "firebase/compat/auth"
 
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBpNsE6wgG-qESsRUsNibo9Lu1tCFPWAq4',
-  authDomain: 'computer-service-system.firebaseapp.com',
-  projectId: 'computer-service-system',
-  storageBucket: 'computer-service-system.appspot.com',
-  messagingSenderId: '668874593419',
-  appId: '1:668874593419:web:512a5b5bd759a0869ef08e',
-  measurementId: 'G-RZYE5SQBZK',
+  apiKey: 'AIzaSyAo2KbSE7kaxH-__s5XTImyPWxlBuT27mQ',
+  authDomain: 'stock-240b7.firebaseapp.com',
+  projectId: 'stock-240b7',
+  storageBucket: 'stock-240b7.appspot.com',
+  messagingSenderId: '1094516188928',
+  appId: '1:1094516188928:web:bf6ad4775626af2a4af5e5',
+  measurementId: 'G-1V5E1JVNZE',
 };
 
 // Initialize Firebase

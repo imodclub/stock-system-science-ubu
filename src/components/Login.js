@@ -29,30 +29,16 @@ function Login() {
         <Grid container spacing={3}>
           <Grid item xs></Grid>
           <Grid item xs={6}>
-            <CardMedia
-              component="img"
-              height="140"
-              image="../images/LogoForCardSingIn.jpg"
-              alt="green iguana"
-            />
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
                 color="text.secondary"
                 gutterBottom
               >
-                กรุณาเข้าสู่ระบบ
+                Stock Science UBU App
               </Typography>
               <Typography variant="h5" component="div">
-                App Computer service from faculty of Science UBU
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                well meaning and kindly.
-                <br />
-                {'"a benevolent smile"'}
+                กรุณาเข้าสู่ระบบ
               </Typography>
             </CardContent>
             <CardActions>

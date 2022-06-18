@@ -12,13 +12,16 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import {auth} from '../../services/firebase'
-
+import { auth } from '../../services/firebase'
+import { Navigate } from 'react-router-dom';
+import Index from '../Index'
 
 
 const ResponsiveAppBar = (props) => {
   const propsName = props.value.displayName;
   const propsPhoto = props.value.photoURL
+  const propsUID = props.value.uid
+  console.log(propsUID)
 
   const pages = ['Products', 'Pricing', 'Blog'];
   const settings = [`${propsName}`, "ออกจากระบบ"];
@@ -44,6 +47,8 @@ const ResponsiveAppBar = (props) => {
       console.log('print of handleCloseUserMenu = false');
     }
     setAnchorElUser(null);
+
+    
   };
 
   console.log(anchorElUser);
