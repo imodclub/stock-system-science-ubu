@@ -21,7 +21,6 @@ const ResponsiveAppBar = (props) => {
   const propsName = props.value.displayName;
   const propsPhoto = props.value.photoURL
   const propsUID = props.value.uid
-  console.log(propsUID)
 
   const pages = ['Products', 'Pricing', 'Blog'];
   const settings = [`${propsName}`, "ออกจากระบบ"];

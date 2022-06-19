@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
 function Home({ user }) {
   const userOnHomeUser = user
+
   return (
     <div>
       <Appbar value={userOnHomeUser} />

@@ -3,25 +3,32 @@ import { useState, useEffect} from 'react';
 import Login from './components/Login'
 import HomeUser from './components/HomeUser'
 import firebase from './services/firebase';
+import GetAuth from './services/firebase'
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/RegisterAdmin'
 import Index from './components/Index';
 import UserContext from './dataContext/userContext';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 
 function App() {
   const [user, setUser] = useState(null)
-  
-  
   //check user local storage
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      setUser(user)
+      if (user) {
+      setUser(user);
+        const uid = user.uid
+        const email = user.email
+        console.log(uid)
+        console.log(email);
+      } else {
+        console.log("Read failed")
+      }
     })
   }, [])
-  console.log(user)
   
   return (
     <div>
