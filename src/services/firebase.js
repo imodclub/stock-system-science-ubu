@@ -1,5 +1,7 @@
 import firebase from 'firebase/compat/app'
 import "firebase/compat/auth"
+import {getFirestore} from 'firebase/firestore'
+import {getAuth} from 'firebase/auth'
 
 
 const firebaseConfig = {
@@ -13,10 +15,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
+const app = firebase.initializeApp(firebaseConfig);
+const db = getFirestore(app)
+const GetAuth = getAuth();
 
 export const auth = firebase.auth()
+export {GetAuth,db}
 
 const provider = new firebase.auth.GoogleAuthProvider()
 provider.setCustomParameters({ prompt: "select_account" })

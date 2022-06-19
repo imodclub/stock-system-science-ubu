@@ -13,14 +13,8 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 
 function App() {
   const [user, setUser] = useState(null)
-  const [count, setCount] = useState(0)
   
-  const TimeCountLogin = () => {
-    if (count==0) {
-     setInterval(()=>{},1000)
-   }
-
-  }
+  
   //check user local storage
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {

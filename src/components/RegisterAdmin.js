@@ -1,12 +1,8 @@
-import React, {useState} from 'react';
-import firebaseConfig from '../services/firebase';
-import Box from '@mui/material/Box';
+import React, { useState } from 'react';
+import { GetAuth } from '../services/firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
-import { Input } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
@@ -16,26 +12,29 @@ import Button from '@mui/material/Button';
 
 
 const RegisterAdmin = () => {
-  
-
-      const [currentUser, setCurrentUser] = useState(null);
+      const [currentUserAdmin, setCurrentUserAdmin] = useState(null);
       const handleSubmit = (e) => {
         e.preventDefault();
         const { email, password } = e.target.elements
-        try {
-          firebaseConfig.auth().createUserWithEmailAndPassword(email.value, password.value)
-          setCurrentUser(true)
-        } catch (error) {
-            alert(error)
-        }
+        const Auth = GetAuth
+        createUserWithEmailAndPassword(Auth, email.value, password.value)
+          .then((i)=>console.log(i))
+          
+          /*((userCredential) => {
+            const user = userCredential
+          })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+            })*/
       }
   return (
     <>
       <Container maxWidth="sm">
-        <FormControl onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <Grid item xs="auto">
-              <CardContent>
+              <CardContent sx={{ maxWidth: 345 }}>
                 <Typography
                   sx={{ fontSize: 14 }}
                   color="text.secondary"
@@ -49,26 +48,33 @@ const RegisterAdmin = () => {
               </CardContent>
               <CardActions>
                 <TextField
-                  id="outlined-basic"
+                  fullWidth
+                  id="Email"
                   label="Email"
                   variant="outlined"
+                  name="email"
                 />
               </CardActions>
               <CardActions>
                 <TextField
-                  id="outlined-basic"
+                  fullWidth
+                  id="password"
                   label="Password"
                   variant="outlined"
+                  name="password"
+                  type="password"
                 />
               </CardActions>
               <CardActions>
-                <Button size="large">สร้างบัญชี</Button>
+                <Button type="submit" variant="contained" size="large">
+                  สร้างบัญชี
+                </Button>
               </CardActions>
             </Grid>
             <Grid item xs={6}></Grid>
             <Grid item xs></Grid>
           </Grid>
-        </FormControl>
+        </form>
       </Container>
     </>
   );
