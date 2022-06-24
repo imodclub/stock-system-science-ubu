@@ -5,6 +5,7 @@ import HomeUser from './components/HomeUser'
 import firebase from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/RegisterAdmin'
+import RegisterProfileAdmin from './components/Layout/RegisterProfileAdminForm'
 import Index from './components/Index';
 import UserContext from './dataContext/userContext';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
@@ -21,7 +22,6 @@ function App() {
       setUser(user)
     })
   }, [])
-  console.log(user)
   
   return (
     <div>
@@ -42,6 +42,7 @@ function App() {
               element={user ? <HomeUser user={user} /> : <Login />}
             ></Route>
             <Route path='registeradmin' element={<RegisterAdmin />}></Route>
+            <Route path='registerprofileadmin' element={<RegisterProfileAdmin />}></Route>
           </Routes>
         </UserContext.Provider>
       </BrowserRouter>
