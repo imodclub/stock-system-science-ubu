@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { GetAuth,setDoc,db } from '../services/firebase'
+import { GetAuth, db } from '../services/firebase'
+import { collection,setDoc} from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -8,34 +9,31 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { collection, connectFirestoreEmulator } from 'firebase/firestore';
 
 
 
 const RegisterAdmin = () => {
-      const [currentUserAdmin, setCurrentUserAdmin] = useState(null);
+      const [currentUser, setCurrentUser] = useState(null);
       const handleSubmit = (e) => {
         e.preventDefault();
         const { email, password, name, lastname, position, departments } = e.target.elements
         const Auth = GetAuth
         createUserWithEmailAndPassword(Auth, email.value, password.value)
           .then  
-          ((userCredential) => {
-            const user = userCredential
-            setCurrentUserAdmin = user
-            
+          (() => {
+            const regData = {
+              Name: name,
+              LastName: lastname,
+              Position: position,
+              Departments: departments,
+              Rule: false
+            }
+            setDoc(collection(db, 'Emproyees',regData));
           })
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
             })
-        setDoc(collection(db, 'UserAdmin'), {
-
-          name: name,
-          lastname: lastname,
-          position: position,
-          departments:departments
-        })
       }
   return (
     <>
@@ -80,37 +78,37 @@ const RegisterAdmin = () => {
               <CardActions>
                 <TextField
                   fullWidth
-                  id="Name"
+                  id="name"
                   label="ชื่อผู้ใช้"
                   variant="outlined"
-                  name="Name"
+                  name="name"
                 />
               </CardActions>
               <CardActions>
                 <TextField
                   fullWidth
-                  id="LastName"
+                  id="lastName"
                   label="นามสกุล"
                   variant="outlined"
-                  name="LastName"
+                  name="lastName"
                 />
               </CardActions>
               <CardActions>
                 <TextField
                   fullWidth
-                  id="Position"
+                  id="position"
                   label="ตำแหน่ง"
                   variant="outlined"
-                  name="Position"
+                  name="position"
                 />
               </CardActions>
               <CardActions>
                 <TextField
                   fullWidth
-                  id="Departments"
+                  id="departments"
                   label="แผนก"
                   variant="outlined"
-                  name="Departments"
+                  name="departments"
                 />
               </CardActions>
 
