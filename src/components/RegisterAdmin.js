@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import {doc, setDoc} from 'firebase/firestore'
 
 
 
@@ -16,17 +17,21 @@ const RegisterAdmin = () => {
       const handleSubmit = (e) => {
         e.preventDefault();
         const { email, password } = e.target.elements
+        const regData = {
+          name: "kamol",
+          lastname: "khampiboool",
+          role:"amdin"
+        }
         const Auth = GetAuth
         createUserWithEmailAndPassword(Auth, email.value, password.value)
-          .then((i)=>console.log(i))
-          
-          /*((userCredential) => {
+          .then          
+          ((result) => {
             const user = userCredential
           })
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
-            })*/
+            })
       }
   return (
     <>
