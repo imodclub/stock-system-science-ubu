@@ -36,73 +36,100 @@ export default function SignIn() {
         event.preventDefault();
         const data = new FormData(event.currentTarget)
         console.log({
-            email: data.get('email'),
-            password: data.get('password')
+            name: data.get('name'),
+            lastname: data.get('lastname'),
+            position: data.get('position'),
+            departments: data.get('departments')
         });
     };
     return (
-        <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
-            <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              ลงทะเบียนเจ้าหน้าที่
+            </Typography>
             <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                }}
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
-                    <Button
-                        type='submit'
-                        fullWidth
-                        variant='contained'
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href='#' variant='body2'>
-                                Forgot password ?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have and account ? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Box>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="ชื่อผู้ใช้งาน"
+                name="name"
+                autoComplete="name"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="lastname"
+                label="นามสกุลผู้ใช้งาน"
+                name="lastname"
+                autoComplete="lastname"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="position"
+                label="ตำแหน่งงาน"
+                name="position"
+                autoComplete="position"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="departments"
+                label="แผนก"
+                name="departments"
+                autoComplete="departments"
+                autoFocus
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                ลงทะเบียน
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password ?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Don't have and account ? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
-            </Container>
-        </ThemeProvider>
-    )
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </ThemeProvider>
+    );
 }
