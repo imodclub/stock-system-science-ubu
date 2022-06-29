@@ -29,6 +29,7 @@ const RegisterAdmin = () => {
               Rule: false
             }
             setDoc(collection(db, 'Emproyees',regData));
+
           })
             .catch((error) => {
               const errorCode = error.code;
