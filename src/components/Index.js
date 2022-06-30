@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { Link } from 'react-router-dom'
 import {styled} from '@mui/material/styles'
 import Box from '@mui/material/Box';
@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { ButtonBase, Typography } from '@mui/material';
 import imagePicture from '../images/indexPicture.png'
+import  AuthContext from './Auth/Auth';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -15,7 +16,10 @@ const Img = styled('img')({
 });
 
 
-function index() {
+function IndexPages({ children }) {
+  const user = useContext(AuthContext)
+  console.log(user)
+  
   return (
     <div>
       <Paper
@@ -42,6 +46,7 @@ function index() {
                   <h1>Stock Science UBU App</h1>
                   <h3>
                     <Link to="/login">Go to Login</Link>
+                    {`${user.email}`}
                   </h3>
                 </Typography>
               </Grid>
@@ -54,4 +59,4 @@ function index() {
   );
 }
 
-export default index
+export default IndexPages

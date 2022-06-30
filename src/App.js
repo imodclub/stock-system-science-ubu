@@ -1,54 +1,35 @@
-
-import { useState, useEffect} from 'react';
-import Login from './components/Login'
-import HomeUser from './components/HomeUser'
+import { useState, useEffect,useContext } from 'react';
+import Login from './components/Login';
+import HomeUser from './components/HomeUser';
 import firebase from './services/firebase';
 import ProfileUser from './components/ProfileUser';
-import RegisterAdmin from './components/RegisterAdmin'
-import RegisterProfileAdmin from './components/Layout/RegisterProfileAdminForm'
+import RegisterAdmin from './components/RegisterAdmin';
+import RegisterProfileAdmin from './components/Layout/RegisterProfileAdminForm';
+import SignOut from './components/Layout/SignOut';
 import Index from './components/Index';
-import UserContext from './dataContext/userContext';
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AuthContext from './components/Auth/Auth'
 
 function App() {
-  const [user, setUser] = useState(null)
-  
-  
+ const [user, setUser] = useState(null);
   //check user local storage
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      setUser(user)
-    })
-  }, [])
-  
+    firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  }, []);
+
   return (
     <div>
       <BrowserRouter>
-        <UserContext.Provider value={user}>
+        <AuthContext.Provider value={user}>
           <Routes>
             <Route path="/" element={<Index />} excat></Route>
-            <Route
-              path="homeuser"
-              element={user ? <HomeUser user={user} /> : <Index />}
-            ></Route>
-            <Route
-              path="profileuser"
-              element={<ProfileUser />}
-            ></Route>
-            <Route
-              path="Login"
-              element={user ? <HomeUser user={user} /> : <Login />}
-            ></Route>
-            <Route path='registeradmin' element={<RegisterAdmin />}></Route>
-            <Route path='registerprofileadmin' element={<RegisterProfileAdmin />}></Route>
           </Routes>
-        </UserContext.Provider>
+        </AuthContext.Provider>
       </BrowserRouter>
     </div>
   );
-      
 }
 
 export default App;

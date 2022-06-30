@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { GetAuth } from '../services/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import RegigterProfileAdminForm from './Layout/RegisterProfileAdminForm'
+import {Redirect} from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
@@ -9,30 +11,33 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import {doc, setDoc} from 'firebase/firestore'
+import { async } from '@firebase/util';
+
 
 
 
 const RegisterAdmin = () => {
-      const [currentUserAdmin, setCurrentUserAdmin] = useState(null);
-      const handleSubmit = (e) => {
+  const [currentUserAdmin, setCurrentUserAdmin] = useState(null);
+  const [currentUID, setCurrentUID] = useState(null);
+  const handleSubmit = (e) => {
         e.preventDefault();
         const { email, password } = e.target.elements
-        const regData = {
-          name: "kamol",
-          lastname: "khampiboool",
-          role:"amdin"
-        }
         const Auth = GetAuth
         createUserWithEmailAndPassword(Auth, email.value, password.value)
           .then          
           ((result) => {
-            const user = userCredential
+            console.log(result.user.uid);
+            setCurrentUID = result.user.uid
+           
           })
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
             })
-      }
+     if (currentUID) {
+     }
+  }
+ 
   return (
     <>
       <Container maxWidth="sm">
