@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { GetAuth, db } from '../services/firebase'
-import { collection,setDoc} from 'firebase/firestore'
+import { GetAuth, db } from './../../services/firebase'
+import { collection,addDoc} from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -14,27 +14,29 @@ import Button from '@mui/material/Button';
 
 const RegisterAdmin = () => {
       const [currentUser, setCurrentUser] = useState(null);
-      const handleSubmit = (e) => {
+      const handleSubmit = async(e) => {
         e.preventDefault();
-        const { email, password, name, lastname, position, departments } = e.target.elements
-        const Auth = GetAuth
-        createUserWithEmailAndPassword(Auth, email.value, password.value)
-          .then  
-          (() => {
-            const regData = {
-              Name: name,
-              LastName: lastname,
-              Position: position,
-              Departments: departments,
-              Rule: false
-            }
-            setDoc(collection(db, 'Emproyees',regData));
-
+        const { email, password } = e.target.elements;
+        const { name, lastname, position, departments } = e.target.elements;
+        const Auth = GetAuth;
+        await createUserWithEmailAndPassword(Auth, email.value, password.value)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
           })
-            .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-            })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
+        addDoc(collection(db, 'UserAdmin'),{
+          Name: name.value,
+          LastName: lastname.value,
+          Position: position.value,
+          Departments: departments.value,
+          Rule: 'admin',
+        });
+        //console.log(name.value, lastname.value)
       }
   return (
     <>
@@ -88,10 +90,10 @@ const RegisterAdmin = () => {
               <CardActions>
                 <TextField
                   fullWidth
-                  id="lastName"
+                  id="lastname"
                   label="นามสกุล"
                   variant="outlined"
-                  name="lastName"
+                  name="lastname"
                 />
               </CardActions>
               <CardActions>

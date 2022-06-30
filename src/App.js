@@ -6,14 +6,12 @@ import HomeUser from './components/HomeUser'
 import firebase from './services/firebase';
 import GetAuth from './services/firebase'
 import ProfileUser from './components/ProfileUser';
-import RegisterAdmin from './components/RegisterAdmin'
-import RegisterProfileAdmin from './components/Layout/RegisterProfileAdminForm'
+import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import Index from './components/Index';
 import UserContext from './dataContext/userContext';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth';
 
-import RegisterAdminForm from './components/register_admin/RegisterAdminForm'
 
 
 
@@ -50,10 +48,6 @@ function App() {
               element={user ? <HomeUser user={user} /> : <Login />}
             ></Route>
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
-            <Route
-              path="registeradminform"
-              element={<RegisterAdminForm />}
-            ></Route>
           </Routes>
         </AuthContext.Provider>
       </BrowserRouter>
