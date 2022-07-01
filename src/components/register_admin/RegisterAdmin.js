@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { GetAuth, db } from './../../services/firebase'
 import { collection,addDoc} from 'firebase/firestore'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -9,11 +9,14 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import firebase from './../../services/firebase';
 
 
 
 const RegisterAdmin = () => {
-      const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [user, setUser]=useState(null)
+  const [uid, setUid,email,setEmail] = useState(null);
       const handleSubmit = async(e) => {
         e.preventDefault();
         const { email, password } = e.target.elements;
@@ -30,15 +33,29 @@ const RegisterAdmin = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
           });
-        console.log(currentUser)
-        /*addDoc(collection(db, 'UserAdmin'),{
+      
+        addDoc(collection(db, 'UserAdmin'), {
+          Email: email,
+          Uid: uid,
           Name: name.value,
           LastName: lastname.value,
           Position: position.value,
           Departments: departments.value,
           Rule: 'admin',
-        });*/
-      }
+        });
+  }
+     useEffect(() => {
+       firebase.auth().onAuthStateChanged((user) => {
+         if (user) {
+           setUser(user);
+           setUid = user.uid;
+           setEmail = user.email;
+         } else {
+           console.log('ไม่สามารถอ่านข้อมูลจาก Register admin pages ได้');
+         }
+       });
+     }, []);
+  
   return (
     <>
       <Container maxWidth="sm">
