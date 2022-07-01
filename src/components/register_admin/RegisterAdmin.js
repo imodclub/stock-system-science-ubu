@@ -23,20 +23,21 @@ const RegisterAdmin = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            setCurrentUser = user
             // ...
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
           });
-        addDoc(collection(db, 'UserAdmin'),{
+        console.log(currentUser)
+        /*addDoc(collection(db, 'UserAdmin'),{
           Name: name.value,
           LastName: lastname.value,
           Position: position.value,
           Departments: departments.value,
           Rule: 'admin',
-        });
-        //console.log(name.value, lastname.value)
+        });*/
       }
   return (
     <>
