@@ -25,7 +25,8 @@ function App() {
         const uid = user.uid
         const email = user.email
         console.log("User id has " + uid)
-        console.log("User email has "+email);
+        console.log("User email has " + email);
+        console.log(user)
       } else {
         console.log("Read failed")
       }
