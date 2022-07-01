@@ -4,33 +4,42 @@ import AuthContext from './components/auth/Auth';
 import Login from './components/Login'
 import HomeUser from './components/HomeUser'
 import firebase from './services/firebase';
-import GetAuth from './services/firebase'
+import { GetAuth, db } from './services/firebase'
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import Index from './components/Index';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth';
-
-
-
+import {doc,getDocs,collection,query,where} from 'firebase/firestore'
 
 function App() {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [email,setEmail] = useState(null)
     //check user local storage
     useEffect(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           setUser(user);
           const uid = user.uid;
-          const email = user.email;
-          console.log('User id has ' + uid);
-          console.log('User email has ' + email);
-          console.log(user);
+          setEmail(user.email);
+          const role = user.Role
+          
         } else {
           console.log('Read failed');
         }
       });
     }, []);
+  
+    const findData = async () => {
+    const q = query(collection(db,'UserAdmin'),where("Email","==",email))
+    const docSnap = await getDocs(q)
+    docSnap.forEach((doc) => {
+      console.log(doc.id," => ",doc.data())
+    })
+  }
+    findData()
+
+
   return (
     <div>
       <BrowserRouter>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { GetAuth, db } from './../../services/firebase'
+import firebase from './../../services/firebase'
 import { collection,addDoc} from 'firebase/firestore'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
@@ -13,7 +14,7 @@ import Button from '@mui/material/Button';
 
 
 const RegisterAdmin = () => {
-      const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
       const handleSubmit = async(e) => {
         e.preventDefault();
         const { email, password } = e.target.elements;
@@ -23,22 +24,23 @@ const RegisterAdmin = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            setCurrentUser = user
             // ...
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
           });
-        console.log(currentUser)
-        /*addDoc(collection(db, 'UserAdmin'),{
-          Name: name.value,
-          LastName: lastname.value,
-          Position: position.value,
-          Departments: departments.value,
-          Rule: 'admin',
-        });*/
+        addDoc(collection(db, 'UserAdmin'), {
+    Email: email.value,
+    Name: name.value,
+    LastName: lastname.value,
+    Position: position.value,
+    Departments: departments.value,
+    Role: 'admin',
+  });
       }
+ 
+
   return (
     <>
       <Container maxWidth="sm">
