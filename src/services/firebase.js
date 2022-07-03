@@ -1,7 +1,8 @@
 import firebase from 'firebase/compat/app'
 import "firebase/compat/auth"
 import {getFirestore} from 'firebase/firestore'
-import {getAuth} from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+
 
 
 const firebaseConfig = {
@@ -25,7 +26,44 @@ export {GetAuth,db}
 const provider = new firebase.auth.GoogleAuthProvider()
 provider.setCustomParameters({ prompt: "select_account" })
 
+
 //สร้าง sign in with google
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
+
+//ตรวจสอบรหัสผ่านหรือ user ที่ลงชื่อเข้าระบบ
+export const checkAuth = () => GetAuth
+onAuthStateChanged(GetAuth,(user) => {
+  if (user) {
+    const uid = user.uid
+    console.log(user.email)
+  } else {
+    console.log("ไม่พบผู้ใช้งาน")
+  }
+  return (
+    user.email
+  )
+})
+
+//สร้างบัญชีใช้งานผู้ดูแล
+export const createUserAdmin= (email, password) => createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    const user = userCredential
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+//เพ่ิมข้อมูลผู้ดูแลลงไปใน Documents
+ /*addDoc(collection(db, 'UserAdmin'), {
+   Email: email.value,
+   Name: name.value,
+   LastName: lastname.value,
+   Position: position.value,
+   Departments: departments.value,
+   Role: 'admin',
+ });*/
+  
+
+
 
 export default firebase 
