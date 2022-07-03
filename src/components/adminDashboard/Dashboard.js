@@ -34,7 +34,7 @@ function CheckUser() {
       noWrap
       sx={{ flexGrow: 1 }}
     >
-      {name.email}
+      {name.currentUser.email}
     </Typography>
   );
 }

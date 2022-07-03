@@ -1,7 +1,17 @@
 import firebase from 'firebase/compat/app'
 import "firebase/compat/auth"
-import {getFirestore} from 'firebase/firestore'
+import {
+  getFirestore,
+  where,
+  query,
+  collection,
+  getDocs,
+  doc,
+} from 'firebase/firestore';
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import { useContext,useState } from 'react';
+import AuthContext from '../components/auth/Auth';
+import App from '../App'
 
 
 
@@ -31,18 +41,26 @@ provider.setCustomParameters({ prompt: "select_account" })
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
 
 //ตรวจสอบรหัสผ่านหรือ user ที่ลงชื่อเข้าระบบ
-export const checkAuth = () => GetAuth
-onAuthStateChanged(GetAuth,(user) => {
-  if (user) {
-    const uid = user.uid
-    console.log(user.email)
-  } else {
-    console.log("ไม่พบผู้ใช้งาน")
-  }
-  return (
-    user.email
-  )
-})
+export const checkAuth = () => {
+    onAuthStateChanged(GetAuth, (user) => {
+      if (user) {
+        const uid = user.uid
+        console.log(user.email)
+      } else {
+        console.log("ไม่พบผู้ใช้งาน")
+      }
+    })
+}
+
+//ตรวจสอบกฏผู้ดูแล
+export const findData = async (email) => {
+ const q = query(collection(db, 'UserAdmin'), where('Email', '==', email));
+ const docSnap = await getDocs(q);
+ docSnap.forEach((doc) => {
+   console.log(doc.id, ' => ', doc.data().Role);
+ });
+}
+
 
 //สร้างบัญชีใช้งานผู้ดูแล
 export const createUserAdmin= (email, password) => createUserWithEmailAndPassword(auth, email, password)

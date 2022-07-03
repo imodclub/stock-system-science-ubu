@@ -1,33 +1,43 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import AuthContext from './components/auth/Auth';
 import Login from './components/Login'
 import HomeUser from './components/HomeUser'
-import firebase, { checkAuth } from './services/firebase';
+import firebase, { checkAuth, findData } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
 import Page400 from './components/Page400';
 import Index from './components/Index';
-import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import {doc,getDocs,collection,query,where} from 'firebase/firestore'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+
 
 function App() {
   const [user, setUser] = useState(null);
-  const [email,role,setEmail,setRole] = useState(null)
-    //check user local storage
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((currentUser) => {
-        if (currentUser) {
-          setUser(currentUser);
+  //const [email, role, setEmail, setRole] = useState(null);
+  //check user local storage
+  checkAuth();
+  
+  
+  
+  
+  /*useEffect(() => {
+    firebase.auth().onAuthStateChanged((authUser) => {
+        if (authUser) {
+          setUser(authUser.email);
         } else {
-          console.log('Read failed');
+          setUser(null)
         }
       });
     }, [])
+  //findData(user)
+
     
+
   
-    /*const findData = async () => {
+    /*
+    const findData = async () => {
     const q = query(collection(db,'UserAdmin'),where("Email","==",email))
     const docSnap = await getDocs(q)
       docSnap.forEach((doc) => {
@@ -37,7 +47,6 @@ function App() {
   }
     findData()
 */
-
   return (
     <div>
       <BrowserRouter>
@@ -63,7 +72,6 @@ function App() {
       </BrowserRouter>
     </div>
   );
-      
 }
 
 export default App;
