@@ -8,6 +8,7 @@ import GetAuth from './services/firebase'
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import Index from './components/Index';
+import UserContext from './dataContext/userContext';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -15,22 +16,23 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 
 function App() {
-    const [user, setUser] = useState(null);
-    //check user local storage
-    useEffect(() => {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          setUser(user);
-          const uid = user.uid;
-          const email = user.email;
-          console.log('User id has ' + uid);
-          console.log('User email has ' + email);
-          console.log(user);
-        } else {
-          console.log('Read failed');
-        }
-      });
-    }, []);
+  const [user, setUser] = useState(null)
+  //check user local storage
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+      setUser(user);
+        const uid = user.uid
+        const email = user.email
+        console.log("User id has " + uid)
+        console.log("User email has " + email);
+        console.log(user)
+      } else {
+        console.log("Read failed")
+      }
+    })
+  }, [])
+  
   return (
     <div>
       <BrowserRouter>

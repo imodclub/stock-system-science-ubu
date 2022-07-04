@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import Auth from './auth/Auth';
+import UserContext from '../dataContext/userContext';
 import { useContext } from 'react';
 
 function ProfileUser() {

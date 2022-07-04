@@ -26,36 +26,21 @@ const RegisterAdmin = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            setCurrentUser = user
             // ...
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
           });
-      
-        addDoc(collection(db, 'UserAdmin'), {
-          Email: email,
-          Uid: uid,
+        addDoc(collection(db, 'UserAdmin'),{
           Name: name.value,
           LastName: lastname.value,
           Position: position.value,
           Departments: departments.value,
           Rule: 'admin',
         });
-  }
-     useEffect(() => {
-       firebase.auth().onAuthStateChanged((user) => {
-         if (user) {
-           setUser(user);
-           setUid = user.uid;
-           setEmail = user.email;
-         } else {
-           console.log('ไม่สามารถอ่านข้อมูลจาก Register admin pages ได้');
-         }
-       });
-     }, []);
-  
+        //console.log(name.value, lastname.value)
+      }
   return (
     <>
       <Container maxWidth="sm">
