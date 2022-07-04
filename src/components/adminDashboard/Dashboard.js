@@ -23,9 +23,12 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
+import { checkAuth } from '../../services/firebase';
 
 function CheckUser() {
-  const name = useContext(AuthContext)
+  //const name = useContext(AuthContext)
+  const name = "Kamol"
+
   return (
     <Typography
       component="h1"
@@ -34,7 +37,7 @@ function CheckUser() {
       noWrap
       sx={{ flexGrow: 1 }}
     >
-      {name.currentUser.email}
+      {checkAuth()}
     </Typography>
   );
 }

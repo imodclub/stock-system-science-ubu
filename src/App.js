@@ -3,41 +3,54 @@ import { useState, useEffect, useContext } from 'react';
 import AuthContext from './components/auth/Auth';
 import Login from './components/Login'
 import HomeUser from './components/HomeUser'
-import firebase, { checkAuth, findData } from './services/firebase';
+import firebase, { db,findData, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
 import Page400 from './components/Page400';
 import Index from './components/Index';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import { sendSignInLinkToEmail } from 'firebase/auth';
+import {
+  getFirestore,
+  where,
+  query,
+  collection,
+  getDocs,
+  doc,
+} from 'firebase/firestore';
 
 
 function App() {
   const [user, setUser] = useState(null);
-  //const [email, role, setEmail, setRole] = useState(null);
+  const [email, setEmail] = useState(null);
+  const auth = GetAuth;
+  const Currentuser = auth.currentUser;
+  let Currentemail
+  
   //check user local storage
-  checkAuth();
-  
-  
-  
-  
-  /*useEffect(() => {
-    firebase.auth().onAuthStateChanged((authUser) => {
+
+  useEffect(() => {
+      auth.onAuthStateChanged((authUser) => {
         if (authUser) {
-          setUser(authUser.email);
+          setUser(authUser);
         } else {
-          setUser(null)
+          setUser(null);
         }
-      });
-    }, [])
-  //findData(user)
-
-    
-
+      })
+     
+    }, []);
+ 
+ 
+    if (Currentuser !== null) {
+      Currentemail = Currentuser.email;
+      const uid = Currentuser.uid;
+      console.log(Currentemail + ' ' + uid);
+      }
   
-    /*
-    const findData = async () => {
+  findData(Currentemail)
+
+  /*const findData = async () => {
     const q = query(collection(db,'UserAdmin'),where("Email","==",email))
     const docSnap = await getDocs(q)
       docSnap.forEach((doc) => {
@@ -47,6 +60,7 @@ function App() {
   }
     findData()
 */
+
   return (
     <div>
       <BrowserRouter>
