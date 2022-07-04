@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import AuthContext from './components/auth/Auth';
 import Login from './components/Login'
 import HomeUser from './components/HomeUser'
-import firebase, { db,findData, GetAuth,checkAuth } from './services/firebase';
+import firebase, { db, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
@@ -23,10 +23,12 @@ import {
 
 function App() {
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [role, setRole] = useState(null);
+  const [name, setName] = useState(null);
   const auth = GetAuth;
   const Currentuser = auth.currentUser;
   let Currentemail
+  let displayname
   
   //check user local storage
 
@@ -45,26 +47,33 @@ function App() {
     if (Currentuser !== null) {
       Currentemail = Currentuser.email;
       const uid = Currentuser.uid;
-      console.log(Currentemail + ' ' + uid);
+      displayname = Currentuser.displayName;
+      console.log(Currentemail + ' '+displayname+ ' ' + uid);
+      
       }
-  
-  findData(Currentemail)
-
-  /*const findData = async () => {
-    const q = query(collection(db,'UserAdmin'),where("Email","==",email))
+  useEffect(() => {
+    setName(displayname);
+  }, []);
+ 
+    const findData = async () => {
+    const q = query(collection(db,'UserAdmin'),where("Email","==",Currentemail))
     const docSnap = await getDocs(q)
       docSnap.forEach((doc) => {
-        setRole(doc.data().Role);
-          console.log(doc.id, ' => ', doc.data().Role)
+        console.log(doc.id, ' => ', doc.data().Role)
+        if (Currentemail === doc.data().Email) {
+         setRole(doc.data().Role)
+        } else {
+          console.log("ไม่พบค่า")
+       }
       })
   }
-    findData()
-*/
+  findData(Currentemail)
+
 
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={user}>
+        <AuthContext.Provider value={name}>
           <Routes>
             <Route path="/" element={<Index />} excat></Route>
             <Route
@@ -79,7 +88,7 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={user ? <AdminDashBoard user={user} /> : <Page400 />}
+              element={user && role ? <AdminDashBoard  /> : <Page400 />}
             ></Route>
           </Routes>
         </AuthContext.Provider>

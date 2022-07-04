@@ -59,7 +59,8 @@ export const findData = async (email) => {
  const docSnap = await getDocs(q);
  docSnap.forEach((doc) => {
    console.log(doc.id, ' => ', doc.data().Role);
-   const role = doc.data().Role
+   const res = doc.data().Role
+   return res
  });
 }
 
