@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { GetAuth, db } from './../../services/firebase'
+import { createUserAdmin }  from './../../services/firebase'
 import { collection,addDoc} from 'firebase/firestore'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
@@ -41,6 +42,8 @@ const RegisterAdmin = () => {
         });
         //console.log(name.value, lastname.value)
       }
+ 
+
   return (
     <>
       <Container maxWidth="sm">
