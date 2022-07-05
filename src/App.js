@@ -9,7 +9,7 @@ import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
 import Page400 from './components/Page400';
 import Index from './components/Index';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route,Link } from 'react-router-dom'
 import { sendSignInLinkToEmail } from 'firebase/auth';
 import {
   getFirestore,
@@ -68,15 +68,17 @@ function App() {
        }
       })
   }
+
   findData(Currentemail)
 
 
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={name}>
+        <Link to="/admindashboard">adminDashboard</Link>
+        <AuthContext.Provider value={displayname}>
           <Routes>
-            <Route path="/" element={<Index />} excat></Route>
+            <Route path="/" element={<Index />} exact></Route>
             <Route
               path="homeuser"
               element={user ? <HomeUser user={user} /> : <Index />}
@@ -89,7 +91,7 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={user && role ? <AdminDashBoard  /> : <Page400 />}
+              element={user && role ? <AdminDashBoard /> : <Index />}
             ></Route>
           </Routes>
         </AuthContext.Provider>

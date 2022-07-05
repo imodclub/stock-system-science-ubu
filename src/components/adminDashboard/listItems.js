@@ -9,6 +9,19 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { GetAuth } from '../../services/firebase'
+import {signOut} from 'firebase/auth'
+import { Link } from 'react-router-dom';
+
+const signOutRedirect = <Link to="/" />
+
+function handleSingOut() {
+  signOut(GetAuth).then(() => {
+    alert("ออกจากระบบสำเร็จ")
+  }).catch((error) => {
+    alert("ไม่สามารถออกจากระบบได้")
+  })
+}
 
 export const mainListItems = (
   <React.Fragment>
@@ -40,7 +53,11 @@ export const mainListItems = (
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText
+        onClick={(e) => handleSingOut()}
+        primary="ออกจากระบบ"
+        key={signOutRedirect}
+      />
     </ListItemButton>
   </React.Fragment>
 );
