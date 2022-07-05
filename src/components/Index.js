@@ -22,7 +22,7 @@ function index() {
         sx={{
           p: 2,
           margin: 'auto',
-          marginTop:5,
+          marginTop: 5,
           maxWidth: 500,
           flexGrow: 1,
           backgroundColor: (theme) =>
@@ -31,7 +31,7 @@ function index() {
       >
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase sx={{ width: 128, height: 128, marginTop:3}}>
+            <ButtonBase sx={{ width: 128, height: 128, marginTop: 3 }}>
               <Img alt="complex" src={imagePicture} />
             </ButtonBase>
           </Grid>
@@ -44,12 +44,16 @@ function index() {
                     <Link to="/login">Go to Login</Link>
                   </h3>
                 </Typography>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  <h3>
+                    <Link to="/admindashboard">Go to Admin Dashboard</Link>
+                  </h3>
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Paper>
-     
     </div>
   );
 }

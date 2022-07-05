@@ -7,7 +7,7 @@ import firebase, { db, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
-import Page400 from './components/Page400';
+import UsersDashBoard from './components/usersDashboard/Dashboard';
 import Index from './components/Index';
 import { BrowserRouter, Routes, Route,Link } from 'react-router-dom'
 import { sendSignInLinkToEmail } from 'firebase/auth';
@@ -75,18 +75,17 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Link to="/admindashboard">adminDashboard</Link>
         <AuthContext.Provider value={displayname}>
           <Routes>
             <Route path="/" element={<Index />} exact></Route>
             <Route
               path="homeuser"
-              element={user ? <HomeUser user={user} /> : <Index />}
+              element={user ? <UsersDashBoard user={user} /> : <Index />}
             ></Route>
             <Route path="profileuser" element={<ProfileUser />}></Route>
             <Route
               path="Login"
-              element={user ? <HomeUser user={user} /> : <Login />}
+              element={user ? <UsersDashBoard user={user} /> : <Login />}
             ></Route>
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
