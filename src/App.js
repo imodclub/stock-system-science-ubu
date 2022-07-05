@@ -19,6 +19,7 @@ import {
   getDocs,
   doc,
 } from 'firebase/firestore';
+import { formControlUnstyledClasses } from '@mui/base';
 
 
 function App() {
@@ -48,7 +49,8 @@ function App() {
       console.log(Currentemail + ' ' + uid);
       }
   
-  findData(Currentemail)
+  
+  
 
   /*const findData = async () => {
     const q = query(collection(db,'UserAdmin'),where("Email","==",email))
