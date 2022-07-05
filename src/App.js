@@ -85,7 +85,7 @@ function App() {
             <Route path="profileuser" element={<ProfileUser />}></Route>
             <Route
               path="Login"
-              element={user ? <UsersDashBoard user={user} /> : <Login />}
+              element={user && role===null ? <UsersDashBoard user={user} /> : <Login />}
             ></Route>
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route

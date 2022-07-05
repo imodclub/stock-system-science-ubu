@@ -39,6 +39,7 @@ provider.setCustomParameters({ prompt: "select_account" })
 
 //สร้าง sign in with google
 export const signInWithGoogle = () => auth.signInWithPopup(provider)
+  
 
 //ตรวจสอบรหัสผ่านหรือ user ที่ลงชื่อเข้าระบบ
 export const checkAuth = () => {
