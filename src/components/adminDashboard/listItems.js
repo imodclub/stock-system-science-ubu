@@ -83,7 +83,9 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <Link to="/">
+        <ListItemText primary="กลับหน้าแรก" />
+      </Link>
     </ListItemButton>
   </React.Fragment>
 );

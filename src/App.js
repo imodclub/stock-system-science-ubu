@@ -20,6 +20,7 @@ import {
   doc,
 } from 'firebase/firestore';
 import { formControlUnstyledClasses } from '@mui/base';
+import { useLocation } from 'react-router';
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
   }
 
   findData(Currentemail)
+  
 
 
   return (
@@ -85,7 +87,7 @@ function App() {
             <Route path="profileuser" element={<ProfileUser />}></Route>
             <Route
               path="Login"
-              element={user && role===null ? <UsersDashBoard user={user} /> : <Login />}
+              element={user ? ( <Navigate to="/homeuser" />):(<Login />) }
             ></Route>
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route

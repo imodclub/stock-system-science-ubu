@@ -41,7 +41,7 @@ function index() {
                 <Typography gutterBottom variant="subtitle1" component="div">
                   <h1>Stock Science UBU App</h1>
                   <h3>
-                    <Link to="/login">Go to Login</Link>
+                    <Link to="/login">Go to User Dashboard</Link>
                   </h3>
                 </Typography>
                 <Typography gutterBottom variant="subtitle1" component="div">
