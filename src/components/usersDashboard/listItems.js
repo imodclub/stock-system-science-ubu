@@ -72,7 +72,7 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="ปรับแต่งโปรไฟล์" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>

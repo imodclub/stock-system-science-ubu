@@ -24,6 +24,7 @@ import Orders from './Orders';
 import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
 import { checkAuth } from '../../services/firebase';
+import Profile from './Profile'
 
 function CheckUser() {
   const name = useContext(AuthContext)
@@ -116,7 +117,7 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" sx={{bgcolor:"green"}} open={open}>
+        <AppBar position="absolute" sx={{ bgcolor: 'green' }} open={open}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -134,7 +135,7 @@ function DashboardContent() {
             >
               <MenuIcon />
             </IconButton>
-            < CheckUser sx={{ pt: 4 }} />
+            <CheckUser sx={{ pt: 4 }} />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -207,6 +208,11 @@ function DashboardContent() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Orders />
+                </Paper>
+              </Grid>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <Profile />
                 </Paper>
               </Grid>
             </Grid>
