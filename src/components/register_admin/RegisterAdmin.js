@@ -16,14 +16,17 @@ import firebase from './../../services/firebase';
 
 const RegisterAdmin = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [user, setUser]=useState(null)
-  const [uid, setUid,email,setEmail] = useState(null);
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [name, setName] = useState(null)
+  const [lastname, setLastname] = useState(null)
+  const [position, setPosition] = useState(null);
+  const [departments, setDepartments] = useState(null);
+
       const handleSubmit = async(e) => {
         e.preventDefault();
-        const { email, password } = e.target.elements;
-        const { name, lastname, position, departments } = e.target.elements;
-        const Auth = GetAuth;
-        await createUserWithEmailAndPassword(Auth, email.value, password.value)
+              const Auth = GetAuth;
+        await createUserWithEmailAndPassword(Auth, email, password)
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
@@ -34,13 +37,20 @@ const RegisterAdmin = () => {
             const errorMessage = error.message;
           });
         addDoc(collection(db, 'UserAdmin'),{
-          Name: name.value,
-          LastName: lastname.value,
-          Position: position.value,
-          Departments: departments.value,
+          Name: name,
+          LastName: lastname,
+          Position: position,
+          Departments: departments,
           Rule: 'admin',
         });
-        //console.log(name.value, lastname.value)
+
+        setEmail('')
+        setPassword('')
+        setName('')
+        setLastname('')
+        setPosition('')
+        setDepartments('')
+        alert("ลงทะเบียนผู้ดูแลสำเร็จ")
       }
  
 
@@ -71,7 +81,9 @@ const RegisterAdmin = () => {
                   id="Email"
                   label="Email"
                   variant="outlined"
-                  name="email"
+                  name="Email"
+                  onChange={(event) => setEmail(event.target.value)}
+                  value={email}
                 />
               </CardActions>
               <CardActions>
@@ -80,8 +92,10 @@ const RegisterAdmin = () => {
                   id="password"
                   label="Password"
                   variant="outlined"
-                  name="password"
+                  name="Password"
                   type="password"
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
                 />
               </CardActions>
               <CardActions>
@@ -90,7 +104,9 @@ const RegisterAdmin = () => {
                   id="name"
                   label="ชื่อผู้ใช้"
                   variant="outlined"
-                  name="name"
+                  name="Name"
+                  onChange={(event) => setName(event.target.value)}
+                  value={name}
                 />
               </CardActions>
               <CardActions>
@@ -99,7 +115,9 @@ const RegisterAdmin = () => {
                   id="lastname"
                   label="นามสกุล"
                   variant="outlined"
-                  name="lastname"
+                  name="Lastname"
+                  onChange={(event) => setLastname(event.target.value)}
+                  value={lastname}
                 />
               </CardActions>
               <CardActions>
@@ -108,7 +126,9 @@ const RegisterAdmin = () => {
                   id="position"
                   label="ตำแหน่ง"
                   variant="outlined"
-                  name="position"
+                  name="Position"
+                  onChange={(event) => setPosition(event.target.value)}
+                  value={position}
                 />
               </CardActions>
               <CardActions>
@@ -117,7 +137,9 @@ const RegisterAdmin = () => {
                   id="departments"
                   label="แผนก"
                   variant="outlined"
-                  name="departments"
+                  name="Departments"
+                  onChange={(event) => setDepartments(event.target.value)}
+                  value={departments}
                 />
               </CardActions>
 

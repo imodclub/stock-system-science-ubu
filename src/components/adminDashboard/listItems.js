@@ -35,7 +35,7 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
+      <ListItemText primary="เพิ่มรายการ" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>

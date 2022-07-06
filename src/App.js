@@ -2,7 +2,6 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from './components/auth/Auth';
 import Login from './components/Login'
-import HomeUser from './components/HomeUser'
 import firebase, { db, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
