@@ -77,7 +77,9 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+      <Link to="/homeuser">
+        <ListItemText primary="โหมดผู้ใช้งาน" />
+      </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
