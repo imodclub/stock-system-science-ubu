@@ -20,6 +20,7 @@ import {
 } from 'firebase/firestore';
 import { formControlUnstyledClasses } from '@mui/base';
 import { useLocation } from 'react-router';
+import SignIn from './components/signin/Signin'
 
 
 function App() {
@@ -85,8 +86,8 @@ function App() {
             ></Route>
             <Route path="profileuser" element={<ProfileUser />}></Route>
             <Route
-              path="Login"
-              element={user ? ( <Navigate to="/homeuser" />):(<Login />) }
+              path="signin"
+              element={user ? <Navigate to="/homeuser" /> : <SignIn />}
             ></Route>
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
