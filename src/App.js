@@ -61,7 +61,6 @@ function App() {
     const q = query(collection(db,'UserAdmin'),where("Email","==",Currentemail))
     const docSnap = await getDocs(q)
       docSnap.forEach((doc) => {
-        console.log(doc.id, ' => ', doc.data().Role)
         if (Currentemail === doc.data().Email) {
          setRole(doc.data().Role)
         } else {
@@ -77,7 +76,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={displayname}>
+        <AuthContext.Provider value={Currentemail}>
           <Routes>
             <Route path="/" element={<Index />} exact></Route>
             <Route

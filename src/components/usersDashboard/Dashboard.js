@@ -16,14 +16,19 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+
+//context and database
 import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
-import { checkAuth } from '../../services/firebase';
-import Profile from './Profile'
+import { GetAuth, db } from '../../services/firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+
+
+
 //ListItem
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -43,14 +48,18 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+/*Alert */
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import Stack from '@mui/material/Stack';
 
-import { GetAuth } from '../../services/firebase';
-import { signOut } from 'firebase/auth';
 
 
 function CheckUser() {
-  //const name = useContext(AuthContext)
+  
   const name = "โหมดผู้ใช้งานทั่วไป"
+
 
   return (
     <Typography
@@ -141,8 +150,23 @@ function handleSingOut() {
 }
 
 function DashboardContent() {
+  const authEmail = useContext(AuthContext)
   const [open, setOpen] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false)
+  const [name,setName]=React.useState(null)
+  const [lastname,setLastname] = React.useState(null)
+  const [position,setPosition] = React.useState(null)
+  const [departments,setDepartments]=React.useState(null)
+  const [telOfUBU,setTelOfUBU]=React.useState(null)
+  const [telPrivate,setTelPrivate]=React.useState(null)
+  const [social,setSocial]=React.useState(null)
+  const [email, setEmail] = React.useState(null);
+  const [alert,setAlert] = React.useState(false)
+
+  const successAlert = () => {
+    setAlert(!alert);
+  };
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -151,14 +175,42 @@ function DashboardContent() {
      setDialogOpen(true);
    };
 
-   const handleClose = () => {
+   const handleClose = async (e) => {
      setDialogOpen(false);
+     e.preventDefault();
+     await addDoc(collection(db, 'UserAnother'), {
+       Email: authEmail,
+       Name: name,
+       Lastname: lastname,
+       Position: position,
+       Departments: departments,
+       TelOfUBU: telOfUBU,
+       TelPrivate: telPrivate,
+       Social:social
+     })
+     setName('')
+     setLastname('')
+     setPosition('')
+     setDepartments('')
+     setTelOfUBU('')
+     setTelPrivate('')
+     setSocial('')
+     successAlert()
+     
    };
+  
+  
+  
  
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
+        <Dialog open={alert} onClose={successAlert}>
+          <Alert icon={false} severity="success">
+            เพิ่มข้อมูลผู้ใช้งานสำเร็จ
+          </Alert>
+        </Dialog>
         <AppBar position="absolute" sx={{ bgcolor: 'green' }} open={open}>
           <Toolbar
             sx={{
@@ -262,16 +314,18 @@ function DashboardContent() {
                         id="Name"
                         label="ชื่อ"
                         autoFocus
+                        onChange={(event) => setName(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
                         fullWidth
-                        id="LastName"
+                        id="Lastname"
                         label="นามสกุล"
-                        name="LastName"
+                        name="Lastname"
                         autoComplete="family-name"
+                        onChange={(event) => setLastname(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -281,6 +335,7 @@ function DashboardContent() {
                         id="Departments"
                         label="ภาควิชา/แผนก"
                         name="Departments"
+                        onChange={(event) => setDepartments(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -290,6 +345,7 @@ function DashboardContent() {
                         name="Position"
                         label="ตำแหน่ง"
                         id="Position"
+                        onChange={(event) => setPosition(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -299,6 +355,7 @@ function DashboardContent() {
                         fullWidth
                         id="TelOfUBU"
                         label="โทรศัพท์ภายใน"
+                        onChange={(event) => setTelOfUBU(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -307,14 +364,16 @@ function DashboardContent() {
                         id="TelPrivate"
                         label="โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"
                         name="TelPrivate"
+                        onChange={(event) => setTelPrivate(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        name="AnotherCommunitation"
+                        name="Social"
                         label="ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"
-                        id="PAnotherCommunitation"
+                        id="Social"
+                        onChange={(event) => setSocial(event.target.value)}
                       />
                     </Grid>
                   </Grid>
