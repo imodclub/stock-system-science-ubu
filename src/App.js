@@ -82,7 +82,7 @@ function App() {
             <Route path="/" element={<Index />} exact></Route>
             <Route
               path="homeuser"
-              element={user ? <UsersDashBoard /> : <Index />}
+              element={user ? <UsersDashBoard /> : <SignIn />}
             ></Route>
             <Route path="profileuser" element={<ProfileUser />}></Route>
             <Route
@@ -92,7 +92,7 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={user && role ? <AdminDashBoard /> : <Index />}
+              element={user && role ? <AdminDashBoard /> : <SignIn />}
             ></Route>
           </Routes>
         </AuthContext.Provider>
