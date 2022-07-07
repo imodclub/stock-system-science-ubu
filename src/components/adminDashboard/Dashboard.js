@@ -26,8 +26,8 @@ import AuthContext from '../auth/Auth';
 import { checkAuth } from '../../services/firebase';
 
 function CheckUser() {
-  const name = useContext(AuthContext)
-  //const name = "Kamol"
+  //const name = useContext(AuthContext)
+  const name = "โหมดผู้ดูแล"
 
   return (
     <Typography

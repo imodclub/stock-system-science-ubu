@@ -12,8 +12,9 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { GetAuth } from '../../services/firebase'
 import {signOut} from 'firebase/auth'
 import { Link } from 'react-router-dom';
+import PurchaseFormDialog from './PurchaseFormDialog'
 
-const signOutRedirect = <Link to="/" />
+
 
 function handleSingOut() {
   signOut(GetAuth).then(() => {
@@ -22,6 +23,7 @@ function handleSingOut() {
     alert("ไม่สามารถออกจากระบบได้")
   })
 }
+
 
 export const mainListItems = (
   <React.Fragment>
@@ -35,7 +37,7 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="เพิ่มรายการ" />
+      <ListItemText primary="เพิ่มรายการ" onClick={PurchaseFormDialog} />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -56,7 +58,6 @@ export const mainListItems = (
       <ListItemText
         onClick={(e) => handleSingOut()}
         primary="ออกจากระบบ"
-        key={signOutRedirect}
       />
     </ListItemButton>
   </React.Fragment>

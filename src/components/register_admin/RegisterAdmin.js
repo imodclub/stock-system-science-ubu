@@ -11,10 +11,21 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import firebase from './../../services/firebase';
+import { Navigate } from 'react-router'
+
+/*Alert */
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import Stack from '@mui/material/Stack';
+import Dialog from '@mui/material/Dialog';
+import { Link } from 'react-router-dom'
+
 
 
 
 const RegisterAdmin = () => {
+  const [alert, setAlert] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [email, setEmail] = useState(null)
   const [password, setPassword] = useState(null)
@@ -22,6 +33,10 @@ const RegisterAdmin = () => {
   const [lastname, setLastname] = useState(null)
   const [position, setPosition] = useState(null);
   const [departments, setDepartments] = useState(null);
+
+   const successAlert = () => {
+     setAlert(!alert);
+   };
 
       const handleSubmit = async(e) => {
         e.preventDefault();
@@ -36,12 +51,13 @@ const RegisterAdmin = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
           });
-        addDoc(collection(db, 'UserAdmin'),{
+        addDoc(collection(db, 'UserAdmin'), {
+          Email:email,
           Name: name,
           LastName: lastname,
           Position: position,
           Departments: departments,
-          Rule: 'admin',
+          Role: 'admin',
         });
 
         setEmail('')
@@ -50,12 +66,22 @@ const RegisterAdmin = () => {
         setLastname('')
         setPosition('')
         setDepartments('')
-        alert("ลงทะเบียนผู้ดูแลสำเร็จ")
+        successAlert()
       }
+
+
  
 
   return (
     <>
+      <Dialog open={alert} onClose={successAlert}>
+        <Alert icon={false} severity="success">
+          ลงทะเบียนผู้ดูแลสำเร็จ
+          <p>
+            <Link to="/admindashboard">ไปหน้า Admin Dashboard</Link>
+          </p>
+        </Alert>
+      </Dialog>
       <Container maxWidth="sm">
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>

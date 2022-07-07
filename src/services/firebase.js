@@ -75,15 +75,7 @@ export const createUserAdmin= (email, password) => createUserWithEmailAndPasswor
     const errorCode = error.code;
     const errorMessage = error.message;
   });
-//เพ่ิมข้อมูลผู้ดูแลลงไปใน Documents
- /*addDoc(collection(db, 'UserAdmin'), {
-   Email: email.value,
-   Name: name.value,
-   LastName: lastname.value,
-   Position: position.value,
-   Departments: departments.value,
-   Role: 'admin',
- });*/
+
   
 
 

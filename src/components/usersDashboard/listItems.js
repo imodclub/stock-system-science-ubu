@@ -12,6 +12,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { GetAuth } from '../../services/firebase'
 import {signOut} from 'firebase/auth'
 import { Link } from 'react-router-dom';
+import Profile from './Profile'
 
 
 
@@ -25,7 +26,9 @@ function handleSingOut() {
 
 
 
+
 export const mainListItems = (
+  
   <React.Fragment>
     <ListItemButton>
       <ListItemIcon>

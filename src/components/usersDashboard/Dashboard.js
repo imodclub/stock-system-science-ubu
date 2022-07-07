@@ -13,7 +13,6 @@ import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -25,10 +24,33 @@ import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
 import { checkAuth } from '../../services/firebase';
 import Profile from './Profile'
+//ListItem
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import {Link} from 'react-router-dom'
+//DialogForm
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+import { GetAuth } from '../../services/firebase';
+import { signOut } from 'firebase/auth';
+
 
 function CheckUser() {
-  const name = useContext(AuthContext)
-  //const name = "Kamol"
+  //const name = useContext(AuthContext)
+  const name = "โหมดผู้ใช้งานทั่วไป"
 
   return (
     <Typography
@@ -107,12 +129,32 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
+
+function handleSingOut() {
+  signOut(GetAuth)
+    .then(() => {
+      alert('ออกจากระบบสำเร็จ');
+    })
+    .catch((error) => {
+      alert('ไม่สามารถออกจากระบบได้');
+    });
+}
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const [dialogOpen, setDialogOpen] = React.useState(false)
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+   const handleClickOpen = () => {
+     setDialogOpen(true);
+   };
+
+   const handleClose = () => {
+     setDialogOpen(false);
+   };
+ 
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -158,9 +200,148 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+            {/*ลิสช่วงบน */}
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShoppingCartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Orders" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="โปรไฟล์ผู้ใช้" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Reports" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText
+                onClick={(e) => handleSingOut()}
+                primary="ออกจากระบบ"
+              />
+            </ListItemButton>
+
+            {/*ลิสต์ช่วงล่าง*/}
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <ListSubheader component="div" inset>
+              Saved reports
+            </ListSubheader>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              {/*ข้อมูลปรับแต่งโปรไฟล์*/}
+              <ListItemText
+                primary="ปรับแต่งโปรไฟล์"
+                onClick={(e) => handleClickOpen()}
+              />
+              <Dialog open={dialogOpen} onClose={handleClose}>
+                <DialogTitle>เพิ่มข้อมูลผู้ใช้งาน</DialogTitle>
+                <DialogContent>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        autoComplete="given-name"
+                        name="Name"
+                        required
+                        fullWidth
+                        id="Name"
+                        label="ชื่อ"
+                        autoFocus
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="LastName"
+                        label="นามสกุล"
+                        name="LastName"
+                        autoComplete="family-name"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="Departments"
+                        label="ภาควิชา/แผนก"
+                        name="Departments"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        name="Position"
+                        label="ตำแหน่ง"
+                        id="Position"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        name="TelOfUBU"
+                        required
+                        fullWidth
+                        id="TelOfUBU"
+                        label="โทรศัพท์ภายใน"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        fullWidth
+                        id="TelPrivate"
+                        label="โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"
+                        name="TelPrivate"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        name="AnotherCommunitation"
+                        label="ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"
+                        id="PAnotherCommunitation"
+                      />
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>ยกเลิก</Button>
+                  <Button onClick={handleClose}>เพิ่มข้อมูล</Button>
+                </DialogActions>
+              </Dialog>
+              {/*ปิดข้อมูลปรับแต่งโปรไฟล์*/}
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <Link to="/admindashboard">
+                <ListItemText primary="โหมดผู้ดูแล" />
+              </Link>
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <Link to="/">
+                <ListItemText primary="กลับหน้าแรก" />
+              </Link>
+            </ListItemButton>
           </List>
         </Drawer>
         <Box
@@ -208,11 +389,6 @@ function DashboardContent() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Orders />
-                </Paper>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Profile />
                 </Paper>
               </Grid>
             </Grid>
