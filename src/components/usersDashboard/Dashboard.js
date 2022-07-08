@@ -23,7 +23,7 @@ import Orders from './Orders';
 //context and database
 import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
-import { GetAuth, db } from '../../services/firebase';
+import { GetAuth, db, auth } from '../../services/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 
@@ -53,6 +53,9 @@ import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Stack from '@mui/material/Stack';
+
+//react-hook-form
+import { useForm } from 'react-hook-form'
 
 
 
@@ -150,6 +153,7 @@ function handleSingOut() {
 }
 
 function DashboardContent() {
+  const { register, handleSubmit }=useForm();
   const authEmail = useContext(AuthContext)
   const [open, setOpen] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false)
@@ -178,25 +182,29 @@ function DashboardContent() {
    const handleClose = async (e) => {
      setDialogOpen(false);
      e.preventDefault();
-     await addDoc(collection(db, 'UserAnother'), {
-       Email: authEmail,
-       Name: name,
-       Lastname: lastname,
-       Position: position,
-       Departments: departments,
-       TelOfUBU: telOfUBU,
-       TelPrivate: telPrivate,
-       Social:social
-     })
-     setName('')
-     setLastname('')
-     setPosition('')
-     setDepartments('')
-     setTelOfUBU('')
-     setTelPrivate('')
-     setSocial('')
-     successAlert()
-     
+     if ((!name) && (!lastname)&&(!position) && (!departments) &&(!telOfUBU)) {
+       
+       await addDoc(collection(db, 'UserAnother'), { 
+         Email: authEmail,
+         Name: name,
+         Lastname: lastname,
+         Position: position,
+         Departments: departments,
+         TelOfUBU: telOfUBU,
+         TelPrivate: telPrivate,
+         Social: social
+       })
+       setName('')
+       setLastname('')
+       setPosition('')
+       setDepartments('')
+       setTelOfUBU('')
+       setTelPrivate('')
+       setSocial('')
+       successAlert()
+     } else {
+       alert("ไม่สามารถเพิ่มข้อมูลได้เนื่องจากใส่ข้อมูลไม่ครบ")
+     }
    };
   
   
@@ -301,14 +309,14 @@ function DashboardContent() {
                 primary="ปรับแต่งโปรไฟล์"
                 onClick={(e) => handleClickOpen()}
               />
-              <Dialog open={dialogOpen} onClose={handleClose}>
+              <Dialog open={dialogOpen} onClose={handleSubmit(handleClose)}>
                 <DialogTitle>เพิ่มข้อมูลผู้ใช้งาน</DialogTitle>
                 <DialogContent>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         autoComplete="given-name"
-                        name="Name"
+                        {...register('Name')}
                         required
                         fullWidth
                         id="Name"
@@ -323,7 +331,7 @@ function DashboardContent() {
                         fullWidth
                         id="Lastname"
                         label="นามสกุล"
-                        name="Lastname"
+                        {...register('Lastname')}
                         autoComplete="family-name"
                         onChange={(event) => setLastname(event.target.value)}
                       />
@@ -334,7 +342,7 @@ function DashboardContent() {
                         fullWidth
                         id="Departments"
                         label="ภาควิชา/แผนก"
-                        name="Departments"
+                        {...register('Departments')}
                         onChange={(event) => setDepartments(event.target.value)}
                       />
                     </Grid>
@@ -342,7 +350,7 @@ function DashboardContent() {
                       <TextField
                         required
                         fullWidth
-                        name="Position"
+                        {...register('Position')}
                         label="ตำแหน่ง"
                         id="Position"
                         onChange={(event) => setPosition(event.target.value)}
@@ -350,7 +358,7 @@ function DashboardContent() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
-                        name="TelOfUBU"
+                        {...register('TelOfUBU')}
                         required
                         fullWidth
                         id="TelOfUBU"
@@ -363,14 +371,14 @@ function DashboardContent() {
                         fullWidth
                         id="TelPrivate"
                         label="โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"
-                        name="TelPrivate"
+                        {...register('TelPrivate')}
                         onChange={(event) => setTelPrivate(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        name="Social"
+                        {...register('Social')}
                         label="ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"
                         id="Social"
                         onChange={(event) => setSocial(event.target.value)}
