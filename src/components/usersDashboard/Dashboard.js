@@ -19,6 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import { FormGroup } from '@mui/material';
 
 //context and database
 import { useContext } from 'react';
@@ -54,8 +55,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Stack from '@mui/material/Stack';
 
-//react-hook-form
+//react-hook-form and validate form
 import { useForm } from 'react-hook-form'
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
 
 
 
@@ -153,10 +155,13 @@ function handleSingOut() {
 }
 
 function DashboardContent() {
-  const { register, handleSubmit }=useForm();
   const authEmail = useContext(AuthContext)
+
   const [open, setOpen] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false)
+
+  const [errors,setErrors] = React.useState(null)
+
   const [name,setName]=React.useState(null)
   const [lastname,setLastname] = React.useState(null)
   const [position,setPosition] = React.useState(null)
@@ -171,6 +176,10 @@ function DashboardContent() {
     setAlert(!alert);
   };
 
+  const errorAlert = () => {
+    setAlert(!alert)
+  }
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -178,11 +187,50 @@ function DashboardContent() {
    const handleClickOpen = () => {
      setDialogOpen(true);
    };
+  
+  
+  const handleClose = () => {
+    setDialogOpen(false);
+  }
 
-   const handleClose = async (e) => {
-     setDialogOpen(false);
-     e.preventDefault();
-     if ((!name) && (!lastname)&&(!position) && (!departments) &&(!telOfUBU)) {
+
+  const handleSubmit = async (e) => {
+    setDialogOpen(false);
+    e.preventDefault();
+    if (!name && !lastname) {
+        console.log('ชื่อและนามสกุลไม่ควรเป็นค่าว่าง');
+        errorAlert()
+      } else if(!position && !departments) {
+      console.log('ตำแหน่งและแผนกไม่ควรเป็นค่าว่าง');
+        errorAlert();
+      
+    } else if (!telOfUBU) {
+        console.log('หมายเลขโทรศัพท์ภายใน ไม่ควรเป็นค่าว่าง');
+        errorAlert();
+      
+    } else {
+       await addDoc(collection(db, 'UserAnother'), {
+         Email: authEmail,
+         Name: name,
+         Lastname: lastname,
+         Position: position,
+         Departments: departments,
+         TelOfUBU: telOfUBU,
+         TelPrivate: telPrivate,
+         Social: social,
+       });
+       setName('');
+       setLastname('');
+       setPosition('');
+       setDepartments('');
+       setTelOfUBU('');
+       setTelPrivate('');
+       setSocial('');
+       successAlert();
+      }
+     
+
+     /*if ((!name) && (!lastname)&&(!position) && (!departments) &&(!telOfUBU)) {
        
        await addDoc(collection(db, 'UserAnother'), { 
          Email: authEmail,
@@ -204,8 +252,18 @@ function DashboardContent() {
        successAlert()
      } else {
        alert("ไม่สามารถเพิ่มข้อมูลได้เนื่องจากใส่ข้อมูลไม่ครบ")
-     }
+     }*/
    };
+  
+  const handleClearForm = (e) => {
+    setName('');
+    setLastname('');
+    setPosition('');
+    setDepartments('');
+    setTelOfUBU('');
+    setTelPrivate('');
+    setSocial('');
+  }
   
   
   
@@ -216,7 +274,12 @@ function DashboardContent() {
         <CssBaseline />
         <Dialog open={alert} onClose={successAlert}>
           <Alert icon={false} severity="success">
-            เพิ่มข้อมูลผู้ใช้งานสำเร็จ
+            เพิ่มข้อมูลผู้ใช้งานสำเร็จ 
+          </Alert>
+        </Dialog>
+        <Dialog open={alert} onClose={errorAlert}>
+          <Alert icon={false} severity="error">
+             กรุณากรอกรายละเอียดให้ครบ 
           </Alert>
         </Dialog>
         <AppBar position="absolute" sx={{ bgcolor: 'green' }} open={open}>
@@ -309,20 +372,21 @@ function DashboardContent() {
                 primary="ปรับแต่งโปรไฟล์"
                 onClick={(e) => handleClickOpen()}
               />
-              <Dialog open={dialogOpen} onClose={handleSubmit(handleClose)}>
+              <Dialog open={dialogOpen} onClose={handleClose}>
                 <DialogTitle>เพิ่มข้อมูลผู้ใช้งาน</DialogTitle>
                 <DialogContent>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextField
-                        autoComplete="given-name"
-                        {...register('Name')}
                         required
+                        autoComplete="given-name"
                         fullWidth
                         id="Name"
                         label="ชื่อ"
                         autoFocus
                         onChange={(event) => setName(event.target.value)}
+                        error={name === ''}
+                        helperText={name === ' ' ? 'Empty' : ' '}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -331,7 +395,6 @@ function DashboardContent() {
                         fullWidth
                         id="Lastname"
                         label="นามสกุล"
-                        {...register('Lastname')}
                         autoComplete="family-name"
                         onChange={(event) => setLastname(event.target.value)}
                       />
@@ -342,7 +405,6 @@ function DashboardContent() {
                         fullWidth
                         id="Departments"
                         label="ภาควิชา/แผนก"
-                        {...register('Departments')}
                         onChange={(event) => setDepartments(event.target.value)}
                       />
                     </Grid>
@@ -350,7 +412,6 @@ function DashboardContent() {
                       <TextField
                         required
                         fullWidth
-                        {...register('Position')}
                         label="ตำแหน่ง"
                         id="Position"
                         onChange={(event) => setPosition(event.target.value)}
@@ -358,7 +419,6 @@ function DashboardContent() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
-                        {...register('TelOfUBU')}
                         required
                         fullWidth
                         id="TelOfUBU"
@@ -371,14 +431,12 @@ function DashboardContent() {
                         fullWidth
                         id="TelPrivate"
                         label="โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"
-                        {...register('TelPrivate')}
                         onChange={(event) => setTelPrivate(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        {...register('Social')}
                         label="ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"
                         id="Social"
                         onChange={(event) => setSocial(event.target.value)}
@@ -388,7 +446,7 @@ function DashboardContent() {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>ยกเลิก</Button>
-                  <Button onClick={handleClose}>เพิ่มข้อมูล</Button>
+                  <Button onClick={handleSubmit}>เพิ่มข้อมูล</Button>
                 </DialogActions>
               </Dialog>
               {/*ปิดข้อมูลปรับแต่งโปรไฟล์*/}
@@ -465,7 +523,7 @@ function DashboardContent() {
       </Box>
     </ThemeProvider>
   );
-}
+                }
 
 export default function Dashboard() {
   return <DashboardContent />;
