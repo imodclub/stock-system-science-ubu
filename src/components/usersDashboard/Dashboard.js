@@ -160,7 +160,7 @@ function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const [dialogOpen, setDialogOpen] = React.useState(false)
 
-  const [errors,setErrors] = React.useState(null)
+  const [errors,setErrors] = React.useState(false)
 
   const [name,setName]=React.useState(null)
   const [lastname,setLastname] = React.useState(null)
@@ -193,22 +193,42 @@ function DashboardContent() {
     setDialogOpen(false);
   }
 
+  const handleChangeName = (e) => {
+    setName(e)
+  }
+
+    const handleChangeLastname = (e) => {
+      setLastname(e);
+  };
+   const handleChangePosition= (e) => {
+     setPosition(e);
+  };
+   const handleChangeDepartments = (e) => {
+     setDepartments(e);
+  };
+  const handleChangeTelOfUBU = (e) => {
+    setTelOfUBU(e);
+  };
+
+  React.useEffect(() => {
+    const validate =
+      name?.trim().length > 0 &&
+      lastname?.trim().length > 0 &&
+      departments?.trim().length > 0 &&
+      telOfUBU
+    
+    if (validate) {
+      setErrors(true)
+      
+    } else {
+      setErrors(false)
+  }
+},[name,lastname,position,departments,telOfUBU])
 
   const handleSubmit = async (e) => {
     setDialogOpen(false);
     e.preventDefault();
-    if (!name && !lastname) {
-        console.log('ชื่อและนามสกุลไม่ควรเป็นค่าว่าง');
-        errorAlert()
-      } else if(!position && !departments) {
-      console.log('ตำแหน่งและแผนกไม่ควรเป็นค่าว่าง');
-        errorAlert();
-      
-    } else if (!telOfUBU) {
-        console.log('หมายเลขโทรศัพท์ภายใน ไม่ควรเป็นค่าว่าง');
-        errorAlert();
-      
-    } else {
+   
        await addDoc(collection(db, 'UserAnother'), {
          Email: authEmail,
          Name: name,
@@ -227,7 +247,7 @@ function DashboardContent() {
        setTelPrivate('');
        setSocial('');
        successAlert();
-      }
+      
      
 
      /*if ((!name) && (!lastname)&&(!position) && (!departments) &&(!telOfUBU)) {
@@ -274,12 +294,7 @@ function DashboardContent() {
         <CssBaseline />
         <Dialog open={alert} onClose={successAlert}>
           <Alert icon={false} severity="success">
-            เพิ่มข้อมูลผู้ใช้งานสำเร็จ 
-          </Alert>
-        </Dialog>
-        <Dialog open={alert} onClose={errorAlert}>
-          <Alert icon={false} severity="error">
-             กรุณากรอกรายละเอียดให้ครบ 
+            เพิ่มข้อมูลผู้ใช้งานสำเร็จ
           </Alert>
         </Dialog>
         <AppBar position="absolute" sx={{ bgcolor: 'green' }} open={open}>
@@ -384,8 +399,9 @@ function DashboardContent() {
                         id="Name"
                         label="ชื่อ"
                         autoFocus
-                        onChange={(event) => setName(event.target.value)}
-                        error={name === ''}
+                        onChange={(event) =>
+                          handleChangeName(event.target.value)
+                        }
                         helperText={name === ' ' ? 'Empty' : ' '}
                       />
                     </Grid>
@@ -396,7 +412,9 @@ function DashboardContent() {
                         id="Lastname"
                         label="นามสกุล"
                         autoComplete="family-name"
-                        onChange={(event) => setLastname(event.target.value)}
+                        onChange={(event) =>
+                          handleChangeLastname(event.target.value)
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -405,7 +423,9 @@ function DashboardContent() {
                         fullWidth
                         id="Departments"
                         label="ภาควิชา/แผนก"
-                        onChange={(event) => setDepartments(event.target.value)}
+                        onChange={(event) =>
+                          handleChangeDepartments(event.target.value)
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -414,7 +434,9 @@ function DashboardContent() {
                         fullWidth
                         label="ตำแหน่ง"
                         id="Position"
-                        onChange={(event) => setPosition(event.target.value)}
+                        onChange={(event) =>
+                          handleChangePosition(event.target.value)
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -423,7 +445,9 @@ function DashboardContent() {
                         fullWidth
                         id="TelOfUBU"
                         label="โทรศัพท์ภายใน"
-                        onChange={(event) => setTelOfUBU(event.target.value)}
+                        onChange={(event) =>
+                          handleChangeTelOfUBU(event.target.value)
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -446,7 +470,9 @@ function DashboardContent() {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleClose}>ยกเลิก</Button>
-                  <Button onClick={handleSubmit}>เพิ่มข้อมูล</Button>
+                  <Button disabled={!errors} onClick={handleSubmit}>
+                    เพิ่มข้อมูล
+                  </Button>
                 </DialogActions>
               </Dialog>
               {/*ปิดข้อมูลปรับแต่งโปรไฟล์*/}
