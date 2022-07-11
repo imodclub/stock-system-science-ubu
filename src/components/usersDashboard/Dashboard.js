@@ -248,44 +248,7 @@ function DashboardContent() {
        setSocial('');
        successAlert();
       
-     
-
-     /*if ((!name) && (!lastname)&&(!position) && (!departments) &&(!telOfUBU)) {
-       
-       await addDoc(collection(db, 'UserAnother'), { 
-         Email: authEmail,
-         Name: name,
-         Lastname: lastname,
-         Position: position,
-         Departments: departments,
-         TelOfUBU: telOfUBU,
-         TelPrivate: telPrivate,
-         Social: social
-       })
-       setName('')
-       setLastname('')
-       setPosition('')
-       setDepartments('')
-       setTelOfUBU('')
-       setTelPrivate('')
-       setSocial('')
-       successAlert()
-     } else {
-       alert("ไม่สามารถเพิ่มข้อมูลได้เนื่องจากใส่ข้อมูลไม่ครบ")
-     }*/
    };
-  
-  const handleClearForm = (e) => {
-    setName('');
-    setLastname('');
-    setPosition('');
-    setDepartments('');
-    setTelOfUBU('');
-    setTelPrivate('');
-    setSocial('');
-  }
-  
-  
   
  
   return (
