@@ -365,7 +365,6 @@ function DashboardContent() {
                         onChange={(event) =>
                           handleChangeName(event.target.value)
                         }
-                        helperText={name === ' ' ? 'Empty' : ' '}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
