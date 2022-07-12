@@ -10,12 +10,12 @@ function preventDefault(event) {
 export default function Deposits() {
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
+      <Title>โปรไฟล์ผู้ใช้</Title>
       <Typography component="p" variant="h4">
-        $3,024.00
+        คุณ กมล คำพิบูลย์
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 15 March, 2019
+        ตำแหน่ง ช่างเครื่องคอมพิวเตอร์
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>

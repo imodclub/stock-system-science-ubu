@@ -17,7 +17,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Chart from './Chart';
-import Deposits from './Deposits';
+import Profile from './Profile';
 import Orders from './Orders';
 import { FormGroup } from '@mui/material';
 
@@ -158,7 +158,8 @@ function DashboardContent() {
   const authEmail = useContext(AuthContext)
 
   const [open, setOpen] = React.useState(true);
-  const [dialogOpen, setDialogOpen] = React.useState(false)
+  const [dialogForm, setDialogForm] = React.useState(false)
+  const [dialogProfile, setDialogProfile] =React.useState(false)
 
   const [errors,setErrors] = React.useState(false)
 
@@ -184,14 +185,22 @@ function DashboardContent() {
     setOpen(!open);
   };
 
-   const handleClickOpen = () => {
-     setDialogOpen(true);
+   const handleClickFormOpen = () => {
+     setDialogForm(true);
    };
   
   
-  const handleClose = () => {
-    setDialogOpen(false);
+  const handleCloseFormClose = () => {
+    setDialogForm(false);
   }
+
+    const handleProfileOpen = () => {
+      setDialogProfile(true);
+    };
+
+    const handleProfileClose = () => {
+      setDialogProfile(false);
+    };
 
   const handleChangeName = (e) => {
     setName(e)
@@ -226,7 +235,7 @@ function DashboardContent() {
 },[name,lastname,position,departments,telOfUBU])
 
   const handleSubmit = async (e) => {
-    setDialogOpen(false);
+    handleClickFormOpen(false);
     e.preventDefault();
    
        await addDoc(collection(db, 'UserAnother'), {
@@ -318,8 +327,15 @@ function DashboardContent() {
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
-              <ListItemText primary="โปรไฟล์ผู้ใช้" />
+
+              {/* ข้อมูลผู้ใช้งาน */}
+              <ListItemText
+                primary="โปรไฟล์ผู้ใช้"
+                onClick={(e) => handleProfileOpen()}
+              />
             </ListItemButton>
+            {/* ปิดข้อมูลผู้ใช้งาน */}
+
             <ListItemButton>
               <ListItemIcon>
                 <BarChartIcon />
@@ -345,12 +361,13 @@ function DashboardContent() {
               <ListItemIcon>
                 <AssignmentIcon />
               </ListItemIcon>
+
               {/*ข้อมูลปรับแต่งโปรไฟล์*/}
               <ListItemText
                 primary="ปรับแต่งโปรไฟล์"
-                onClick={(e) => handleClickOpen()}
+                onClick={(e) => handleClickFormOpen()}
               />
-              <Dialog open={dialogOpen} onClose={handleClose}>
+              <Dialog open={dialogForm} onClose={handleCloseFormClose}>
                 <DialogTitle>เพิ่มข้อมูลผู้ใช้งาน</DialogTitle>
                 <DialogContent>
                   <Grid container spacing={2}>
@@ -431,7 +448,7 @@ function DashboardContent() {
                   </Grid>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={handleClose}>ยกเลิก</Button>
+                  <Button onClick={handleCloseFormClose}>ยกเลิก</Button>
                   <Button disabled={!errors} onClick={handleSubmit}>
                     เพิ่มข้อมูล
                   </Button>
@@ -472,8 +489,22 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+              {/* Recent Profile */}
+              <Grid item xs={12} md={4} lg={6}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Profile />
+                </Paper>
+              </Grid>
+
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={8} lg={6}>
                 <Paper
                   sx={{
                     p: 2,
@@ -485,19 +516,7 @@ function DashboardContent() {
                   <Chart />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
+
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
