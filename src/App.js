@@ -76,7 +76,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={Currentemail}>
+        <AuthContext.Provider value={{ Currentemail ,displayname }}>
           <Routes>
             <Route path="/" element={<Index />} exact></Route>
             <Route
