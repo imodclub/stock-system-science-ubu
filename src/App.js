@@ -29,54 +29,52 @@ function App() {
   const [name, setName] = useState(null);
   const auth = GetAuth;
   const Currentuser = auth.currentUser;
-  let Currentemail
-  let displayname
-  
+  let Currentemail;
+  let displayname;
+
   //check user local storage
 
   useEffect(() => {
-      auth.onAuthStateChanged((authUser) => {
-        if (authUser) {
-          setUser(authUser);
-        } else {
-          setUser(null);
-        }
-      })
-     
-    }, []);
- 
- 
-    if (Currentuser !== null) {
-      Currentemail = Currentuser.email;
-      const uid = Currentuser.uid;
-      displayname = Currentuser.displayName;
-      console.log(Currentemail + ' '+displayname+ ' ' + uid);
-      
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        setUser(null);
       }
+    });
+  }, []);
+
+  if (Currentuser !== null) {
+    Currentemail = Currentuser.email;
+    const uid = Currentuser.uid;
+    displayname = Currentuser.displayName;
+    console.log(Currentemail + ' ' + displayname + ' ' + uid);
+  }
   useEffect(() => {
     setName(displayname);
   }, []);
- 
-    const findData = async () => {
-    const q = query(collection(db,'UserAdmin'),where("Email","==",Currentemail))
-    const docSnap = await getDocs(q)
-      docSnap.forEach((doc) => {
-        if (Currentemail === doc.data().Email) {
-         setRole(doc.data().Role)
-        } else {
-          console.log("ไม่พบค่า")
-       }
-      })
-  }
 
-  findData(Currentemail)
+  const findData = async () => {
+    const q = query(collection(db, "UserAdmin"),where("Email", "==", Currentemail));
+    const docSnap = await getDocs(q);
+    docSnap.forEach((doc) => {
+      if (Currentemail === doc.data().Email) {
+        console.log(doc.data().Role)
+        setRole(doc.data().Role);
+      } else {
+        console.log("ไม่พบค่า");
+      }
+    });
+  };
+
+  findData();
+
   
-
 
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={{ Currentemail ,displayname }}>
+        <AuthContext.Provider value={{ Currentemail, displayname }}>
           <Routes>
             <Route path="/" element={<Index />} exact></Route>
             <Route

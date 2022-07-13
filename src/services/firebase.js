@@ -67,7 +67,7 @@ export const findData = async (email) => {
 
 
 //สร้างบัญชีใช้งานผู้ดูแล
-export const createUserAdmin= (email, password) => createUserWithEmailAndPassword(auth, email, password)
+ export const createUserAdmin= (email, password) => createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     const user = userCredential
   })
