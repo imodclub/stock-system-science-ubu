@@ -8,7 +8,7 @@ import {
   getDocs,
   doc,
 } from 'firebase/firestore';
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup,GoogleAuthProvider} from 'firebase/auth'
 import { useContext,useState } from 'react';
 import AuthContext from '../components/auth/Auth';
 import App from '../App'
@@ -38,7 +38,20 @@ provider.setCustomParameters({ prompt: "select_account" })
 
 
 //สร้าง sign in with google
-export const signInWithGoogle = () => auth.signInWithPopup(provider)
+//export const signInWithGoogle = () => auth.signInWithPopup(provider)
+export const signInWithGoogle = () =>
+  signInWithPopup(GetAuth, provider)
+    .then((result) => {
+      const credential = provider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = provider.credentialFromError(error);
+    });
   
 
 //ตรวจสอบรหัสผ่านหรือ user ที่ลงชื่อเข้าระบบ
@@ -77,6 +90,18 @@ export const findData = async (email) => {
   });
 
   
+//Signin with Email password from Signin Form
+export const signInWithEmailPasswordFromSignForm = (email, password) => { 
+  signInWithEmailAndPassword(GetAuth, email, password)
+    .then((userCredential) => {
+      const user = userCredential
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+}
+
 
 
 

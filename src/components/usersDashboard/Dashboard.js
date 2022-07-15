@@ -155,7 +155,7 @@ function handleSingOut() {
 }
 
 function DashboardContent() {
-  const authEmail = useContext(AuthContext)
+  const { Currentemail, displayname } = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(true);
   const [dialogForm, setDialogForm] = React.useState(false)
@@ -239,7 +239,7 @@ function DashboardContent() {
     e.preventDefault();
    
        await addDoc(collection(db, 'UserAnother'), {
-         Email: authEmail,
+         Email: Currentemail,
          Name: name,
          Lastname: lastname,
          Position: position,

@@ -13,7 +13,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Copyright from '../copyright/Copyright';
-import { signInWithGoogle } from '../../services/firebase';
+import {
+  signInWithGoogle,
+  signInWithEmailPasswordFromSignForm,
+} from '../../services/firebase';
+import AuthContext from '../auth/Auth';
+import { useContext } from 'react';
+import Dashboard from '../usersDashboard/Dashboard';
+
 
 
 
@@ -21,12 +28,26 @@ import { signInWithGoogle } from '../../services/firebase';
 const theme = createTheme();
 
 export default function SignIn() {
+  const chkAuth = useContext(AuthContext)
+   
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+    const email = data.get('email');
+    const password = data.get('password');
+    const p = new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        resolve(signInWithEmailPasswordFromSignForm(email, password));
+        console.log('ส่งค่า Login สำเร็จ');
+      }, 1000);
+       
+    })
+    p.then((userCredential) => {
+      alert('ล็อกอินสำเร็จ ', userCredential);
+      <Dashboard />;
+    }).cache((error) => {
+      alert(error);
     });
   };
 
