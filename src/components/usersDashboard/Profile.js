@@ -20,6 +20,7 @@ function preventDefault(event) {
 
 export default function Profile() {
   const { Currentemail, displayname } = useContext(AuthContext);
+
   const [email, setEmail] = useState(Currentemail);
   const [Name, setName] = useState(null);
   const [LastName, setLastName] = useState(null);
@@ -29,12 +30,12 @@ export default function Profile() {
   //ค้นหาอีเมลและเรียกชื่อผู้ใช้งาน
   const findUserName = async () => {
     const q = query(
-      collection(db, 'UserAnother'),
-      where('Email.Currentemail', '==', Currentemail)
+      collection(db, "UserAnother"),
+      where("Email", "==", Currentemail)
     );
     const docSnap = await getDocs(q);
     docSnap.forEach((doc) => {
-      if (Currentemail === doc.data().Email.Currentemail) {
+      if (Currentemail === doc.data().Email.Currentemail || doc.data().Email) {
         console.log(doc.id, ' => ', doc.data());
         setName(doc.data().Name);
         setLastName(doc.data().Lastname)
@@ -54,7 +55,7 @@ export default function Profile() {
     <React.Fragment>
       <Title>โปรไฟล์ผู้ใช้</Title>
       <Typography component="p" variant="h4" key={email.id}>
-        สวัสดีคุณ {Name} {LastName}
+        สวัสดีคุณ {Name ? Name : "ไม่ทราบชื่อ"} {LastName}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         ตำแหน่ง {Position}

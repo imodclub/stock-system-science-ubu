@@ -237,7 +237,7 @@ function DashboardContent() {
   const handleSubmit = async (e) => {
     handleClickFormOpen(false);
     e.preventDefault();
-   
+       
        await addDoc(collection(db, 'UserAnother'), {
          Email: Currentemail,
          Name: name,

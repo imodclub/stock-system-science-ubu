@@ -22,6 +22,8 @@ import { formControlUnstyledClasses } from '@mui/base';
 import { useLocation } from 'react-router';
 import SignIn from './components/signin/Signin'
 
+import ReadDataUser from './components/Tools/ReadDataUser';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -91,6 +93,12 @@ function App() {
               path="admindashboard"
               element={user && role ? <AdminDashBoard /> : <SignIn />}
             ></Route>
+            {/** Test ReadData */}
+            <Route
+              path="readdatauser"
+              element={<ReadDataUser />}
+            ></Route>
+            {/** End Test ReadData */}
           </Routes>
         </AuthContext.Provider>
       </BrowserRouter>
