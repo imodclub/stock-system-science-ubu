@@ -23,25 +23,20 @@ function createData(
 }
 
 const ReadDataUser = () => {
-    const [data, setData] = React.useState([null]);
+    const [data, setData] = React.useState([]);
     const [docID, setDocID] = React.useState([])
     
 
-      const ReadData = async () => {
+  const ReadData = async () => {
+    const docData = [];
       const querySnapshort = await getDocs(collection(db, 'User'));
       querySnapshort.forEach((doc) => {
         //console.log(doc.id, ' => ', doc.data())
-         var docData = {
-          uid: doc.id,
-          name: doc.data().Name,
-          lastname: doc.data().Lastname,
-          email: doc.data().Email,
-          role: doc.data().Role,
-        };
-
+         docData.push(Object.keys(doc.id),doc.data())
         //setDocID(doc.id)
         setData(docData);
       });
+    console.log(data[3].Email)
     };
     
 
