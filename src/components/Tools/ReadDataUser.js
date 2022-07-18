@@ -10,33 +10,23 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { keys } from '@mui/system';
 
-function createData(
-    UserID,
-    Name,
-    Lastname,
-    Email,
-    Role
 
-) {
-    return {UserID,Name,Lastname,Email,Role}
-}
 
 const ReadDataUser = () => {
     const [data, setData] = React.useState([]);
-    const [docID, setDocID] = React.useState([])
-    
 
   const ReadData = async () => {
     const docData = [];
       const querySnapshort = await getDocs(collection(db, 'User'));
-      querySnapshort.forEach((doc) => {
-        //console.log(doc.id, ' => ', doc.data())
-         docData.push(Object.keys(doc.id),doc.data())
+    querySnapshort.forEach((doc) => {
+      //console.log(doc.id, ' => ', doc.data())
+      docData.push({...doc.data(), key: doc.id,});
         //setDocID(doc.id)
         setData(docData);
       });
-    console.log(data[3].Email)
+    
     };
     
 
@@ -44,11 +34,7 @@ const ReadDataUser = () => {
             ReadData();   
 },[])
    
-    const rows = [
-      createData(data.uid, data.name, data.lastname, data.email, data.role),
-      ];
-
-   
+    
   return (
     <div>
       <TableContainer component={Paper}>
@@ -63,13 +49,13 @@ const ReadDataUser = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data.map((row) => (
               <TableRow
-                key={row.UserID}
+                key={row.key}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.UserID}
+                  {row.key}
                 </TableCell>
                 <TableCell align="left">{row.Name}</TableCell>
                 <TableCell align="left">{row.Lastname}</TableCell>
