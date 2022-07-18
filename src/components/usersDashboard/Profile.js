@@ -19,7 +19,7 @@ function preventDefault(event) {
 }
 
 export default function Profile() {
-  const { Currentemail, displayname } = useContext(AuthContext);
+  const { Currentemail, displayname, uid } = useContext(AuthContext);
 
   const [email, setEmail] = useState(Currentemail);
   const [Name, setName] = useState(null);
@@ -30,7 +30,7 @@ export default function Profile() {
   //ค้นหาอีเมลและเรียกชื่อผู้ใช้งาน
   const findUserName = async () => {
     const q = query(
-      collection(db, "UserAnother"),
+      collection(db, "User"),
       where("Email", "==", Currentemail)
     );
     const docSnap = await getDocs(q);

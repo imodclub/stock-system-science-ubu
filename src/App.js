@@ -33,6 +33,7 @@ function App() {
   const Currentuser = auth.currentUser;
   let Currentemail;
   let displayname;
+  let uid
 
   //check user local storage
 
@@ -48,7 +49,7 @@ function App() {
 
   if (Currentuser !== null) {
     Currentemail = Currentuser.email;
-    const uid = Currentuser.uid;
+    uid = Currentuser.uid;
     displayname = Currentuser.displayName;
     console.log(Currentemail + ' ' + displayname + ' ' + uid);
   }
@@ -76,7 +77,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={{ Currentemail, displayname }}>
+        <AuthContext.Provider value={{ Currentemail, displayname, uid }}>
           <Routes>
             <Route path="/" element={<Index />} exact></Route>
             <Route

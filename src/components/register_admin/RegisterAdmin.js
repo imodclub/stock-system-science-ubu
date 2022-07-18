@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GetAuth, db } from './../../services/firebase'
 import { createUserAdmin }  from './../../services/firebase'
-import { collection,addDoc} from 'firebase/firestore'
+import { collection,addDoc, getDocs, getDoc,doc,query,where} from 'firebase/firestore'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -20,11 +20,16 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
 import { Link } from 'react-router-dom'
+import AuthContext from '../auth/Auth';
 
 
+
+
+  
 
 
 const RegisterAdmin = () => {
+  const { Currentemail, displayname, uid } = useContext(AuthContext);
   const [alert, setAlert] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [email, setEmail] = useState(null)
@@ -38,27 +43,32 @@ const RegisterAdmin = () => {
      setAlert(!alert);
    };
 
+  
+
       const handleSubmit = async(e) => {
         e.preventDefault();
-              const Auth = GetAuth;
-        await createUserWithEmailAndPassword(Auth, email, password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            // ...
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+        const Auth = GetAuth;
+          await createUserWithEmailAndPassword(Auth, email, password)
+            .then((userCredential) => {
+              // Signed in
+              const user = userCredential.user;
+              // ...
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+            });
+        
+          addDoc(collection(db, 'User'), {
+            Email: email,
+            Name: name,
+            LastName: lastname,
+            Position: position,
+            Departments: departments,
+            Role: 'staff',
+            UID:uid
           });
-        addDoc(collection(db, 'UserAdmin'), {
-          Email:email,
-          Name: name,
-          LastName: lastname,
-          Position: position,
-          Departments: departments,
-          Role: 'admin',
-        });
+        
 
         setEmail('')
         setPassword('')
