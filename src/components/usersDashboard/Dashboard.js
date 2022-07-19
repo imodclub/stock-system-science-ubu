@@ -171,7 +171,9 @@ function DashboardContent() {
   const [telPrivate,setTelPrivate]=React.useState(null)
   const [social,setSocial]=React.useState(null)
   const [email, setEmail] = React.useState(null);
-  const [alert,setAlert] = React.useState(false)
+  const [alert, setAlert] = React.useState(false)
+  
+  var staff = "staff"
 
   const successAlert = () => {
     setAlert(!alert);
@@ -351,10 +353,7 @@ function DashboardContent() {
               <ListItemText primary="แบบฟอร์มเบิกวัสดุ" />
             </ListItemButton>
             <ListItemButton>
-              <ListItemIcon>
-              </ListItemIcon>
-
-             
+              <ListItemIcon></ListItemIcon>
             </ListItemButton>
 
             <ListItemButton>
@@ -398,7 +397,7 @@ function DashboardContent() {
                         autoComplete="given-name"
                         fullWidth
                         id="Name"
-                        label={name ? name : "ชื่อ"}
+                        label={name ? name : 'ชื่อ'}
                         autoFocus
                         onChange={(event) =>
                           handleChangeName(event.target.value)
@@ -410,7 +409,7 @@ function DashboardContent() {
                         required
                         fullWidth
                         id="Lastname"
-                        label={lastname ? lastname : "นามสกุล"}
+                        label={lastname ? lastname : 'นามสกุล'}
                         autoComplete="family-name"
                         onChange={(event) =>
                           handleChangeLastname(event.target.value)
@@ -422,7 +421,7 @@ function DashboardContent() {
                         required
                         fullWidth
                         id="Departments"
-                        label={departments ? departments: "ภาควิชา/แผนก"}
+                        label={departments ? departments : 'ภาควิชา/แผนก'}
                         onChange={(event) =>
                           handleChangeDepartments(event.target.value)
                         }
@@ -432,7 +431,7 @@ function DashboardContent() {
                       <TextField
                         required
                         fullWidth
-                        label={position ? position : "ตำแหน่ง"}
+                        label={position ? position : 'ตำแหน่ง'}
                         id="Position"
                         onChange={(event) =>
                           handleChangePosition(event.target.value)
@@ -443,7 +442,7 @@ function DashboardContent() {
                       <TextField
                         required
                         fullWidth
-                        id={telOfUBU ? telOfUBU : "TelOfUBU"}
+                        id={telOfUBU ? telOfUBU : 'TelOfUBU'}
                         label="โทรศัพท์ภายใน"
                         onChange={(event) =>
                           handleChangeTelOfUBU(event.target.value)
@@ -454,14 +453,22 @@ function DashboardContent() {
                       <TextField
                         fullWidth
                         id="TelPrivate"
-                        label={telPrivate ? telPrivate : "โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"}
+                        label={
+                          telPrivate
+                            ? telPrivate
+                            : 'โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)'
+                        }
                         onChange={(event) => setTelPrivate(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        label={social ? social : "ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"}
+                        label={
+                          social
+                            ? social
+                            : 'ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)'
+                        }
                         id="Social"
                         onChange={(event) => setSocial(event.target.value)}
                       />
@@ -481,7 +488,17 @@ function DashboardContent() {
               <ListItemIcon>
                 <AssignmentIcon />
               </ListItemIcon>
-              <Link to={()=> role === "staff" ? '/admindashboard': alert("ไม่สามารถเข้าเมนูนี้ได้")}>
+              <Link
+                to={
+                  role === staff ? (
+                    '/admindashboard'
+                  ) : (
+                    <Alert severity="error">
+                      ("ไม่สามารถเข้าเมนูนี้ได้") เพิ่มข้อมูลผู้ใช้งานสำเร็จ
+                    </Alert>
+                  )
+                }
+              >
                 <ListItemText primary="โหมดผู้ดูแล" />
               </Link>
             </ListItemButton>

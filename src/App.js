@@ -31,6 +31,7 @@ function App() {
   const [name, setName] = useState(null);
   const auth = GetAuth;
   const Currentuser = auth.currentUser;
+  var ValidatorTextRole = "staff"
   let Currentemail;
   let displayname;
   let uid
@@ -55,7 +56,7 @@ function App() {
   }
   useEffect(() => {
     setName(displayname);
-
+  }, []);
     const findData = async () => {
       const q = query(
         collection(db, 'User'),
@@ -72,7 +73,8 @@ function App() {
     };
 
     findData();
-  }, []);
+ 
+  console.log(role)
 
   return (
     <div>
@@ -92,7 +94,7 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={user && (role==="staff") ? <AdminDashBoard /> : <SignIn />}
+              element={user && role===ValidatorTextRole ? <AdminDashBoard /> : <SignIn />}
             ></Route>
             {/** Test ReadData */}
             <Route
