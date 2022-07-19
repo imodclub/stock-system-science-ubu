@@ -25,7 +25,7 @@ import { FormGroup } from '@mui/material';
 import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
 import { GetAuth, db, auth } from '../../services/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs,query,where } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 
 
@@ -232,7 +232,26 @@ function DashboardContent() {
     } else {
       setErrors(false)
   }
-},[name,lastname,position,departments,telOfUBU])
+  }, [name, lastname, position, departments, telOfUBU])
+  
+  React.useEffect(() => {
+    const findUserName = async () => {
+      const q = query(collection(db, "User"), where("Email", "==", Currentemail));
+      const docSnap = await getDocs(q);
+      docSnap.forEach((doc) => {
+        if (Currentemail === doc.data().Email.Currentemail || doc.data().Email) {
+          setName(doc.data().Name);
+          setLastname(doc.data().Lastname);
+          setDepartments(doc.data().Departments);
+          setPosition(doc.data().Position);
+          setTelOfUBU(doc.data().TelOfUBU);
+          setTelPrivate(doc.data().TelPrivate);
+          setSocial(doc.data().Social)
+        }
+      })
+    }
+    findUserName();
+  },[])
 
   const handleSubmit = async (e) => {
     handleClickFormOpen(false);
@@ -379,7 +398,7 @@ function DashboardContent() {
                         autoComplete="given-name"
                         fullWidth
                         id="Name"
-                        label="ชื่อ"
+                        label={name ? name : "ชื่อ"}
                         autoFocus
                         onChange={(event) =>
                           handleChangeName(event.target.value)
@@ -391,7 +410,7 @@ function DashboardContent() {
                         required
                         fullWidth
                         id="Lastname"
-                        label="นามสกุล"
+                        label={lastname ? lastname : "นามสกุล"}
                         autoComplete="family-name"
                         onChange={(event) =>
                           handleChangeLastname(event.target.value)
@@ -403,7 +422,7 @@ function DashboardContent() {
                         required
                         fullWidth
                         id="Departments"
-                        label="ภาควิชา/แผนก"
+                        label={departments ? departments: "ภาควิชา/แผนก"}
                         onChange={(event) =>
                           handleChangeDepartments(event.target.value)
                         }
@@ -413,7 +432,7 @@ function DashboardContent() {
                       <TextField
                         required
                         fullWidth
-                        label="ตำแหน่ง"
+                        label={position ? position : "ตำแหน่ง"}
                         id="Position"
                         onChange={(event) =>
                           handleChangePosition(event.target.value)
@@ -424,7 +443,7 @@ function DashboardContent() {
                       <TextField
                         required
                         fullWidth
-                        id="TelOfUBU"
+                        id={telOfUBU ? telOfUBU : "TelOfUBU"}
                         label="โทรศัพท์ภายใน"
                         onChange={(event) =>
                           handleChangeTelOfUBU(event.target.value)
@@ -435,14 +454,14 @@ function DashboardContent() {
                       <TextField
                         fullWidth
                         id="TelPrivate"
-                        label="โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"
+                        label={telPrivate ? telPrivate : "โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"}
                         onChange={(event) => setTelPrivate(event.target.value)}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
-                        label="ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"
+                        label={social ? social : "ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"}
                         id="Social"
                         onChange={(event) => setSocial(event.target.value)}
                       />
