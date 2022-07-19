@@ -55,24 +55,24 @@ function App() {
   }
   useEffect(() => {
     setName(displayname);
+
+    const findData = async () => {
+      const q = query(
+        collection(db, 'User'),
+        where('Email', '==', Currentemail)
+      );
+      const docSnap = await getDocs(q);
+      docSnap.forEach((doc) => {
+        if (Currentemail === doc.data().Email) {
+          setRole(doc.data().Role);
+        } else {
+          console.log('ไม่พบค่า');
+        }
+      });
+    };
+
+    findData();
   }, []);
-
-  const findData = async () => {
-    const q = query(collection(db, "User"),where("Email", "==", Currentemail));
-    const docSnap = await getDocs(q);
-    docSnap.forEach((doc) => {
-      if (Currentemail === doc.data().Email) {
-        console.log(doc.data().Role)
-        setRole(doc.data().Role);
-      } else {
-        console.log("ไม่พบค่า");
-      }
-    });
-  };
-
-  findData();
-
-  
 
   return (
     <div>

@@ -329,20 +329,14 @@ function DashboardContent() {
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary="Orders" />
+              <ListItemText primary="แบบฟอร์มเบิกวัสดุ" />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
-                <PeopleIcon />
               </ListItemIcon>
 
-              {/* ข้อมูลผู้ใช้งาน */}
-              <ListItemText
-                primary="โปรไฟล์ผู้ใช้"
-                onClick={(e) => handleProfileOpen()}
-              />
+             
             </ListItemButton>
-            {/* ปิดข้อมูลผู้ใช้งาน */}
 
             <ListItemButton>
               <ListItemIcon>
