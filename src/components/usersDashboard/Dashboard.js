@@ -155,7 +155,7 @@ function handleSingOut() {
 }
 
 function DashboardContent() {
-  const { Currentemail, displayname } = useContext(AuthContext);
+ const { Currentemail, displayname, uid } = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(true);
   const [dialogForm, setDialogForm] = React.useState(false)
@@ -238,7 +238,7 @@ function DashboardContent() {
     handleClickFormOpen(false);
     e.preventDefault();
        
-       await addDoc(collection(db, 'UserAnother'), {
+       await addDoc(collection(db, 'User'), {
          Email: Currentemail,
          Name: name,
          Lastname: lastname,
@@ -247,6 +247,8 @@ function DashboardContent() {
          TelOfUBU: telOfUBU,
          TelPrivate: telPrivate,
          Social: social,
+         Role: "users",
+         UID:uid
        });
        setName('');
        setLastname('');

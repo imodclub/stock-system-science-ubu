@@ -7,7 +7,7 @@ import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
 import UsersDashBoard from './components/usersDashboard/Dashboard';
-import Index from './components/Index';
+import Home from './components/Home';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { sendSignInLinkToEmail } from 'firebase/auth';
 import {
@@ -58,7 +58,7 @@ function App() {
   }, []);
 
   const findData = async () => {
-    const q = query(collection(db, "UserAdmin"),where("Email", "==", Currentemail));
+    const q = query(collection(db, "User"),where("Email", "==", Currentemail));
     const docSnap = await getDocs(q);
     docSnap.forEach((doc) => {
       if (Currentemail === doc.data().Email) {
@@ -79,7 +79,7 @@ function App() {
       <BrowserRouter>
         <AuthContext.Provider value={{ Currentemail, displayname, uid }}>
           <Routes>
-            <Route path="/" element={<Index />} exact></Route>
+            <Route path="/" element={<Home />} exact></Route>
             <Route
               path="homeuser"
               element={user ? <UsersDashBoard /> : <SignIn />}

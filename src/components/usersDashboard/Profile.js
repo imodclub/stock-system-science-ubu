@@ -38,8 +38,8 @@ export default function Profile() {
       if (Currentemail === doc.data().Email.Currentemail || doc.data().Email) {
         console.log(doc.id, ' => ', doc.data());
         setName(doc.data().Name);
-        setLastName(doc.data().Lastname)
-        setPosition(doc.data().Position)
+        setLastName(doc.data().LastName);
+        setPosition(doc.data().Position);
       } else {
         console.log('ไม่พบค่า');
       }
@@ -47,8 +47,9 @@ export default function Profile() {
   };
 
 
- 
+  React.useEffect(() => {
   findUserName(Currentemail);
+ },[])
 
      
   return (
