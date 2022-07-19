@@ -77,7 +77,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <AuthContext.Provider value={{ Currentemail, displayname, uid }}>
+        <AuthContext.Provider value={{ Currentemail, displayname, uid, role }}>
           <Routes>
             <Route path="/" element={<Home />} exact></Route>
             <Route
@@ -92,7 +92,7 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={user && role ? <AdminDashBoard /> : <SignIn />}
+              element={user && (role==="staff") ? <AdminDashBoard /> : <SignIn />}
             ></Route>
             {/** Test ReadData */}
             <Route

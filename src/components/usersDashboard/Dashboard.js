@@ -155,7 +155,7 @@ function handleSingOut() {
 }
 
 function DashboardContent() {
- const { Currentemail, displayname, uid } = useContext(AuthContext);
+ const { Currentemail, displayname, uid, role } = useContext(AuthContext);
 
   const [open, setOpen] = React.useState(true);
   const [dialogForm, setDialogForm] = React.useState(false)
@@ -260,7 +260,13 @@ function DashboardContent() {
        successAlert();
       
    };
-  
+  const checkRole = () => {
+    if (role === "staff") {
+      return true
+    } else {
+      return false
+    }
+  }
  
   return (
     <ThemeProvider theme={mdTheme}>
@@ -462,7 +468,7 @@ function DashboardContent() {
               <ListItemIcon>
                 <AssignmentIcon />
               </ListItemIcon>
-              <Link to="/admindashboard">
+              <Link to={()=> role === "staff" ? '/admindashboard': alert("ไม่สามารถเข้าเมนูนี้ได้")}>
                 <ListItemText primary="โหมดผู้ดูแล" />
               </Link>
             </ListItemButton>
