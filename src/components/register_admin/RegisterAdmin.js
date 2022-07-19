@@ -43,7 +43,10 @@ const RegisterAdmin = () => {
      setAlert(!alert);
    };
 
-  
+  const checkStatus = () => {
+    var text = "ขณะนี้อยู่ในสถานะลงชื่อใช้งาน "
+    return (text,Currentemail)
+  }
 
       const handleSubmit = async(e) => {
         e.preventDefault();
@@ -107,6 +110,16 @@ const RegisterAdmin = () => {
                 <Typography variant="h5" component="div">
                   ลงทะเบียน
                 </Typography>
+              </CardContent>
+              <CardContent sx={{ maxWidth: 345 }}>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  {checkStatus()}
+                </Typography>
+               
               </CardContent>
             </Grid>
             <Grid item xs={6}></Grid>
