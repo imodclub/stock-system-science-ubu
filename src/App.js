@@ -23,6 +23,7 @@ import { useLocation } from 'react-router';
 import SignIn from './components/signin/Signin'
 
 import ReadDataUser from './components/Tools/ReadDataUser';
+import AddOrUpdateProfile from './components/usersDashboard/AddOrUpdateProfile'
 
 
 function App() {
@@ -94,13 +95,19 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={user && role===ValidatorTextRole ? <AdminDashBoard /> : <SignIn />}
+              element={
+                user && role === ValidatorTextRole ? (
+                  <AdminDashBoard />
+                ) : (
+                  <SignIn />
+                )
+              }
             ></Route>
             {/** Test ReadData */}
-            <Route
-              path="readdatauser"
-              element={<ReadDataUser />}
-            ></Route>
+            <Route path="readdatauser" element={<ReadDataUser />}></Route>
+            {/** End Test ReadData */}
+            {/** Test ReadData */}
+            <Route path="addprofile" element={<AddOrUpdateProfile />}></Route>
             {/** End Test ReadData */}
           </Routes>
         </AuthContext.Provider>

@@ -57,7 +57,9 @@ import Stack from '@mui/material/Stack';
 
 //react-hook-form and validate form
 import { useForm } from 'react-hook-form'
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+
+import AddOrUpdateUser from './AddOrUpdateProfile'
 
 
 
@@ -189,6 +191,7 @@ function DashboardContent() {
 
    const handleClickFormOpen = () => {
      setDialogForm(true);
+     
    };
   
   
@@ -221,39 +224,8 @@ function DashboardContent() {
     setTelOfUBU(e);
   };
 
-  React.useEffect(() => {
-    const validate =
-      name?.trim().length > 0 &&
-      lastname?.trim().length > 0 &&
-      departments?.trim().length > 0 &&
-      telOfUBU
-    
-    if (validate) {
-      setErrors(true)
-      
-    } else {
-      setErrors(false)
-  }
-  }, [name, lastname, position, departments, telOfUBU])
+ 
   
-  React.useEffect(() => {
-    const findUserName = async () => {
-      const q = query(collection(db, "User"), where("Email", "==", Currentemail));
-      const docSnap = await getDocs(q);
-      docSnap.forEach((doc) => {
-        if (Currentemail === doc.data().Email.Currentemail || doc.data().Email) {
-          setName(doc.data().Name);
-          setLastname(doc.data().Lastname);
-          setDepartments(doc.data().Departments);
-          setPosition(doc.data().Position);
-          setTelOfUBU(doc.data().TelOfUBU);
-          setTelPrivate(doc.data().TelPrivate);
-          setSocial(doc.data().Social)
-        }
-      })
-    }
-    findUserName();
-  },[])
 
   const handleSubmit = async (e) => {
     handleClickFormOpen(false);
@@ -382,6 +354,8 @@ function DashboardContent() {
                 <AssignmentIcon />
               </ListItemIcon>
 
+              
+
               {/*ข้อมูลปรับแต่งโปรไฟล์*/}
               <ListItemText
                 primary="ปรับแต่งโปรไฟล์"
@@ -390,99 +364,15 @@ function DashboardContent() {
               <Dialog open={dialogForm} onClose={handleCloseFormClose}>
                 <DialogTitle>เพิ่มข้อมูลผู้ใช้งาน</DialogTitle>
                 <DialogContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        autoComplete="given-name"
-                        fullWidth
-                        id="Name"
-                        label={name ? name : 'ชื่อ'}
-                        autoFocus
-                        onChange={(event) =>
-                          handleChangeName(event.target.value)
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="Lastname"
-                        label={lastname ? lastname : 'นามสกุล'}
-                        autoComplete="family-name"
-                        onChange={(event) =>
-                          handleChangeLastname(event.target.value)
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="Departments"
-                        label={departments ? departments : 'ภาควิชา/แผนก'}
-                        onChange={(event) =>
-                          handleChangeDepartments(event.target.value)
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        label={position ? position : 'ตำแหน่ง'}
-                        id="Position"
-                        onChange={(event) =>
-                          handleChangePosition(event.target.value)
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        id={telOfUBU ? telOfUBU : 'TelOfUBU'}
-                        label="โทรศัพท์ภายใน"
-                        onChange={(event) =>
-                          handleChangeTelOfUBU(event.target.value)
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        fullWidth
-                        id="TelPrivate"
-                        label={
-                          telPrivate
-                            ? telPrivate
-                            : 'โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)'
-                        }
-                        onChange={(event) => setTelPrivate(event.target.value)}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        label={
-                          social
-                            ? social
-                            : 'ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)'
-                        }
-                        id="Social"
-                        onChange={(event) => setSocial(event.target.value)}
-                      />
-                    </Grid>
-                  </Grid>
+                  <p></p>
+                  <AddOrUpdateUser />
+                  <p></p>
                 </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleCloseFormClose}>ยกเลิก</Button>
-                  <Button disabled={!errors} onClick={handleSubmit}>
-                    เพิ่มข้อมูล
-                  </Button>
-                </DialogActions>
               </Dialog>
               {/*ปิดข้อมูลปรับแต่งโปรไฟล์*/}
+
+
+
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
