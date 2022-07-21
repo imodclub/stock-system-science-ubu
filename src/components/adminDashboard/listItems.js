@@ -14,6 +14,15 @@ import {signOut} from 'firebase/auth'
 import { Link } from 'react-router-dom';
 import PurchaseFormDialog from './PurchaseFormDialog'
 
+//Dialog
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+
 
 
 function handleSingOut() {
@@ -24,13 +33,49 @@ function handleSingOut() {
   })
 }
 
-function testClick() {
-  const items = "ทดสอบคลิ๊ก"
-  this.props.getItem(items)
+export default function FormDialog() {
+  const [open, setOpen] = React.useState(false)
+  
+  const handleClickOpen = () => {
+   setOpen(true);
+ };
+
+  const handleClose = () => {
+   setOpen(false);
+ };
 
   console.log("ทดสอบคลิ๊ก")
-}
 
+return (
+  <div>
+    <Button variant="outlined" onClick={handleClickOpen}>
+      Open form dialog
+    </Button>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Subscribe</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          To subscribe to this website, please enter your email address here. We
+          will send updates occasionally.
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Email Address"
+          type="email"
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Subscribe</Button>
+      </DialogActions>
+    </Dialog>
+  </div>
+);
+}
 
 export const mainListItems = (
   <React.Fragment>
@@ -44,13 +89,13 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="เพิ่มรายการ" onClick={PurchaseFormDialog} />
+      <ListItemText primary="เพิ่มรายการ"  />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="จัดการ User" onClick={testClick} />
+      <ListItemText primary="จัดการ User" onClick={FormDialog} />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -62,10 +107,7 @@ export const mainListItems = (
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText
-        onClick={(e) => handleSingOut()}
-        primary="ออกจากระบบ"
-      />
+      <ListItemText onClick={(e) => handleSingOut()} primary="ออกจากระบบ" />
     </ListItemButton>
   </React.Fragment>
 );
