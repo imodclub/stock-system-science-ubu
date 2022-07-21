@@ -25,13 +25,9 @@ import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
 import { checkAuth } from '../../services/firebase';
 
-
-
-
-
 function CheckUser() {
   //const name = useContext(AuthContext)
-  const name = 'โหมดผู้ดูแล';
+  const name = "โหมดผู้ดูแล"
 
   return (
     <Typography
@@ -55,7 +51,8 @@ function Copyright(props) {
       {...props}
     >
       {'Copyright © '}
-      Kamol Khampibool {new Date().getFullYear()}
+      Kamol Khampibool{' '}
+      {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -111,10 +108,11 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
-  const [showMainScreen, setShowMainScreen] = React.useState(false);
+  const [showMainScreen, setShowMainScreen ] = React.useState(false)
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -182,7 +180,12 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid
+                item
+                xs={12}
+                md={8}
+                lg={9}
+                 >
                 <Paper
                   sx={{
                     p: 2,

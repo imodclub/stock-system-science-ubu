@@ -24,6 +24,13 @@ function handleSingOut() {
   })
 }
 
+function testClick() {
+  const items = "ทดสอบคลิ๊ก"
+  this.props.getItem(items)
+
+  console.log("ทดสอบคลิ๊ก")
+}
+
 
 export const mainListItems = (
   <React.Fragment>
@@ -43,7 +50,7 @@ export const mainListItems = (
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Customers" />
+      <ListItemText primary="จัดการ User" onClick={testClick} />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
