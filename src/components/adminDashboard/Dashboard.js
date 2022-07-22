@@ -129,7 +129,8 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
-  const [listUser, setListUser] = React.useState("none");
+  const [listUser, setListUser] = React.useState('none');
+  const [openDashboard, setOpenDashboard] = React.useState('flex');
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -143,28 +144,33 @@ function DashboardContent() {
       .catch((error) => {
         alert('ไม่สามารถออกจากระบบได้');
       });
-  }
+  };
 
   //List จัดการ user
   const userManage = (text) => {
-     return <AddOrUpdateUser />
-  }
+    return <AddOrUpdateUser />;
+  };
   const userList = () => {
     return <ReadDataUser />;
   };
 
   //จัดการปุ่ม list user ปิดเปิด
- 
   const toggleListUser = () => {
-    if (listUser === "none") {
-      setListUser("flex");
+    if (listUser === 'none') {
+      setListUser('flex');
     } else {
-      setListUser("none")
+      setListUser('none');
     }
-    
-  }; 
- 
+  };
 
+  //จัดการปุ่ม Dashboard ปิดเปิด
+  const toggleDashboard = () => {
+    if (openDashboard === 'flex') {
+      setOpenDashboard('none');
+    } else {
+      setOpenDashboard('flex');
+    }
+  };
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -217,7 +223,10 @@ function DashboardContent() {
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText
+                primary="Dashboard"
+                onClick={(e) => toggleDashboard()}
+              />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
@@ -334,6 +343,7 @@ function DashboardContent() {
                     display: 'flex',
                     flexDirection: 'column',
                     height: 240,
+                    display: `${openDashboard}`,
                   }}
                 >
                   <Chart />
@@ -347,6 +357,7 @@ function DashboardContent() {
                     display: 'flex',
                     flexDirection: 'column',
                     height: 240,
+                    display: `${openDashboard}`,
                   }}
                 >
                   <Deposits />
@@ -354,7 +365,13 @@ function DashboardContent() {
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: `${openDashboard}`,
+                    flexDirection: 'column',
+                  }}
+                >
                   <Orders />
                 </Paper>
               </Grid>
