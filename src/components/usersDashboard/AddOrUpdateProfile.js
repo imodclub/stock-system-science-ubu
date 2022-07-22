@@ -4,7 +4,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 
 import Grid from '@mui/material/Grid';
-
+import Typography  from '@mui/material/Typography'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -144,9 +144,12 @@ function AddOrUpdate() {
 
   return (
     <React.Fragment>
-      <Grid container spacing={2}>
+      <Typography mt={2} variant="h4" component="h4">
+        จัดการข้อมูล
+      </Typography>
+      <Grid container spacing={2} mt={2}>
         <Grid item xs={12} sm={6}>
-         <TextField
+          <TextField
             required
             autoComplete="given-name"
             fullWidth
@@ -212,8 +215,8 @@ function AddOrUpdate() {
             id="Social"
             onChange={(event) => setSocial(event.target.value)}
           />
-              </Grid>
-              <p></p>
+        </Grid>
+        <p></p>
         <Button disabled={!errors} onClick={handleSubmit}>
           เพิ่ม หรือ เปลี่ยนแปลงข้อมูล
         </Button>

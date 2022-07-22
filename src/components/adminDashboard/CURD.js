@@ -36,7 +36,6 @@ const ReadDataUser = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>UID</TableCell>
               <TableCell align="left">ชื่อ</TableCell>
               <TableCell align="left">นามสกุล</TableCell>
               <TableCell align="left">Email</TableCell>
@@ -49,9 +48,7 @@ const ReadDataUser = () => {
                 key={row.key}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.key}
-                </TableCell>
+                
                 <TableCell align="left">{row.Name}</TableCell>
                 <TableCell align="left">{row.Lastname}</TableCell>
                 <TableCell align="left">{row.Email}</TableCell>

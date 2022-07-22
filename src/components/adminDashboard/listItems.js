@@ -11,17 +11,9 @@ import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { GetAuth } from '../../services/firebase'
 import {signOut} from 'firebase/auth'
-import { Link } from 'react-router-dom';
-import PurchaseFormDialog from './PurchaseFormDialog'
+import Link from '@mui/material/Link';
 
-//Dialog
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
+
 
 
 
@@ -33,49 +25,7 @@ function handleSingOut() {
   })
 }
 
-export default function FormDialog() {
-  const [open, setOpen] = React.useState(false)
-  
-  const handleClickOpen = () => {
-   setOpen(true);
- };
 
-  const handleClose = () => {
-   setOpen(false);
- };
-
-  console.log("ทดสอบคลิ๊ก")
-
-return (
-  <div>
-    <Button variant="outlined" onClick={handleClickOpen}>
-      Open form dialog
-    </Button>
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Subscribe</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Subscribe</Button>
-      </DialogActions>
-    </Dialog>
-  </div>
-);
-}
 
 export const mainListItems = (
   <React.Fragment>
@@ -89,13 +39,13 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="เพิ่มรายการ"  />
+      <ListItemText primary="เพิ่มรายการ" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="จัดการ User" onClick={FormDialog} />
+      <ListItemText primary="จัดการ User"  />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -127,7 +77,7 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <Link to="/homeuser">
+      <Link href="/homeuser">
         <ListItemText primary="โหมดผู้ใช้งาน" />
       </Link>
     </ListItemButton>
@@ -135,7 +85,7 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <Link to="/">
+      <Link href="/">
         <ListItemText primary="กลับหน้าแรก" />
       </Link>
     </ListItemButton>

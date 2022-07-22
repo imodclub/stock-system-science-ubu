@@ -17,16 +17,34 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
 import { checkAuth } from '../../services/firebase';
+import AddOrUpdateUser from '../usersDashboard/AddOrUpdateProfile';
+import Hidden from '@mui/material/Hidden';
 
 
+//List Item
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
+//service
+import { GetAuth } from '../../services/firebase';
+import { signOut } from 'firebase/auth';
+
+//data base
+import ReadDataUser from './CURD';
 
 
 function CheckUser() {
@@ -111,10 +129,42 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
-  const [showMainScreen, setShowMainScreen] = React.useState(false);
+  const [listUser, setListUser] = React.useState("none");
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  //List ออกจากระบบ
+  const handleSingOut = () => {
+    signOut(GetAuth)
+      .then(() => {
+        alert('ออกจากระบบสำเร็จ');
+      })
+      .catch((error) => {
+        alert('ไม่สามารถออกจากระบบได้');
+      });
+  }
+
+  //List จัดการ user
+  const userManage = (text) => {
+     return <AddOrUpdateUser />
+  }
+  const userList = () => {
+    return <ReadDataUser />;
+  };
+
+  //จัดการปุ่ม list user ปิดเปิด
+ 
+  const toggleListUser = () => {
+    if (listUser === "none") {
+      setListUser("flex");
+    } else {
+      setListUser("none")
+    }
+    
+  }; 
+ 
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -160,12 +210,75 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
+
+          {/* List Item */}
           <List component="nav">
-            {mainListItems}
+            <ListItemButton>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <ShoppingCartIcon />
+              </ListItemIcon>
+              <ListItemText primary="เพิ่มรายการ" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="จัดการ User"
+                onClick={(e) => toggleListUser()}
+              />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Reports" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText
+                onClick={(e) => handleSingOut()}
+                primary="ออกจากระบบ"
+              />
+            </ListItemButton>
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <ListSubheader component="div" inset>
+              Saved reports
+            </ListSubheader>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary="Current month" />
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <Link href="/homeuser">
+                <ListItemText primary="โหมดผู้ใช้งาน" />
+              </Link>
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <Link href="/">
+                <ListItemText primary="กลับหน้าแรก" />
+              </Link>
+            </ListItemButton>
           </List>
         </Drawer>
+        {/* Close List Item */}
+
         <Box
           component="main"
           sx={{
@@ -181,6 +294,38 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+              {/* Open Form User manage*/}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 640,
+                    display: `${listUser}`,
+                  }}
+                >
+                  {userManage()}
+                </Paper>
+              </Grid>
+              {/* Open Form User manage*/}
+
+              {/* Open Read Data user*/}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 640,
+                    display: `${listUser}`,
+                  }}
+                >
+                  {userList()}
+                </Paper>
+              </Grid>
+              {/* close Read Data user*/}
+
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
