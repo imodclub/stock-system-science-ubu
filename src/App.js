@@ -2,6 +2,7 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from './components/auth/Auth';
 import Login from './components/Login'
+import CircularProgress from '@mui/material/CircularProgress';
 import firebase, { db, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
@@ -30,6 +31,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [name, setName] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const auth = GetAuth;
   const Currentuser = auth.currentUser;
   var ValidatorTextRole = "staff"
@@ -38,7 +41,6 @@ function App() {
   let uid
 
   //check user local storage
-
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -72,10 +74,21 @@ function App() {
         }
       });
     };
-
-    findData();
+  
  
-  console.log(role)
+  findData();
+
+  const load = () => {
+    if (user && role === ValidatorTextRole) {
+      setTimeout(() => {
+        <CircularProgress />;
+      }, 4000);
+      return <AdminDashBoard />;
+    } else {
+      <CircularProgress />
+      return <SignIn />;
+    }
+  };
 
   return (
     <div>
@@ -95,12 +108,8 @@ function App() {
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
             <Route
               path="admindashboard"
-              element={
-                user && role === ValidatorTextRole ? (
-                  <AdminDashBoard />
-                ) : (
-                  <SignIn />
-                )
+              element={ 
+                load()
               }
             ></Route>
             {/** Test ReadData */}
