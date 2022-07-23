@@ -143,7 +143,7 @@ function getListContent(list) {
     case 2:
       return <Chart />;
     default:
-      return <Deposits />;
+      throw new Error('Unknown step');
   }
 }
 
