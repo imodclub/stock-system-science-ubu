@@ -11,6 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { keys } from '@mui/system';
+import { Typography } from '@mui/material';
 
 const ReadDataUser = () => {
   const [data, setData] = React.useState([]);
@@ -32,8 +33,12 @@ const ReadDataUser = () => {
 
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <TableContainer>
+        <Typography variant="h6" sx={{ p: 2 }}>
+          ข้อมูลผู้ใช้งาน
+        </Typography>
+
+        <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
               <TableCell align="left">ชื่อ</TableCell>
@@ -48,7 +53,6 @@ const ReadDataUser = () => {
                 key={row.key}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                
                 <TableCell align="left">{row.Name}</TableCell>
                 <TableCell align="left">{row.Lastname}</TableCell>
                 <TableCell align="left">{row.Email}</TableCell>
