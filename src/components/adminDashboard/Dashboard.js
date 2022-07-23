@@ -133,15 +133,83 @@ function getListContent(list) {
     case 0:
       return (
         <React.Fragment>
-          <Orders />,
-          <Deposits />,
-          <AddOrUpdateUser />
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 340,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <ReadDataUser />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={4} lg={3}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 240,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Deposits />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={8} lg={9}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 600,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <AddOrUpdateUser />
+            </Paper>
+          </Grid>
         </React.Fragment>
       );
     case 1:
-      return <AddOrUpdateUser />;
+      return (
+        <React.Fragment>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 340,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Orders />
+            </Paper>
+          </Grid>
+        </React.Fragment>
+      );
     case 2:
-      return <Chart />;
+      return (
+        <React.Fragment>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 540,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <AddOrUpdateUser />
+            </Paper>
+          </Grid>
+        </React.Fragment>
+      );
     default:
       throw new Error('Unknown step');
   }
@@ -271,7 +339,10 @@ function DashboardContent() {
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary="เพิ่มรายการ" onClick={(e) => listClickAddList()} />
+              <ListItemText
+                primary="เพิ่มรายการ"
+                onClick={(e) => listClickAddList()}
+              />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
@@ -286,7 +357,10 @@ function DashboardContent() {
               <ListItemIcon>
                 <BarChartIcon />
               </ListItemIcon>
-              <ListItemText primary="Reports" onClick={(e) => listClickChart()}  />
+              <ListItemText
+                primary="Reports"
+                onClick={(e) => listClickChart()}
+              />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
@@ -342,93 +416,11 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Test*/}
-              <Grid item xs={12} md={8} lg={9}>
+              {/* แสดงผล ดึงข้อมูลจาก getListContent */}
+              
                 {getListContent(list)}
-                <paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 640,
-                    justifyContent: 'flex-end',
-                  }}
-                ></paper>
-              </Grid>
-              {/* Test*/}
-
-              {/* Open Form User manage*/}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 640,
-                    display: `${listUser}`,
-                  }}
-                >
-                  {userManage()}
-                </Paper>
-              </Grid>
-              {/* Open Form User manage*/}
-
-              {/* Open Read Data user*/}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 640,
-                    display: `${listUser}`,
-                  }}
-                >
-                  {userList()}
-                </Paper>
-              </Grid>
-              {/* close Read Data user*/}
-
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                    display: `${openDashboard}`,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                    display: `${openDashboard}`,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: `${openDashboard}`,
-                    flexDirection: 'column',
-                  }}
-                >
-                  <Orders />
-                </Paper>
-              </Grid>
+               
+              {/* จบ การแสดงผล*/}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
