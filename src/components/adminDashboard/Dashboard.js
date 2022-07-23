@@ -125,14 +125,51 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
+//ทดสอบจัดการปิดเปิดฟอร์มจากเพลิสย์
+const listItemSteps = ["Dashboard", "AddList", "UserManage"]
+
+function getListContent(list) {
+  switch (list) {
+    case 0:
+      return (
+        <React.Fragment>
+          <Orders />,
+          <Deposits />,
+          <AddOrUpdateUser />
+        </React.Fragment>
+      );
+    case 1:
+      return <AddOrUpdateUser />;
+    case 2:
+      return <Chart />;
+    default:
+      return <Deposits />;
+  }
+}
+
 const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const [list, setList] = React.useState(0)
   const [listUser, setListUser] = React.useState('none');
   const [openDashboard, setOpenDashboard] = React.useState('flex');
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+
+//ทดสอบคลิ๊ก list
+   const listClickDashboard = () => {
+     setList(0);
+   };
+  const listClickAddList = () => {
+    setList(1)
+  }
+  const listClickUserManage = () => {
+    setList(2)
+  }
+  const listClickChart = () => {
+    setList(3);
   };
 
   //List ออกจากระบบ
@@ -171,6 +208,8 @@ function DashboardContent() {
       setOpenDashboard('flex');
     }
   };
+
+  
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -225,14 +264,14 @@ function DashboardContent() {
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
-                onClick={(e) => toggleDashboard()}
+                onClick={(e) => listClickDashboard()}
               />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
                 <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary="เพิ่มรายการ" />
+              <ListItemText primary="เพิ่มรายการ" onClick={(e) => listClickAddList()} />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
@@ -240,14 +279,14 @@ function DashboardContent() {
               </ListItemIcon>
               <ListItemText
                 primary="จัดการ User"
-                onClick={(e) => toggleListUser()}
+                onClick={(e) => listClickUserManage()}
               />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
                 <BarChartIcon />
               </ListItemIcon>
-              <ListItemText primary="Reports" />
+              <ListItemText primary="Reports" onClick={(e) => listClickChart()}  />
             </ListItemButton>
             <ListItemButton>
               <ListItemIcon>
@@ -303,6 +342,21 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
+              {/* Test*/}
+              <Grid item xs={12} md={8} lg={9}>
+                {getListContent(list)}
+                <paper
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 640,
+                    justifyContent: 'flex-end',
+                  }}
+                ></paper>
+              </Grid>
+              {/* Test*/}
+
               {/* Open Form User manage*/}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
