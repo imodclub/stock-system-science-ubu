@@ -12,6 +12,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { keys } from '@mui/system';
 import { Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 const ReadDataUser = () => {
   const [data, setData] = React.useState([]);
@@ -45,6 +50,8 @@ const ReadDataUser = () => {
               <TableCell align="left">นามสกุล</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">ระดับ</TableCell>
+              <TableCell align="left"></TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -57,6 +64,24 @@ const ReadDataUser = () => {
                 <TableCell align="left">{row.Lastname}</TableCell>
                 <TableCell align="left">{row.Email}</TableCell>
                 <TableCell align="left">{row.Role}</TableCell>
+                <TableCell align="left">
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      variant="outlined"
+                      startIcon={<EditIcon />}
+                      color="warning"
+                    >
+                      แก้ไข
+                    </Button>
+                    <Button
+                      variant="contained"
+                      endIcon={<DeleteIcon />}
+                      color='error'
+                    >
+                      ลบ
+                    </Button>
+                  </Stack>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
