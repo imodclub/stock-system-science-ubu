@@ -3,7 +3,7 @@ import * as React from 'react';
 //service and database
 import firebase from '../../services/firebase';
 import { GetAuth, db } from '../../services/firebase';
-import { collection, getDocs,where } from 'firebase/firestore';
+import { collection, doc, deleteDoc, getDocs,where } from 'firebase/firestore';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -25,6 +25,7 @@ import EditIcon from '@mui/icons-material/Edit';
 const ReadDataUser = () => {
   const [data, setData] = React.useState([]);
   const [dataOnClick, setDataOnClick] = React.useState(null)
+  const [getValue, setGetValue] = React.useState(null)
 
   //Read Data to Table list user
   const ReadData = async () => {
@@ -45,18 +46,26 @@ const ReadDataUser = () => {
 
   //Delete User
   const handleClickDelete = async (id) => {
-    console.log("id documents ",id)
-    const checkIdUserFromCollection = await getDocs(collection(db, 'User'), where('id', '==', 'id'));
+    var dataID
+    const checkIdUserFromCollection = await getDocs(collection(db, 'User'), where('id', '==', id));
     checkIdUserFromCollection.forEach((doc => {
-    console.log("user id ",doc.data().UID)
+      if (doc.id == id) {
+        dataID = doc.id
+        console.log('id documents ', doc.id);
+        setDataOnClick(doc.data().UID);
+      }
     }))
-  }
-
-  React.useEffect(() => {
-    handleClickDelete();
-  },[])
+    if (dataID) {
+      console.log("data id คือ ",dataID)
+      
+      await deleteDoc(doc(db, 'User', dataID));
+      
+      
+    }
+    
+    }
   
-  
+    
 
   return (
     <div>
