@@ -43,8 +43,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { GetAuth } from '../../services/firebase';
 import { signOut } from 'firebase/auth';
 
-//data base
-import ReadDataUser from './CURD';
+//user managements
+import DataUser from './CURD';
 
 
 function CheckUser() {
@@ -143,7 +143,7 @@ function getListContent(list) {
                 justifyContent: 'flex-end',
               }}
             >
-              <ReadDataUser />
+              <DataUser />
             </Paper>
           </Grid>
           <Grid item xs={12} md={4} lg={3}>
@@ -187,7 +187,7 @@ function getListContent(list) {
                 justifyContent: 'flex-end',
               }}
             >
-              <ReadDataUser />
+              <DataUser />
             </Paper>
           </Grid>
         </React.Fragment>
@@ -256,7 +256,7 @@ function DashboardContent() {
     return <AddOrUpdateUser />;
   };
   const userList = () => {
-    return <ReadDataUser />;
+    return <DataUser />;
   };
 
   //จัดการปุ่ม list user ปิดเปิด

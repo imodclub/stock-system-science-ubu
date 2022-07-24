@@ -18,14 +18,36 @@ import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Dialog from '@mui/material/Dialog';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
 
-
-const ReadDataUser = () => {
+const DataUser = () => {
   const [data, setData] = React.useState([]);
   const [dataOnClick, setDataOnClick] = React.useState(null)
   const [getValue, setGetValue] = React.useState(null)
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   //Read Data to Table list user
   const ReadData = async () => {
@@ -43,6 +65,10 @@ const ReadDataUser = () => {
   }, []);
   //Read Data to Table list user
 
+  //Edit user from button
+  const EditUser = () => {
+    
+  }
 
   //Delete User
   const handleClickDelete = async (id) => {
@@ -64,11 +90,45 @@ const ReadDataUser = () => {
     }
     
     }
-  
-    
-
   return (
     <div>
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              แก้ไขข้อมูล
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              บันทึกข้อมูลแก้ไข
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <List>
+          <ListItem button>
+            <ListItemText primary="Phone ringtone" secondary="Titania" />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemText
+              primary="Default notification ringtone"
+              secondary="Tethys"
+            />
+          </ListItem>
+        </List>
+      </Dialog>
       <TableContainer>
         <Typography variant="h6" sx={{ p: 2 }}>
           ข้อมูลผู้ใช้งาน
@@ -101,6 +161,9 @@ const ReadDataUser = () => {
                       variant="outlined"
                       startIcon={<EditIcon />}
                       color="warning"
+                      onClick={
+                        handleClickOpen
+                      }
                     >
                       แก้ไข
                     </Button>
@@ -108,7 +171,10 @@ const ReadDataUser = () => {
                       variant="contained"
                       endIcon={<DeleteIcon />}
                       color="error"
-                      onClick={()=>{handleClickDelete(row.key)}}>
+                      onClick={() => {
+                        handleClickDelete(row.key);
+                      }}
+                    >
                       ลบ
                     </Button>
                   </Stack>
@@ -122,4 +188,4 @@ const ReadDataUser = () => {
   );
 };
 
-export default ReadDataUser;
+export default DataUser;
