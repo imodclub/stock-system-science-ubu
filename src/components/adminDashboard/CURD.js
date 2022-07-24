@@ -28,6 +28,8 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -128,6 +130,25 @@ const DataUser = () => {
             />
           </ListItem>
         </List>
+        <Box
+          component="form"
+          sx={{ '& .MuiTextField-root': { m: 1, width: '30ch' } }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            required
+            id="outlined-required"
+            label="ระบุชื่อ"
+            defaultValue="ชื่อ"
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="นามสกุล"
+            defaultValue="นามสกุล"
+          />
+        </Box>
       </Dialog>
       <TableContainer>
         <Typography variant="h6" sx={{ p: 2 }}>
@@ -161,9 +182,7 @@ const DataUser = () => {
                       variant="outlined"
                       startIcon={<EditIcon />}
                       color="warning"
-                      onClick={
-                        handleClickOpen
-                      }
+                      onClick={handleClickOpen}
                     >
                       แก้ไข
                     </Button>
