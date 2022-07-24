@@ -1,7 +1,9 @@
 import * as React from 'react';
+
+//service and database
 import firebase from '../../services/firebase';
 import { GetAuth, db } from '../../services/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs,where } from 'firebase/firestore';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,9 +20,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 
+
+
 const ReadDataUser = () => {
   const [data, setData] = React.useState([]);
+  const [dataOnClick, setDataOnClick] = React.useState(null)
 
+  //Read Data to Table list user
   const ReadData = async () => {
     const docData = [];
     const querySnapshort = await getDocs(collection(db, 'User'));
@@ -31,10 +37,26 @@ const ReadDataUser = () => {
       setData(docData);
     });
   };
-
   React.useEffect(() => {
     ReadData();
   }, []);
+  //Read Data to Table list user
+
+
+  //Delete User
+  const handleClickDelete = async (id) => {
+    console.log("id documents ",id)
+    const checkIdUserFromCollection = await getDocs(collection(db, 'User'), where('id', '==', 'id'));
+    checkIdUserFromCollection.forEach((doc => {
+    console.log("user id ",doc.data().UID)
+    }))
+  }
+
+  React.useEffect(() => {
+    handleClickDelete();
+  },[])
+  
+  
 
   return (
     <div>
@@ -76,8 +98,8 @@ const ReadDataUser = () => {
                     <Button
                       variant="contained"
                       endIcon={<DeleteIcon />}
-                      color='error'
-                    >
+                      color="error"
+                      onClick={()=>{handleClickDelete(row.key)}}>
                       ลบ
                     </Button>
                   </Stack>
