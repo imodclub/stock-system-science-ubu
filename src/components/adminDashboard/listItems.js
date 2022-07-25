@@ -12,6 +12,11 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { GetAuth } from '../../services/firebase'
 import {signOut} from 'firebase/auth'
 import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import AddOrUpdateUser from '../usersDashboard/AddOrUpdateProfile';
+import DataUser from './CURD';
+import Deposits from './Deposits';
 
 
 
@@ -25,6 +30,113 @@ function handleSingOut() {
   })
 }
 
+//ทดสอบจัดการปิดเปิดฟอร์มจากเพลิสย์
+const listItemSteps = ["Dashboard", "AddList", "UserManage"]
+
+export const ListContent=(list)=> {
+  switch (list) {
+    case 0:
+      return (
+        <React.Fragment>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 340,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <DataUser />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={4} lg={3}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 240,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Deposits />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={8} lg={9}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 600,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <AddOrUpdateUser />
+            </Paper>
+          </Grid>
+        </React.Fragment>
+      );
+    case 1:
+      return (
+        <React.Fragment>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 340,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <DataUser />
+            </Paper>
+          </Grid>
+        </React.Fragment>
+      );
+    case 2:
+      return (
+        <React.Fragment>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: 540,
+                justifyContent: 'flex-end',
+              }}
+            >
+              <AddOrUpdateUser />
+            </Paper>
+          </Grid>
+        </React.Fragment>
+      );
+    default:
+      throw new Error('Unknown step');
+  }
+}
+
+
+
+  //ทดสอบคลิ๊ก list
+  const listClickDashboard = () => {
+    ListContent(0);
+  };
+  const listClickAddList = () => {
+    ListContent(1);
+  };
+  const listClickUserManage = () => {
+    ListContent(2);
+  };
+  const listClickChart = () => {
+    ListContent(3);
+  };
+  
+
 
 
 export const mainListItems = (
@@ -33,19 +145,28 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText
+        primary="Dashboard"
+        onClick={(e) => listClickDashboard()}
+      />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <ListItemText primary="เพิ่มรายการ" />
+      <ListItemText
+        primary="เพิ่มรายการ"
+        onClick={(e) => listClickAddList()}
+      />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="จัดการ User"  />
+      <ListItemText
+        primary="จัดการ User"
+        onClick={(e) => listClickUserManage()}
+      />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>

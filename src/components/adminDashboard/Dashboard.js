@@ -24,8 +24,6 @@ import { useContext } from 'react';
 import AuthContext from '../auth/Auth';
 import { checkAuth } from '../../services/firebase';
 import AddOrUpdateUser from '../usersDashboard/AddOrUpdateProfile';
-import Hidden from '@mui/material/Hidden';
-
 
 //List Item
 import ListItemButton from '@mui/material/ListItemButton';
@@ -259,23 +257,9 @@ function DashboardContent() {
     return <DataUser />;
   };
 
-  //จัดการปุ่ม list user ปิดเปิด
-  const toggleListUser = () => {
-    if (listUser === 'none') {
-      setListUser('flex');
-    } else {
-      setListUser('none');
-    }
-  };
+  
 
-  //จัดการปุ่ม Dashboard ปิดเปิด
-  const toggleDashboard = () => {
-    if (openDashboard === 'flex') {
-      setOpenDashboard('none');
-    } else {
-      setOpenDashboard('flex');
-    }
-  };
+  
 
   
 
@@ -417,13 +401,14 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* แสดงผล ดึงข้อมูลจาก getListContent */}
-              
-                {getListContent(list)}
-               
+
+              {getListContent(list)}
+
               {/* จบ การแสดงผล*/}
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
+          
         </Box>
       </Box>
     </ThemeProvider>
