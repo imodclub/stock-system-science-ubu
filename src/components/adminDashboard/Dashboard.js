@@ -42,7 +42,8 @@ import { GetAuth } from '../../services/firebase';
 import { signOut } from 'firebase/auth';
 
 //user managements
-import DataUser from './CURD';
+import ListUsers from './ListUsers';
+import ButtonAddUser from './Tools/ButtonAddUser'
 
 
 function CheckUser() {
@@ -123,6 +124,14 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 //ทดสอบจัดการปิดเปิดฟอร์มจากเพลิสย์
 const listItemSteps = ["Dashboard", "AddList", "UserManage"]
 
@@ -141,7 +150,7 @@ function getListContent(list) {
                 justifyContent: 'flex-end',
               }}
             >
-              <DataUser />
+              <ListUsers />
             </Paper>
           </Grid>
           <Grid item xs={12} md={4} lg={3}>
@@ -203,7 +212,21 @@ function getListContent(list) {
                 justifyContent: 'flex-end',
               }}
             >
-              <DataUser />
+              <ListUsers />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper
+              sx={{
+                p: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+            >
+              <ButtonAddUser />
             </Paper>
           </Grid>
         </React.Fragment>
