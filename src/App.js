@@ -1,7 +1,6 @@
 
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from './components/auth/Auth';
-import Login from './components/Login'
 import CircularProgress from '@mui/material/CircularProgress';
 import firebase, { db, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
@@ -19,8 +18,7 @@ import {
   getDocs,
   doc,
 } from 'firebase/firestore';
-import { formControlUnstyledClasses } from '@mui/base';
-import { useLocation } from 'react-router';
+
 import SignIn from './components/signin/Signin'
 
 import ReadDataUser from './components/Tools/ReadDataUser';

@@ -16,7 +16,12 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Grid, TextField, Box, Pape, CssBaseline, Container } from '@mui/material'
-import {createTheme,ThemeProvider} from '@mui/material/styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { teal } from '@mui/material/colors';
+
+//servie and database
+import { db } from '../../../services/firebase'
+import { useRef } from 'react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +29,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function AddUser() {
   const [open, setOpen] = React.useState(false);
+  const [validatorForm, setValidatorForm] = React.useState(false);
+  const textInputName = React.useRef(null);
+  const textInputLastname = React.useRef(null);
+  const textInputDepartments = React.useRef(null);
+  const textInputPosition = React.useRef(null);
+  const textInputTelOfUBU = React.useRef(null);
+  const textInputTelPrivate = React.useRef(null);
+  const textInputSocial = React.useRef(null);
+
+
    const [name, setName] = React.useState(null);
    const [lastname, setLastname] = React.useState(null);
    const [position, setPosition] = React.useState(null);
@@ -39,6 +54,22 @@ const handleClickOpen = () => {
 const handleClose = () => {
   setOpen(false);
   };
+
+  //validate form
+  React.useEffect(() => {
+    const validate =
+      name?.trim().length > 0 &&
+      lastname?.trim().length > 0 &&
+      departments?.trim().length > 0 &&
+      telOfUBU;
+
+    if (validate) {
+      setValidatorForm(true);
+    } else {
+      setValidatorForm(false);
+    }
+  }, [name, lastname, position, departments, telOfUBU]);
+
 
   const handleChangeName = (e) => {
     setName(e);
@@ -56,10 +87,32 @@ const handleClose = () => {
   const handleChangeTelOfUBU = (e) => {
     setTelOfUBU(e);
   };
+    const handleTelPrivate = (e) => {
+      setTelPrivate(e);
+  };
+    const handleChangeSocial = (e) => {
+      setSocial(e);
+    };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  const handleClear = () => {
+    textInputName.current.value = ""
+    textInputLastname.current.value = ""
+    textInputDepartments.current.value = ""
+    textInputPosition.current.value = ""
+    textInputTelOfUBU.current.value = ""
+    textInputTelPrivate.current.value = ""
+    textInputSocial.current.value = '';
+    }
+    
+
+   
+  
+
   
   const theme = createTheme();
 
@@ -96,8 +149,34 @@ const handleClose = () => {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 เพิ่มผู้ใช้งาน
               </Typography>
-              <Button autoFocus color="inherit" onClick={handleClose}>
-                บันทึก
+              <Button
+                autoFocus
+                color="inherit"
+                onClick={
+                 handleClear
+                }
+              >
+                <Typography
+                  sx={{ ml: 2, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
+                  ล้างข้อมูล
+                </Typography>
+              </Button>
+              <Button
+                autoFocus
+                color="inherit"
+                disabled={!validatorForm}
+                onClick={handleClose}
+              >
+                <Typography
+                  sx={{ ml: 2, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
+                  บันทึก
+                </Typography>
               </Button>
             </Toolbar>
           </AppBar>
@@ -115,8 +194,9 @@ const handleClose = () => {
                     required
                     autoComplete="given-name"
                     fullWidth
+                    inputRef={textInputName}
                     id="Name"
-                    label={name ? name : 'ชื่อ'}
+                    label="ชื่อ"
                     autoFocus
                     onChange={(event) => handleChangeName(event.target.value)}
                   />
@@ -125,8 +205,9 @@ const handleClose = () => {
                   <TextField
                     required
                     fullWidth
+                    inputRef={textInputLastname}
                     id="Lastname"
-                    label={lastname ? lastname : 'นามสกุล'}
+                    label="นามสกุล"
                     autoComplete="family-name"
                     onChange={(event) =>
                       handleChangeLastname(event.target.value)
@@ -137,8 +218,9 @@ const handleClose = () => {
                   <TextField
                     required
                     fullWidth
+                    inputRef={textInputDepartments}
                     id="Departments"
-                    label={departments ? departments : 'ภาควิชา/แผนก'}
+                    label="ภาควิชา/แผนก"
                     onChange={(event) =>
                       handleChangeDepartments(event.target.value)
                     }
@@ -148,7 +230,8 @@ const handleClose = () => {
                   <TextField
                     required
                     fullWidth
-                    label={position ? position : 'ตำแหน่ง'}
+                    inputRef={textInputPosition}
+                    label="ตำแหน่ง"
                     id="Position"
                     onChange={(event) =>
                       handleChangePosition(event.target.value)
@@ -159,7 +242,8 @@ const handleClose = () => {
                   <TextField
                     required
                     fullWidth
-                    id={telOfUBU ? telOfUBU : 'TelOfUBU'}
+                    inputRef={textInputTelOfUBU}
+                    id="TelOfUBU"
                     label="โทรศัพท์ภายใน"
                     onChange={(event) =>
                       handleChangeTelOfUBU(event.target.value)
@@ -169,23 +253,17 @@ const handleClose = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
+                    inputRef={textInputTelPrivate}
                     id="TelPrivate"
-                    label={
-                      telPrivate
-                        ? telPrivate
-                        : 'โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)'
-                    }
+                    label="โทรศัพท์ที่ติดต่อได้ (ไม่บังคับ)"
                     onChange={(event) => setTelPrivate(event.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label={
-                      social
-                        ? social
-                        : 'ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)'
-                    }
+                    inputRef={textInputSocial}
+                    label="ช่องทางการติดต่ออื่น เช่น Line, Facebook (ไม่บังคับ)"
                     id="Social"
                     onChange={(event) => setSocial(event.target.value)}
                   />
