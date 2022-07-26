@@ -27,6 +27,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const DepartmentsList = ["เคมี","ฟิสิกส์","วิทยาศาสตร์ชีวภาพ","คณิตศาสตร์ สถิติและคอมพิวเตอร์","สำนักงานเลขานุการ"]
+
 export default function AddUser() {
   const [open, setOpen] = React.useState(false);
   const [validatorForm, setValidatorForm] = React.useState(false);
@@ -34,6 +36,7 @@ export default function AddUser() {
   const textInputLastname = React.useRef(null);
   const textInputDepartments = React.useRef(null);
   const textInputPosition = React.useRef(null);
+  const textInputEmail = React.useRef(null);
   const textInputTelOfUBU = React.useRef(null);
   const textInputTelPrivate = React.useRef(null);
   const textInputSocial = React.useRef(null);
@@ -104,6 +107,7 @@ const handleClose = () => {
     textInputLastname.current.value = ""
     textInputDepartments.current.value = ""
     textInputPosition.current.value = ""
+    textInputEmail.current.value = '';
     textInputTelOfUBU.current.value = ""
     textInputTelPrivate.current.value = ""
     textInputSocial.current.value = '';
@@ -149,13 +153,7 @@ const handleClose = () => {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 เพิ่มผู้ใช้งาน
               </Typography>
-              <Button
-                autoFocus
-                color="inherit"
-                onClick={
-                 handleClear
-                }
-              >
+              <Button autoFocus color="inherit" onClick={handleClear}>
                 <Typography
                   sx={{ ml: 2, flex: 1 }}
                   variant="h6"
@@ -233,6 +231,18 @@ const handleClose = () => {
                     inputRef={textInputPosition}
                     label="ตำแหน่ง"
                     id="Position"
+                    onChange={(event) =>
+                      handleChangePosition(event.target.value)
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    inputRef={textInputEmail}
+                    label="Email"
+                    id="Email"
                     onChange={(event) =>
                       handleChangePosition(event.target.value)
                     }
