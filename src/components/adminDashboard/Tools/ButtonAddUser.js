@@ -18,6 +18,9 @@ import Slide from '@mui/material/Slide';
 import { Grid, TextField, Box, Pape, CssBaseline, Container } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { teal } from '@mui/material/colors';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import Autocomplete from '@mui/material/Autocomplete';
 
 //servie and database
 import { db } from '../../../services/firebase'
@@ -27,11 +30,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DepartmentsList = ["เคมี","ฟิสิกส์","วิทยาศาสตร์ชีวภาพ","คณิตศาสตร์ สถิติและคอมพิวเตอร์","สำนักงานเลขานุการ"]
+const options = ["เลือกภาควิชา","เคมี", "ฟิสิกส์", "วิทยาศาสตร์ชีวภาพ", "คณิตศาสตร์ สถิติและคอมพิวเตอร์", "สำนักงานเลขานุการ"]
+
+
 
 export default function AddUser() {
   const [open, setOpen] = React.useState(false);
   const [validatorForm, setValidatorForm] = React.useState(false);
+  const [value, setValue] = React.useState(options[0]);
+  const [inputValue, setInputValue] = React.useState('');
   const textInputName = React.useRef(null);
   const textInputLastname = React.useRef(null);
   const textInputDepartments = React.useRef(null);
@@ -41,21 +48,22 @@ export default function AddUser() {
   const textInputTelPrivate = React.useRef(null);
   const textInputSocial = React.useRef(null);
 
+  const [name, setName] = React.useState(null);
+  const [lastname, setLastname] = React.useState(null);
+  const [position, setPosition] = React.useState(null);
+  const [departments, setDepartments] = React.useState(null);
+  const [telOfUBU, setTelOfUBU] = React.useState(null);
+  const [telPrivate, setTelPrivate] = React.useState(null);
+  const [social, setSocial] = React.useState(null);
 
-   const [name, setName] = React.useState(null);
-   const [lastname, setLastname] = React.useState(null);
-   const [position, setPosition] = React.useState(null);
-   const [departments, setDepartments] = React.useState(null);
-   const [telOfUBU, setTelOfUBU] = React.useState(null);
-   const [telPrivate, setTelPrivate] = React.useState(null);
-   const [social, setSocial] = React.useState(null);
+ 
 
-const handleClickOpen = () => {
-  setOpen(true);
-};
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-const handleClose = () => {
-  setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
   };
 
   //validate form
@@ -73,7 +81,6 @@ const handleClose = () => {
     }
   }, [name, lastname, position, departments, telOfUBU]);
 
-
   const handleChangeName = (e) => {
     setName(e);
   };
@@ -90,34 +97,28 @@ const handleClose = () => {
   const handleChangeTelOfUBU = (e) => {
     setTelOfUBU(e);
   };
-    const handleTelPrivate = (e) => {
-      setTelPrivate(e);
+  const handleTelPrivate = (e) => {
+    setTelPrivate(e);
   };
-    const handleChangeSocial = (e) => {
-      setSocial(e);
-    };
-  
+  const handleChangeSocial = (e) => {
+    setSocial(e);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
   const handleClear = () => {
-    textInputName.current.value = ""
-    textInputLastname.current.value = ""
-    textInputDepartments.current.value = ""
-    textInputPosition.current.value = ""
+    textInputName.current.value = '';
+    textInputLastname.current.value = '';
+    textInputDepartments.current.value = '';
+    textInputPosition.current.value = '';
     textInputEmail.current.value = '';
-    textInputTelOfUBU.current.value = ""
-    textInputTelPrivate.current.value = ""
+    textInputTelOfUBU.current.value = '';
+    textInputTelPrivate.current.value = '';
     textInputSocial.current.value = '';
-    }
-    
+  };
 
-   
-  
-
-  
   const theme = createTheme();
 
   return (
@@ -213,21 +214,39 @@ const handleClose = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    inputRef={textInputDepartments}
-                    id="Departments"
-                    label="ภาควิชา/แผนก"
-                    onChange={(event) =>
-                      handleChangeDepartments(event.target.value)
-                    }
+                  <Autocomplete
+                    value={value}
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                    inputValue={inputValue}
+                    onInputChange={(event, newInputValue) => {
+                      setInputValue(newInputValue);
+                    }}
+                    id="DepartmentsList"
+                    options={options}
+                    sx={12}
+                    selectOnFocus
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required
+                        fullWidth
+                        inputRef={textInputDepartments}
+                        id="Departments"
+                        label="เลือกภาควิชา"
+                        onChange={(event) =>
+                          handleChangeDepartments(event.target.value)
+                        }
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
+                    selectOnFocus
                     inputRef={textInputPosition}
                     label="ตำแหน่ง"
                     id="Position"
