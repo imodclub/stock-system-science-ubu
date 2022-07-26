@@ -111,7 +111,7 @@ export default function AddUser() {
   const handleClear = () => {
     textInputName.current.value = '';
     textInputLastname.current.value = '';
-    textInputDepartments.current.value = '';
+    textInputDepartments.current.value = 'เลือกภาควิชา';
     textInputPosition.current.value = '';
     textInputEmail.current.value = '';
     textInputTelOfUBU.current.value = '';
@@ -197,7 +197,7 @@ export default function AddUser() {
                     id="Name"
                     label="ชื่อ"
                     autoFocus
-                    onChange={(event) => handleChangeName(event.target.value)}
+                    onChange={(event) => setName(event.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -209,7 +209,7 @@ export default function AddUser() {
                     label="นามสกุล"
                     autoComplete="family-name"
                     onChange={(event) =>
-                      handleChangeLastname(event.target.value)
+                      setLastname(event.target.value)
                     }
                   />
                 </Grid>
@@ -226,7 +226,6 @@ export default function AddUser() {
                     }}
                     id="DepartmentsList"
                     options={options}
-                    sx={12}
                     selectOnFocus
                     renderInput={(params) => (
                       <TextField
@@ -245,7 +244,6 @@ export default function AddUser() {
                   <TextField
                     required
                     fullWidth
-                    selectOnFocus
                     inputRef={textInputPosition}
                     label="ตำแหน่ง"
                     id="Position"
