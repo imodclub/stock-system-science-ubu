@@ -183,11 +183,11 @@ function getListContent(list) {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 340,
+                height: 540,
                 justifyContent: 'flex-end',
               }}
             >
-              <DataUser />
+              <AddOrUpdateUser />
             </Paper>
           </Grid>
         </React.Fragment>
@@ -201,11 +201,11 @@ function getListContent(list) {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 540,
+                height: '100%',
                 justifyContent: 'flex-end',
               }}
             >
-              <AddOrUpdateUser />
+              <DataUser />
             </Paper>
           </Grid>
         </React.Fragment>
@@ -251,13 +251,7 @@ function DashboardContent() {
       });
   };
 
-  //List จัดการ user
-  const userManage = (text) => {
-    return <AddOrUpdateUser />;
-  };
-  const userList = () => {
-    return <DataUser />;
-  };
+
 
   //จัดการปุ่ม list user ปิดเปิด
   const toggleListUser = () => {

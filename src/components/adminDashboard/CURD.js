@@ -30,6 +30,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+
+import ButtonAddUsers from './Tools/ButtonAddUser'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -93,7 +96,7 @@ const DataUser = () => {
     
     }
   return (
-    <div>
+    <React.Fragment>
       <Dialog
         fullScreen
         open={open}
@@ -203,7 +206,9 @@ const DataUser = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+      
+    </React.Fragment> 
+    
   );
 };
 

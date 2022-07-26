@@ -60,10 +60,11 @@ function App() {
   useEffect(() => {
     setName(displayname);
   }, []);
-    const findData = async () => {
+
+  const findData = async () => {
       const q = query(
         collection(db, 'User'),
-        where('Email', '==', Currentemail)
+        where('Email', '==',Currentemail)
       );
       const docSnap = await getDocs(q);
       docSnap.forEach((doc) => {
@@ -74,9 +75,8 @@ function App() {
         }
       });
     };
-  
- 
   findData();
+
 
   const load = () => {
     if (user && role === ValidatorTextRole) {
