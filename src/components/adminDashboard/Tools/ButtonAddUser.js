@@ -92,7 +92,7 @@ export default function AddUser() {
     setPosition(e);
   };
   const handleChangeDepartments = (e) => {
-    setDepartments(e);
+    setDepartments(value);
   };
   const handleChangeTelOfUBU = (e) => {
     setTelOfUBU(e);
@@ -218,6 +218,7 @@ export default function AddUser() {
                     value={value}
                     onChange={(event, newValue) => {
                       setValue(newValue);
+                      setDepartments(newValue)
                     }}
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
@@ -235,9 +236,7 @@ export default function AddUser() {
                         inputRef={textInputDepartments}
                         id="Departments"
                         label="เลือกภาควิชา"
-                        onChange={(event) =>
-                          handleChangeDepartments(event.target.value)
-                        }
+                       
                       />
                     )}
                   />
