@@ -15,7 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { Grid, TextField, Box, Pape, CssBaseline, Container } from '@mui/material'
+import { Grid, TextField, Box, Pape, CssBaseline, Container,Alert,AlertTitle } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { teal } from '@mui/material/colors';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,6 +24,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 //servie and database
 import { db } from '../../../services/firebase'
+import {collection, addDoc, serverTimestamp} from 'firebase/firestore'
 import { useRef } from 'react';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -39,6 +40,8 @@ export default function AddUser() {
   const [validatorForm, setValidatorForm] = React.useState(false);
   const [value, setValue] = React.useState(options[0]);
   const [inputValue, setInputValue] = React.useState('');
+  const [alert, setAlert] = React.useState(false);
+
   const textInputName = React.useRef(null);
   const textInputLastname = React.useRef(null);
   const textInputDepartments = React.useRef(null);
@@ -51,10 +54,17 @@ export default function AddUser() {
   const [name, setName] = React.useState(null);
   const [lastname, setLastname] = React.useState(null);
   const [position, setPosition] = React.useState(null);
+  const [email, setEmail] = React.useState(null);
   const [departments, setDepartments] = React.useState(null);
   const [telOfUBU, setTelOfUBU] = React.useState(null);
   const [telPrivate, setTelPrivate] = React.useState(null);
   const [social, setSocial] = React.useState(null);
+  
+  //hook data
+  const [data, setData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false)
+  const [errors, setErrors] = React.useState(null)
+
 
  
 
@@ -81,31 +91,48 @@ export default function AddUser() {
     }
   }, [name, lastname, position, departments, telOfUBU]);
 
-  const handleChangeName = (e) => {
-    setName(e);
-  };
-
-  const handleChangeLastname = (e) => {
-    setLastname(e);
-  };
-  const handleChangePosition = (e) => {
-    setPosition(e);
-  };
-  const handleChangeDepartments = (e) => {
-    setDepartments(value);
-  };
-  const handleChangeTelOfUBU = (e) => {
-    setTelOfUBU(e);
-  };
-  const handleTelPrivate = (e) => {
-    setTelPrivate(e);
-  };
-  const handleChangeSocial = (e) => {
-    setSocial(e);
-  };
-
-  const handleSubmit = (e) => {
+  const PrepareData = async() => {
+    try{
+      setLoading(true);
+      setErrors(null);
+      setData(null);
+      const docRef = await addDoc(collection(db, 'User'), {
+        Name: name,
+        Lastname: lastname,
+        Departments: departments,
+        Email: email,
+        Position: position,
+        TelOfUBU: telOfUBU,
+        TelPrivate: telPrivate,
+        Tocial: social,
+        DateCreate: serverTimestamp(),
+      });
+      console.log('Document written with ID :', docRef.id);
+    } catch (err) {
+      setErrors(err.toString());
+    } finally {
+      setLoading(false)
+     }
+  }
+  
+  //บันทึกข้อมูล
+/*
+    let chekValueONVariable = name && lastname && email && departments && position && telOfUBU;
+     
+     
+      */
+    //จบ บันทึกข้อมูล
+    
+  
+  const handleSave = async(e) => {
     e.preventDefault();
+    PrepareData();
+    const delayTime = setTimeout(
+      setAlert(true), 2000
+    )
+    const delayTime1 = setTimeout(handleClose(), 3000)
+    delayTime();
+    delayTime1();
   };
 
   const handleClear = () => {
@@ -125,6 +152,7 @@ export default function AddUser() {
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+
         <Stack direction="row" spacing={2}>
           <Button
             variant="outlined"
@@ -167,7 +195,7 @@ export default function AddUser() {
                 autoFocus
                 color="inherit"
                 disabled={!validatorForm}
-                onClick={handleClose}
+                onClick={handleSave}
               >
                 <Typography
                   sx={{ ml: 2, flex: 1 }}
@@ -180,11 +208,22 @@ export default function AddUser() {
             </Toolbar>
           </AppBar>
 
+          {/**Alert */}
+          {alert ?
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert severity="success" >
+                <AlertTitle>Success</AlertTitle>
+                This is a success alert — <strong>check it out!</strong>
+              </Alert>
+            </Stack>
+                  : <></>}
+          {/**Close Alert */}
+
           <Container component="main" maxWidth="xs">
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              onSubmit={handleSave}
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
@@ -208,9 +247,7 @@ export default function AddUser() {
                     id="Lastname"
                     label="นามสกุล"
                     autoComplete="family-name"
-                    onChange={(event) =>
-                      setLastname(event.target.value)
-                    }
+                    onChange={(event) => setLastname(event.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -218,7 +255,7 @@ export default function AddUser() {
                     value={value}
                     onChange={(event, newValue) => {
                       setValue(newValue);
-                      setDepartments(newValue)
+                      setDepartments(newValue);
                     }}
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
@@ -235,7 +272,6 @@ export default function AddUser() {
                         inputRef={textInputDepartments}
                         id="Departments"
                         label="เลือกภาควิชา"
-                       
                       />
                     )}
                   />
@@ -247,9 +283,7 @@ export default function AddUser() {
                     inputRef={textInputPosition}
                     label="ตำแหน่ง"
                     id="Position"
-                    onChange={(event) =>
-                      handleChangePosition(event.target.value)
-                    }
+                    onChange={(event) => setPosition(event.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -259,9 +293,7 @@ export default function AddUser() {
                     inputRef={textInputEmail}
                     label="Email"
                     id="Email"
-                    onChange={(event) =>
-                      handleChangePosition(event.target.value)
-                    }
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -271,9 +303,7 @@ export default function AddUser() {
                     inputRef={textInputTelOfUBU}
                     id="TelOfUBU"
                     label="โทรศัพท์ภายใน"
-                    onChange={(event) =>
-                      handleChangeTelOfUBU(event.target.value)
-                    }
+                    onChange={(event) => setTelOfUBU(event.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
