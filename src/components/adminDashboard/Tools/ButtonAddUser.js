@@ -59,14 +59,11 @@ export default function AddUser() {
   const [telOfUBU, setTelOfUBU] = React.useState(null);
   const [telPrivate, setTelPrivate] = React.useState(null);
   const [social, setSocial] = React.useState(null);
-  
+
   //hook data
   const [data, setData] = React.useState(null);
-  const [loading, setLoading] = React.useState(false)
-  const [errors, setErrors] = React.useState(null)
-
-
- 
+  const [loading, setLoading] = React.useState(false);
+  const [errors, setErrors] = React.useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,8 +88,8 @@ export default function AddUser() {
     }
   }, [name, lastname, position, departments, telOfUBU]);
 
-  const PrepareData = async() => {
-    try{
+  const PrepareData = async () => {
+    try {
       setLoading(true);
       setErrors(null);
       setData(null);
@@ -106,34 +103,29 @@ export default function AddUser() {
         TelPrivate: telPrivate,
         Tocial: social,
         DateCreate: serverTimestamp(),
+        Role:"user"
       });
-      console.log('Document written with ID :', docRef.id);
     } catch (err) {
       setErrors(err.toString());
     } finally {
-      setLoading(false)
-     }
-  }
+      setLoading(false);
+      setTimeout(() => {
+        setAlert(true)
+      },100);
+      setTimeout(()=>{
+        window.location.reload();
+      },4500);
+    }
+  };
+
   
   //บันทึกข้อมูล
-/*
-    let chekValueONVariable = name && lastname && email && departments && position && telOfUBU;
-     
-     
-      */
-    //จบ บันทึกข้อมูล
-    
-  
-  const handleSave = async(e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
     PrepareData();
-    const delayTime = setTimeout(
-      setAlert(true), 2000
-    )
-    const delayTime1 = setTimeout(handleClose(), 3000)
-    delayTime();
-    delayTime1();
+    
   };
+  //จบ บันทึกข้อมูล
 
   const handleClear = () => {
     textInputName.current.value = '';
@@ -209,14 +201,16 @@ export default function AddUser() {
           </AppBar>
 
           {/**Alert */}
-          {alert ?
+          {alert ? (
             <Stack sx={{ width: '100%' }} spacing={2}>
-              <Alert severity="success" >
+              <Alert severity="success">
                 <AlertTitle>Success</AlertTitle>
                 This is a success alert — <strong>check it out!</strong>
               </Alert>
             </Stack>
-                  : <></>}
+          ) : (
+            <></>
+          )}
           {/**Close Alert */}
 
           <Container component="main" maxWidth="xs">

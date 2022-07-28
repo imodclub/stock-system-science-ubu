@@ -146,7 +146,7 @@ function getListContent(list) {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 340,
+                height: '100%',
                 justifyContent: 'flex-end',
               }}
             >

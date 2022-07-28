@@ -65,7 +65,7 @@ const RegisterAdmin = () => {
           addDoc(collection(db, 'User'), {
             Email: email,
             Name: name,
-            LastName: lastname,
+            Lastname: lastname,
             Position: position,
             Departments: departments,
             Role: 'staff',
