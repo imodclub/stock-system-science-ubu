@@ -66,7 +66,7 @@ const ListUsers = () => {
     });
   };
   React.useEffect(() => {
-    ReadData();
+      ReadData();
   }, []);
   //Read Data to Table list user
 
