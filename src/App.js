@@ -1,7 +1,8 @@
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, Fragment } from 'react';
 import AuthContext from './components/auth/Auth';
 import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box'
 import firebase, { db, GetAuth,checkAuth } from './services/firebase';
 import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
@@ -42,8 +43,10 @@ function App() {
   //check user local storage
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
+      setLoading(false)
       if (authUser) {
         setUser(authUser);
+        setLoading(true)
       } else {
         setUser(null);
       }
@@ -61,37 +64,60 @@ function App() {
   }, []);
 
   const findData = async () => {
-      const q = query(
-        collection(db, 'User'),
-        where('Email', '==',Currentemail)
-      );
-      const docSnap = await getDocs(q);
-      docSnap.forEach((doc) => {
-        if (Currentemail === doc.data().Email) {
-          setRole(doc.data().Role);
-        } else {
-          console.log('ไม่พบค่า');
-        }
-      });
-    };
+    const q = query(
+      collection(db, 'User'),
+      where('Email', '==', Currentemail)
+    );
+    const docSnap = await getDocs(q);
+    docSnap.forEach((doc) => {
+      if (Currentemail === doc.data().Email) {
+        setRole(doc.data().Role);
+      } else {
+        console.log('ไม่พบค่า');
+      }
+    });
+  };
   findData();
 
 
   const load = () => {
     if (user && role === ValidatorTextRole) {
-      setTimeout(() => {
-        <CircularProgress />;
-      }, 4000);
-      return <AdminDashBoard />;
+
+      const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          setLoading(false);
+          resolve("done")
+        }, 2000);
+      }) 
+      return <AdminDashBoard />
+      
     } else {
-      <CircularProgress />
-      return <SignIn />;
+       
+      
+      return <></>;
     }
   };
 
   return (
     <div>
       <BrowserRouter>
+        <Fragment>
+          {loading == true ? (
+            <Box
+              sx={{
+                display: 'flex',
+                width: '100%',
+                minHeight: '20vh',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <div></div>
+          )}
+        </Fragment>
         <AuthContext.Provider value={{ Currentemail, displayname, uid, role }}>
           <Routes>
             <Route path="/" element={<Home />} exact></Route>
@@ -105,12 +131,7 @@ function App() {
               element={user ? <Navigate to="/homeuser" /> : <SignIn />}
             ></Route>
             <Route path="registeradmin" element={<RegisterAdmin />}></Route>
-            <Route
-              path="admindashboard"
-              element={ 
-                load()
-              }
-            ></Route>
+            <Route path="admindashboard" element={load()}></Route>
             {/** Test ReadData */}
             <Route path="readdatauser" element={<ReadDataUser />}></Route>
             {/** End Test ReadData */}
