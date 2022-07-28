@@ -53,16 +53,18 @@ function App() {
     });
   }, []);
 
+  //ตรวจสอบ Currentuser ถ้าไม่ใช่ค่าว่างให้ทำตามเงื่อนไข
   if (Currentuser !== null) {
     Currentemail = Currentuser.email;
     uid = Currentuser.uid;
     displayname = Currentuser.displayName;
-    console.log(Currentemail + ' ' + displayname + ' ' + uid);
+    console.log(Currentemail + ' ' + displayname + ' ' + uid); 
   }
   useEffect(() => {
     setName(displayname);
   }, []);
 
+  //ค้นหาผู้ใช้ว่า Currentemail และ Email ตรงกันหรือไม่ ถ้ามีให้เก็บค่าสถานะผู้ใช้ staff ไว้ใน setUser
   const findData = async () => {
     const q = query(
       collection(db, 'User'),
@@ -79,10 +81,9 @@ function App() {
   };
   findData();
 
-
+//ตรวจสอบผู้ใช้ว่าเป็น staff หรือไม่
   const load = () => {
     if (user && role === ValidatorTextRole) {
-
       const promise = new Promise((resolve, reject) => {
         setTimeout(() => {
           setLoading(false);
