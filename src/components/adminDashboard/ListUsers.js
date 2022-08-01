@@ -3,7 +3,7 @@ import * as React from 'react';
 //service and database
 import firebase from '../../services/firebase';
 import { GetAuth, db } from '../../services/firebase';
-import { collection, doc, deleteDoc, getDocs, where } from 'firebase/firestore';
+import { collection, doc, deleteDoc, getDocs, where,updateDoc } from 'firebase/firestore';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -74,15 +74,35 @@ const ListUsers = () => {
 
   
   //Edit user from button
-  const EditUser = () => {
+  const EditUser = async (id) => {
     setOpen(false);
     setLoading(true)
-    setTimeout(() => {
-      window.location.reload();
-      setLoading(false)
-    }, 3000)
+    var dataID;
+    const checkIdUserFromCollection = await getDocs(
+      collection(db, 'User'), where('id', '==', id)
+    );
+    checkIdUserFromCollection.forEach((doc) => {
+      if (doc.id == id) {
+        dataID = doc.id;
+        console.log('id documents ', dataID);
+        setDataOnClick(doc.data().Name)
+      }
+    });
+    try {
+if (dataID) {
+  const userRef = doc(db, 'User','Name');
+  await updateDoc(userRef, { Name: 'ทดสอบเปลี่ยนชื่อ' });
+}
+setTimeout(() => {
+  window.location.reload();
+  setLoading(false);
+}, 3000);
+
+console.log('test edit button');
+    } catch (error) {
+      console.error(error);
+    }
     
-    console.log("test edit button")
   };
 
   //Delete User
