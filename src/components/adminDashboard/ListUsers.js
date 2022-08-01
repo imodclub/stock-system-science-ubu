@@ -72,6 +72,7 @@ const ListUsers = () => {
   }, []);
   //Read Data to Table list user
 
+  
   //Edit user from button
   const EditUser = () => {
       <ProgressLoading />;
@@ -189,41 +190,39 @@ const ListUsers = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-                {
-                  data.map((row) => (
-                    <TableRow
-                      key={row.key}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell align="left">{row.Name}</TableCell>
-                      <TableCell align="left">{row.Lastname}</TableCell>
-                      <TableCell align="left">{row.Email}</TableCell>
-                      <TableCell align="left">{row.Role}</TableCell>
-                      <TableCell align="left">
-                        <Stack direction="row" spacing={2}>
-                          <Button
-                            variant="outlined"
-                            startIcon={<EditIcon />}
-                            color="warning"
-                            onClick={handleClickOpen}
-                          >
-                            แก้ไข
-                          </Button>
-                          <Button
-                            variant="contained"
-                            endIcon={<DeleteIcon />}
-                            color="error"
-                            onClick={() => {
-                              handleClickDelete(row.key);
-                            }}
-                          >
-                            ลบ
-                          </Button>
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                }
+              {data.map((row) => (
+                <TableRow
+                  key={row.key}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell align="left">{row.Name}</TableCell>
+                  <TableCell align="left">{row.Lastname}</TableCell>
+                  <TableCell align="left">{row.Email}</TableCell>
+                  <TableCell align="left">{row.Role}</TableCell>
+                  <TableCell align="left">
+                    <Stack direction="row" spacing={2}>
+                      <Button
+                        variant="outlined"
+                        startIcon={<EditIcon />}
+                        color="warning"
+                        onClick={handleClickOpen}
+                      >
+                        แก้ไข
+                      </Button>
+                      <Button
+                        variant="contained"
+                        endIcon={<DeleteIcon />}
+                        color="error"
+                        onClick={() => {
+                          handleClickDelete(row.key);
+                        }}
+                      >
+                        ลบ
+                      </Button>
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
