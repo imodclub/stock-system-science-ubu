@@ -74,9 +74,9 @@ const ListUsers = () => {
 
   //Edit user from button
   const EditUser = () => {
+      <ProgressLoading />;
     setTimeout(() => {
-      <ProgressLoading />
-      setOpen(false);
+       setOpen(false);
     }, 3000)
     
     console.log("test edit button")
@@ -170,7 +170,7 @@ const ListUsers = () => {
           />
         </Box>
       </Dialog>
-      
+
       <Grid item xs={12}>
         <TableContainer>
           <Typography variant="h6" sx={{ p: 2 }}>
