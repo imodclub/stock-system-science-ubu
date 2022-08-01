@@ -22,6 +22,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Autocomplete from '@mui/material/Autocomplete';
 
+import  ProgressLoading from './ProgessLoading'
+
 //servie and database
 import { db } from '../../../services/firebase'
 import {collection, addDoc, serverTimestamp} from 'firebase/firestore'
@@ -112,10 +114,11 @@ export default function AddUser() {
       setErrors(err.toString());
     } finally {
       setLoading(false);
-      setTimeout(() => {
+      
         setAlert(true)
-      },100);
-      setTimeout(()=>{
+      
+      setTimeout(() => {
+         <ProgressLoading />
         window.location.reload();
       },4500);
     }
@@ -209,7 +212,7 @@ export default function AddUser() {
             <Stack sx={{ width: '100%' }} spacing={2}>
               <Alert severity="success">
                 <AlertTitle>[บันทึกข้อมูลสำเร็จ]</AlertTitle>
-                ระบบทำการบันทึกข้อมูลสำเร็จ <strong>กรุณารอสักครู่เพื่อกลับไปหน้าเดิม</strong>
+                บันทึกข้อมูลผู้ใช้งานสำเร็จ  — <strong>กำลังกลับสู่หน้าแรก</strong>
               </Alert>
             </Stack>
           ) : (
