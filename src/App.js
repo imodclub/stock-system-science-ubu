@@ -9,6 +9,7 @@ import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
 import UsersDashBoard from './components/usersDashboard/Dashboard';
 import Home from './components/Home';
+import ButtonAddUser from './components/adminDashboard/Tools/ButtonAddUser'
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { sendSignInLinkToEmail } from 'firebase/auth';
 import {
@@ -24,7 +25,6 @@ import SignIn from './components/signin/Signin'
 
 import ReadDataUser from './components/Tools/ReadDataUser';
 import AddOrUpdateProfile from './components/usersDashboard/AddOrUpdateProfile'
-import ButtonAddUser from './components/adminDashboard/Tools/ButtonAddUser'
 
 
 function App() {
@@ -39,6 +39,9 @@ function App() {
   let Currentemail;
   let displayname;
   let uid
+
+ 
+ 
 
   //check user local storage
   useEffect(() => {
@@ -139,6 +142,7 @@ function App() {
             {/** Test ReadData */}
             <Route path="addprofile" element={<AddOrUpdateProfile />}></Route>
             {/** End Test ReadData */}
+            
           </Routes>
         </AuthContext.Provider>
       </BrowserRouter>
