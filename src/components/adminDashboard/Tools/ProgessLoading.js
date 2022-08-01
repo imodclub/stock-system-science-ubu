@@ -11,7 +11,7 @@ export default function ProgressLoading() {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            minHeight="100vh"
+            minHeight="50vh"
           >
             <CircularProgress />
           </Box>

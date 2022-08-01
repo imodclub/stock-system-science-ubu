@@ -75,9 +75,11 @@ const ListUsers = () => {
   
   //Edit user from button
   const EditUser = () => {
-      <ProgressLoading />;
+    setOpen(false);
+    setLoading(true)
     setTimeout(() => {
-       setOpen(false);
+      window.location.reload();
+      setLoading(false)
     }, 3000)
     
     console.log("test edit button")
@@ -86,10 +88,7 @@ const ListUsers = () => {
   //Delete User
   const handleClickDelete = async (id) => {
     setLoading(false)
-     setTimeout(() => {
-       <ProgressLoading />;
-       setLoading(false);
-     }, 3000);
+     
     var dataID;
     const checkIdUserFromCollection = await getDocs(
       collection(db, 'User'),
@@ -104,9 +103,11 @@ const ListUsers = () => {
     });
     if (dataID) {
       console.log('data id คือ ', dataID);
-        setLoading(true)
+        setLoading(false)
         await deleteDoc(doc(db, 'User', dataID));
-       
+      setTimeout(() => {
+         setLoading(true)
+       },3000)
        window.location.reload();
      
       
@@ -227,6 +228,7 @@ const ListUsers = () => {
           </Table>
         </TableContainer>
       </Grid>
+      {loading === true ? <ProgressLoading /> : <></>}
     </React.Fragment>
   );
 };
