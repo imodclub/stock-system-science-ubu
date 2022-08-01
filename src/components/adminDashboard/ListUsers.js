@@ -31,6 +31,7 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import ProgressLoading from './Tools/ProgessLoading'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 
@@ -42,6 +43,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ListUsers = () => {
   const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(null)
   const [dataOnClick, setDataOnClick] = React.useState(null);
   const [getValue, setGetValue] = React.useState(null);
   const [open, setOpen] = React.useState(false);
@@ -71,10 +73,22 @@ const ListUsers = () => {
   //Read Data to Table list user
 
   //Edit user from button
-  const EditUser = () => {};
+  const EditUser = () => {
+    setTimeout(() => {
+      <ProgressLoading />
+      setOpen(false);
+    }, 3000)
+    
+    console.log("test edit button")
+  };
 
   //Delete User
   const handleClickDelete = async (id) => {
+    setLoading(false)
+     setTimeout(() => {
+       <ProgressLoading />;
+       setLoading(false);
+     }, 3000);
     var dataID;
     const checkIdUserFromCollection = await getDocs(
       collection(db, 'User'),
@@ -89,10 +103,15 @@ const ListUsers = () => {
     });
     if (dataID) {
       console.log('data id คือ ', dataID);
-
-      await deleteDoc(doc(db, 'User', dataID));
+        setLoading(true)
+        await deleteDoc(doc(db, 'User', dataID));
+       
+       window.location.reload();
+     
+      
     }
   };
+
   return (
     <React.Fragment>
       <Dialog
@@ -114,7 +133,7 @@ const ListUsers = () => {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               แก้ไขข้อมูล
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="inherit" onClick={EditUser}>
               บันทึกข้อมูลแก้ไข
             </Button>
           </Toolbar>
@@ -151,6 +170,7 @@ const ListUsers = () => {
           />
         </Box>
       </Dialog>
+      
       <Grid item xs={12}>
         <TableContainer>
           <Typography variant="h6" sx={{ p: 2 }}>
@@ -169,44 +189,45 @@ const ListUsers = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
-                <TableRow
-                  key={row.key}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="left">{row.Name}</TableCell>
-                  <TableCell align="left">{row.Lastname}</TableCell>
-                  <TableCell align="left">{row.Email}</TableCell>
-                  <TableCell align="left">{row.Role}</TableCell>
-                  <TableCell align="left">
-                    <Stack direction="row" spacing={2}>
-                      <Button
-                        variant="outlined"
-                        startIcon={<EditIcon />}
-                        color="warning"
-                        onClick={handleClickOpen}
-                      >
-                        แก้ไข
-                      </Button>
-                      <Button
-                        variant="contained"
-                        endIcon={<DeleteIcon />}
-                        color="error"
-                        onClick={() => {
-                          handleClickDelete(row.key);
-                        }}
-                      >
-                        ลบ
-                      </Button>
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              ))}
+                {
+                  data.map((row) => (
+                    <TableRow
+                      key={row.key}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell align="left">{row.Name}</TableCell>
+                      <TableCell align="left">{row.Lastname}</TableCell>
+                      <TableCell align="left">{row.Email}</TableCell>
+                      <TableCell align="left">{row.Role}</TableCell>
+                      <TableCell align="left">
+                        <Stack direction="row" spacing={2}>
+                          <Button
+                            variant="outlined"
+                            startIcon={<EditIcon />}
+                            color="warning"
+                            onClick={handleClickOpen}
+                          >
+                            แก้ไข
+                          </Button>
+                          <Button
+                            variant="contained"
+                            endIcon={<DeleteIcon />}
+                            color="error"
+                            onClick={() => {
+                              handleClickDelete(row.key);
+                            }}
+                          >
+                            ลบ
+                          </Button>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                }
             </TableBody>
           </Table>
         </TableContainer>
       </Grid>
-      
     </React.Fragment>
   );
 };
