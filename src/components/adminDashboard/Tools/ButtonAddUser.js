@@ -27,6 +27,8 @@ import { db } from '../../../services/firebase'
 import {collection, addDoc, serverTimestamp} from 'firebase/firestore'
 import { useRef } from 'react';
 
+
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -73,6 +75,7 @@ export default function AddUser() {
     setOpen(false);
   };
 
+ 
   //validate form
   React.useEffect(() => {
     const validate =
@@ -123,6 +126,7 @@ export default function AddUser() {
   const handleSave = async (e) => {
     e.preventDefault();
     PrepareData();
+    
     
   };
   //จบ บันทึกข้อมูล
@@ -204,8 +208,8 @@ export default function AddUser() {
           {alert ? (
             <Stack sx={{ width: '100%' }} spacing={2}>
               <Alert severity="success">
-                <AlertTitle>Success</AlertTitle>
-                This is a success alert — <strong>check it out!</strong>
+                <AlertTitle>[บันทึกข้อมูลสำเร็จ]</AlertTitle>
+                ระบบทำการบันทึกข้อมูลสำเร็จ <strong>กรุณารอสักครู่เพื่อกลับไปหน้าเดิม</strong>
               </Alert>
             </Stack>
           ) : (
