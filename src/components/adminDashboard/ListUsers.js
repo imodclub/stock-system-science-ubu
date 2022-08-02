@@ -36,6 +36,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 
 import ButtonAddUsers from './Tools/ButtonAddUser';
+import { set } from 'react-hook-form';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -43,13 +44,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ListUsers = () => {
   const [data, setData] = React.useState([]);
+  const [singleData, setSingleData] = React.useState(null)
   const [loading, setLoading] = React.useState(null)
   const [dataOnClick, setDataOnClick] = React.useState(null);
   const [getValue, setGetValue] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (id) => {
     setOpen(true);
+    setSingleData(id)
   };
 
   const handleClose = () => {
@@ -68,41 +71,39 @@ const ListUsers = () => {
     });
   };
   React.useEffect(() => {
-      ReadData();
+    ReadData();
+    setData([])
   }, []);
   //Read Data to Table list user
 
   
   //Edit user from button
-  const EditUser = async (id) => {
+  const EditUser = async () => {
     setOpen(false);
-    setLoading(true)
+    setLoading(true);
+    setDataOnClick(null);
     var dataID;
     const checkIdUserFromCollection = await getDocs(
-      collection(db, 'User'), where('id', '==', id)
+      collection(db, 'User'),
+      where('id', '==', singleData)
     );
     checkIdUserFromCollection.forEach((doc) => {
-      if (doc.id == id) {
+      if (doc.id == singleData) {
         dataID = doc.id;
-        console.log('id documents ', dataID);
-        setDataOnClick(doc.data().Name)
       }
     });
     try {
-if (dataID) {
-  const userRef = doc(db, 'User','Name');
-  await updateDoc(userRef, { Name: 'ทดสอบเปลี่ยนชื่อ' });
-}
-setTimeout(() => {
-  window.location.reload();
-  setLoading(false);
-}, 3000);
-
-console.log('test edit button');
+        const userRef = doc(db, 'User',dataID);
+        await updateDoc(userRef, { Name: 'น้องมาร์ช' });
+      setTimeout(() => {
+        window.location.reload();
+        setLoading(false);
+        setSingleData(null);
+        dataID = null;
+      }, 3000);
     } catch (error) {
       console.error(error);
     }
-    
   };
 
   //Delete User
@@ -128,9 +129,9 @@ console.log('test edit button');
       setTimeout(() => {
          setLoading(true)
        },3000)
-       window.location.reload();
-     
-      
+      window.location.reload();
+      setData([]);
+      setLoading(false)
     }
   };
 
@@ -182,13 +183,28 @@ console.log('test edit button');
             required
             id="outlined-required"
             label="ระบุชื่อ"
-            defaultValue="ชื่อ"
           />
           <TextField
             required
             id="outlined-required"
             label="นามสกุล"
-            defaultValue="นามสกุล"
+          />
+        </Box>
+        <Box
+          component="form"
+          sx={{ '& .MuiTextField-root': { m: 1, width: '30ch' } }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            required
+            id="outlined-required"
+            label="ภาควิชา"
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="ตำแหน่ง"
           />
         </Box>
       </Dialog>
@@ -226,7 +242,9 @@ console.log('test edit button');
                         variant="outlined"
                         startIcon={<EditIcon />}
                         color="warning"
-                        onClick={handleClickOpen}
+                        onClick={() => {
+                          handleClickOpen(row.key);
+                        }}
                       >
                         แก้ไข
                       </Button>
