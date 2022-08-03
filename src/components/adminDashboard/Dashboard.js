@@ -45,6 +45,10 @@ import { signOut } from 'firebase/auth';
 import ListUsers from './ListUsers';
 import ButtonAddUser from './Tools/ButtonAddUser'
 
+//List Material
+import MaterialsList from './MaterialsList';
+import ButtonAddMaterial from './Tools/ฺButtonAddMaterial'
+
 
 function CheckUser() {
   //const name = useContext(AuthContext)
@@ -184,6 +188,10 @@ function getListContent(list) {
     case 1:
       return (
         <React.Fragment>
+          <Grid item xs={12} md={4} lg={3}>
+            
+              <ButtonAddMaterial />
+          </Grid>
           <Grid item xs={12}>
             <Paper
               sx={{
@@ -194,7 +202,7 @@ function getListContent(list) {
                 justifyContent: 'flex-end',
               }}
             >
-              <AddOrUpdateUser />
+              <MaterialsList />
             </Paper>
           </Grid>
         </React.Fragment>
@@ -341,7 +349,7 @@ function DashboardContent() {
                 <ShoppingCartIcon />
               </ListItemIcon>
               <ListItemText
-                primary="เพิ่มรายการ"
+                primary="รายการวัสดุ"
                 onClick={(e) => listClickAddList()}
               />
             </ListItemButton>

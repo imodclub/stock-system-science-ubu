@@ -33,6 +33,7 @@ function App() {
   const [name, setName] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
   const auth = GetAuth;
   const Currentuser = auth.currentUser;
   var ValidatorTextRole = "staff"
@@ -105,23 +106,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Fragment>
-          {loading == true ? (
-            <Box
-              sx={{
-                display: 'flex',
-                width: '100%',
-                minHeight: '20vh',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          ) : (
-            <div></div>
-          )}
-        </Fragment>
+   
         <AuthContext.Provider value={{ Currentemail, displayname, uid, role }}>
           <Routes>
             <Route path="/" element={<Home />} exact></Route>
