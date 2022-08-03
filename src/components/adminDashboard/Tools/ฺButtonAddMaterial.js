@@ -16,13 +16,17 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import TextField from '@mui/material/TextField';
 import AddMaterialForm from './AddMaterialForm';
-
+import { width } from '@mui/system';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 
 const bull = (
   <Box
@@ -32,68 +36,130 @@ const bull = (
     •
   </Box>
 );
+const theme = createTheme();
 
 export default function ButtonAddMaterial() {
-     const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-     const handleClickOpen = () => {
-       setOpen(true);
-     };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-     const handleClose = () => {
-       setOpen(false);
-     };
-    return (
-      <React.Fragment>
-        <Dialog
-          fullScreen
-          open={open}
-          onClose={handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar sx={{ position: 'relative' }}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handleClose}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Sound
-              </Typography>
-              <Button autoFocus color="inherit" onClick={handleClose}>
-                save
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText
-                primary="Default notification ringtone"
-                secondary="Tethys"
-              />
-            </ListItem>
-          </List>
-        </Dialog>
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              <CardActions>
-                <AddIcon color="primary" fontSize="large" />
-                <Button size="large" onClick={handleClickOpen}>
-                  เพิ่มรายการวัสดุ
+  const handleClose = () => {
+    setOpen(false);
+  };
+  return (
+    <React.Fragment>
+      <ThemeProvider theme={theme}>
+        <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+          <CssBaseline />
+          <Dialog
+            fullScreen
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Transition}
+          >
+            <AppBar sx={{ position: 'relative' }}>
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  onClick={handleClose}
+                  aria-label="close"
+                >
+                  <CloseIcon />
+                </IconButton>
+                <Typography
+                  sx={{ ml: 2, flex: 1 }}
+                  variant="h6"
+                  component="div"
+                >
+                  รายการวัสดุ
+                </Typography>
+                <Button
+                  autoFocus
+                  size="large"
+                  color="inherit"
+                  onClick={handleClose}
+                >
+                  บันทึกข้อมูล
                 </Button>
-              </CardActions>
-            </Typography>
-          </CardContent>
-        </Card>
-      </React.Fragment>
-    );
+              </Toolbar>
+            </AppBar>
+
+            <Box
+              sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Typography component="h1" variant="h5">
+                รายละเอียดวัสดุ
+              </Typography>
+              <Box component="form" noValidate sx={{ mt: 3 }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      autoComplete="false"
+                      name="MaterialName"
+                      required
+                      fullWidth
+                      id="MaterialName"
+                      label="ชื่อวัสดุ"
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      id="MaterialCategories"
+                      label="หมวดหมู่วัสดุ"
+                      name="MaterialCategories"
+                      autoComplete="false"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      id="MaterialBrand"
+                      label="ยี่ห้อ"
+                      name="MaterialBrand"
+                      autoComplete="false"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="new-password"
+                    />
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Dialog>
+          <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography variant="h5" component="div">
+                <CardActions>
+                  <AddIcon color="primary" fontSize="large" />
+                  <Button size="large" onClick={handleClickOpen}>
+                    เพิ่มรายการวัสดุ
+                  </Button>
+                </CardActions>
+              </Typography>
+            </CardContent>
+          </Card>
+        </Container>
+      </ThemeProvider>
+    </React.Fragment>
+  );
 }
