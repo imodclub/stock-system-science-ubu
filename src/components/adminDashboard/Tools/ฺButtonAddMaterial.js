@@ -23,6 +23,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -121,7 +122,7 @@ export default function ButtonAddMaterial() {
                       autoComplete="false"
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={8}>
                     <TextField
                       required
                       fullWidth
@@ -131,15 +132,23 @@ export default function ButtonAddMaterial() {
                       autoComplete="false"
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       required
                       fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
+                      name="MaterialPrice"
+                      label="ราคาซื้อ"
+                      id="MaterialPrice"
+                      autoComplete="false"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      aria-label="รายละเอียด"
+                      placeholder="รายละเอียด / บันทึก"
+                      multiline
+                      fullWidth
+                      row={5}
                     />
                   </Grid>
                 </Grid>
