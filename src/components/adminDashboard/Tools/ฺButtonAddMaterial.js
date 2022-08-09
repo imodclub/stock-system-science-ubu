@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,23 +6,34 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import TextField from '@mui/material/TextField';
 import AddMaterialForm from './AddMaterialForm';
-import { width } from '@mui/system';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import TextareaAutosize from '@mui/material/TextareaAutosize'
+import Stack from '@mui/material/Stack';
+import {
+  Grid,
+  TextField,
+  Box,
+  Paper,
+  CssBaseline,
+  Container,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
+
+
+
+import ProgressLoading from './ProgessLoading';
+
+
+//database and service
+import { db } from '../../../services/firebase'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,6 +51,19 @@ const theme = createTheme();
 
 export default function ButtonAddMaterial() {
   const [open, setOpen] = React.useState(false);
+  const [validatorForm, setValidatorForm] = React.useState(false);
+  const [alert, setAlert] = React.useState(false);
+
+  const [nameBrand, setNameBrand] = React.useState(null);
+  const [nameMaterial, setNameMaterial] = React.useState(null);
+  const [categories, setCategories] = React.useState(null);
+  const [priceOfUnit, setPriceOfUnit] = React.useState(null);
+  const [detail, setDetail] = React.useState(null);
+
+  //hook data
+  const [data, setData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [errors, setErrors] = React.useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,6 +72,55 @@ export default function ButtonAddMaterial() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  //validate form
+  React.useEffect(() => {
+    const validate =
+      nameBrand?.trim().length > 0 &&
+      nameMaterial?.trim().length > 0 &&
+      priceOfUnit?.trim().length > 0 &&
+      categories?.trim().length;
+
+    if (validate) {
+      setValidatorForm(true);
+      setLoading(true);
+    } else {
+      setValidatorForm(false);
+    }
+  }, [nameBrand, nameMaterial, priceOfUnit, categories]);
+
+  const PrepareData = async () => {
+    try {
+      if (loading === true) {
+        setErrors(null);
+        setData(null);
+        const docRef = await addDoc(collection(db, 'Material'), {
+          NameMaterial: nameMaterial,
+          NameBrand: nameBrand,
+          Categories: categories,
+          PriceOfUnit: priceOfUnit,
+          Detail: detail,
+        });
+      }
+    } catch (error) {
+      setErrors(error.toString());
+    } finally {
+      setLoading(false);
+      setAlert(true);
+      setTimeout(() => {
+        <ProgressLoading />;
+        window.location.reload();
+      }, 3000);
+    }
+  };
+
+  //บันทึกข้อมูล
+  const handleSave = async (e) => {
+    e.preventDefault();
+    PrepareData();
+  };
+  //จบ บันทึกข้อมูล
+
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
@@ -81,12 +153,27 @@ export default function ButtonAddMaterial() {
                   autoFocus
                   size="large"
                   color="inherit"
-                  onClick={handleClose}
+                  disabled={!validatorForm}
+                  onClick={handleSave}
                 >
                   บันทึกข้อมูล
                 </Button>
               </Toolbar>
             </AppBar>
+
+            {/**Alert */}
+            {alert ? (
+              <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="success">
+                  <AlertTitle>[บันทึกข้อมูลสำเร็จ]</AlertTitle>
+                  บันทึกข้อมูลผู้ใช้งานสำเร็จ —{' '}
+                  <strong>กำลังกลับสู่หน้าแรก</strong>
+                </Alert>
+              </Stack>
+            ) : (
+              <></>
+            )}
+            {/**Close Alert */}
 
             <Box
               sx={{
@@ -104,11 +191,12 @@ export default function ButtonAddMaterial() {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       autoComplete="false"
-                      name="MaterialName"
+                      name="NameMaterial"
                       required
                       fullWidth
-                      id="MaterialName"
+                      id="NameMaterial"
                       label="ชื่อวัสดุ"
+                      onChange={(event) => setNameMaterial(event.target.value)}
                       autoFocus
                     />
                   </Grid>
@@ -116,9 +204,10 @@ export default function ButtonAddMaterial() {
                     <TextField
                       required
                       fullWidth
-                      id="MaterialCategories"
+                      id="Categories"
                       label="หมวดหมู่วัสดุ"
-                      name="MaterialCategories"
+                      name="Categories"
+                      onChange={(even) => setCategories(even.target.value)}
                       autoComplete="false"
                     />
                   </Grid>
@@ -126,9 +215,10 @@ export default function ButtonAddMaterial() {
                     <TextField
                       required
                       fullWidth
-                      id="MaterialBrand"
+                      id="NameBrand"
                       label="ยี่ห้อ"
-                      name="MaterialBrand"
+                      name="NameBrand"
+                      onChange={(event) => setNameBrand(event.target.value)}
                       autoComplete="false"
                     />
                   </Grid>
@@ -136,9 +226,10 @@ export default function ButtonAddMaterial() {
                     <TextField
                       required
                       fullWidth
-                      name="MaterialPrice"
+                      name="PriceOfUnit"
                       label="ราคาซื้อ"
-                      id="MaterialPrice"
+                      id="PriceOfUnit"
+                      onChange={(event) => setPriceOfUnit(event.target.value)}
                       autoComplete="false"
                     />
                   </Grid>
@@ -149,6 +240,9 @@ export default function ButtonAddMaterial() {
                       multiline
                       fullWidth
                       row={5}
+                      onChange={(event) => setDetail(event.target.value)}
+                      name="Detail"
+                      id="Detail"
                     />
                   </Grid>
                 </Grid>

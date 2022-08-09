@@ -15,7 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { Grid, TextField, Box, Pape, CssBaseline, Container,Alert,AlertTitle } from '@mui/material'
+import { Grid, TextField, Box, Paper, CssBaseline, Container,Alert,AlertTitle } from '@mui/material'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { teal } from '@mui/material/colors';
 import MenuItem from '@mui/material/MenuItem';
@@ -120,7 +120,7 @@ export default function AddUser() {
       setTimeout(() => {
          <ProgressLoading />
         window.location.reload();
-      },4500);
+      },3000);
     }
   };
 

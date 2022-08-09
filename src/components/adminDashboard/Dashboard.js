@@ -218,9 +218,10 @@ function getListContent(list) {
                 flexDirection: 'column',
                 height: '100%',
                 justifyContent: 'flex-end',
+                alignItems: 'center',
               }}
             >
-              <ListUsers />
+              <ButtonAddUser />
             </Paper>
           </Grid>
           <Grid item xs={12}>
@@ -231,10 +232,9 @@ function getListContent(list) {
                 flexDirection: 'column',
                 height: '100%',
                 justifyContent: 'flex-end',
-                alignItems: 'center',
               }}
             >
-              <ButtonAddUser />
+              <ListUsers />
             </Paper>
           </Grid>
         </React.Fragment>

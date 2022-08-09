@@ -221,7 +221,7 @@ const ListUsers = () => {
                 <TableCell align="left">ชื่อ</TableCell>
                 <TableCell align="left">นามสกุล</TableCell>
                 <TableCell align="left">Email</TableCell>
-                <TableCell align="left">ระดับ</TableCell>
+                <TableCell align="left">ภาควิชา</TableCell>
                 <TableCell align="left"></TableCell>
                 <TableCell align="left"></TableCell>
               </TableRow>
@@ -235,7 +235,7 @@ const ListUsers = () => {
                   <TableCell align="left">{row.Name}</TableCell>
                   <TableCell align="left">{row.Lastname}</TableCell>
                   <TableCell align="left">{row.Email}</TableCell>
-                  <TableCell align="left">{row.Role}</TableCell>
+                  <TableCell align="left">{row.Departments}</TableCell>
                   <TableCell align="left">
                     <Stack direction="row" spacing={2}>
                       <Button
