@@ -47,7 +47,7 @@ import ButtonAddUser from './Tools/ButtonAddUser'
 
 //List Material
 import MaterialsList from './MaterialsList';
-import ButtonAddMaterial from './Tools/ฺButtonAddMaterial'
+import ButtonAddMaterial from './Tools/ButtonAddMaterial'
 
 
 function CheckUser() {
@@ -180,7 +180,7 @@ function getListContent(list) {
                 justifyContent: 'flex-end',
               }}
             >
-              <AddOrUpdateUser />
+              <MaterialsList />
             </Paper>
           </Grid>
         </React.Fragment>

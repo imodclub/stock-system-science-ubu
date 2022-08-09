@@ -57,6 +57,7 @@ export default function ButtonAddMaterial() {
   const [nameBrand, setNameBrand] = React.useState(null);
   const [nameMaterial, setNameMaterial] = React.useState(null);
   const [categories, setCategories] = React.useState(null);
+  const [unit, setUnit] = React.useState(null)
   const [priceOfUnit, setPriceOfUnit] = React.useState(null);
   const [detail, setDetail] = React.useState(null);
 
@@ -78,6 +79,7 @@ export default function ButtonAddMaterial() {
     const validate =
       nameBrand?.trim().length > 0 &&
       nameMaterial?.trim().length > 0 &&
+      unit?.trim().length > 0 &&
       priceOfUnit?.trim().length > 0 &&
       categories?.trim().length;
 
@@ -87,7 +89,7 @@ export default function ButtonAddMaterial() {
     } else {
       setValidatorForm(false);
     }
-  }, [nameBrand, nameMaterial, priceOfUnit, categories]);
+  }, [nameBrand, nameMaterial,unit, priceOfUnit, categories]);
 
   const PrepareData = async () => {
     try {
@@ -98,6 +100,7 @@ export default function ButtonAddMaterial() {
           NameMaterial: nameMaterial,
           NameBrand: nameBrand,
           Categories: categories,
+          Unit:unit,
           PriceOfUnit: priceOfUnit,
           Detail: detail,
         });
@@ -211,7 +214,7 @@ export default function ButtonAddMaterial() {
                       autoComplete="false"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={8}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       required
                       fullWidth
@@ -226,8 +229,19 @@ export default function ButtonAddMaterial() {
                     <TextField
                       required
                       fullWidth
+                      id="Unit"
+                      label="หน่วย"
+                      name="Unit"
+                      onChange={(event) => setUnit(event.target.value)}
+                      autoComplete="false"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      required
+                      fullWidth
                       name="PriceOfUnit"
-                      label="ราคาซื้อ"
+                      label="ราคาซื้อต่อหน่วย"
                       id="PriceOfUnit"
                       onChange={(event) => setPriceOfUnit(event.target.value)}
                       autoComplete="false"
