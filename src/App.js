@@ -25,6 +25,7 @@ import SignIn from './components/signin/Signin'
 
 import ReadDataUser from './components/Tools/ReadDataUser';
 import AddOrUpdateProfile from './components/usersDashboard/AddOrUpdateProfile'
+import MaterialsList from './components/adminDashboard/MaterialsList';
 
 
 function App() {
@@ -106,7 +107,6 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-   
         <AuthContext.Provider value={{ Currentemail, displayname, uid, role }}>
           <Routes>
             <Route path="/" element={<Home />} exact></Route>
@@ -127,9 +127,8 @@ function App() {
             {/** Test ReadData */}
             <Route path="addprofile" element={<AddOrUpdateProfile />}></Route>
             {/** End Test ReadData */}
-            
           </Routes>
-          
+         
         </AuthContext.Provider>
       </BrowserRouter>
     </div>
