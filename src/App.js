@@ -1,7 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import firebase from 'firebase/compat/app';
+import { getAuth } from 'firebase/auth'
 
 import Appbar from './components/Appbar'
+import { Container } from '@mui/system';
+import { CssBaseline } from '@mui/material';
+import { CurrencyYenTwoTone } from '@mui/icons-material';
+
 
 function App() {
   const firebaseConfig = {
@@ -15,11 +20,32 @@ function App() {
   };
   firebase.initializeApp(firebaseConfig);
 
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+
+
+ //check user local storage
+  useEffect(() => {
+    getAuth().onAuthStateChanged((authUser) => {
+      setLoading(false)
+      if (authUser) {
+        setUser(authUser.email)
+        setLoading(true)
+      } else {
+        setUser(null)
+      }
+    })
+  },[])
+
+
   return (
     <Fragment>
-      <Appbar body="ทดสอบส่ง props ในปุ่ม Home"  />
+      <CssBaseline />
+      <Appbar user={user} />
+      <Container></Container>
     </Fragment>
-  )
+  );
 }
 
 export default App

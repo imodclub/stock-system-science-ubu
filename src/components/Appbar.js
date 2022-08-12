@@ -38,11 +38,14 @@ function Appbar(props) {
     setAnchorElNav(null);
     setLoading((current) => !current);
   };
+    const handleHomeMenu = (event) => {
+       setLoading(true)
+    }
     
     const handleSigninMenu = (event) => {
       setLoading(true);
     };
-    
+
 
   return (
     <React.Fragment>
@@ -57,7 +60,7 @@ function Appbar(props) {
               >
                 <Tooltip title="Home">
                   <IconButton
-                    onClick={handleCloseNavMenu}
+                    onClick={handleHomeMenu}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
@@ -100,11 +103,14 @@ function Appbar(props) {
                     <VpnKeyIcon fontSize="large" />
                   </IconButton>
                 </Tooltip>
-              </Box>
+                          </Box>
+                          <Box sx={{ flexGrow: 0 }}>
+                              <h2>{props.user}</h2>
+                          </Box>
             </Toolbar>
           </Container>
         </AppBar>
-        <h1>{loading === true ? <Signin /> : <></>}</h1>
+        {loading === true ? <Signin /> : <></>}
       </ThemeProvider>
     </React.Fragment>
   );
