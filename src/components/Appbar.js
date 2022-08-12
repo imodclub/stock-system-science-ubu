@@ -16,6 +16,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Signin from './signin/Signin';
+import SignOut from './SignOut'
 
 const theme = createTheme({
   palette: {
@@ -29,22 +30,25 @@ const theme = createTheme({
 
 function Appbar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [singninMenu, setSigninMenu] = React.useState(false)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
-    setLoading((current) => !current);
+    
   };
     const handleHomeMenu = (event) => {
        setLoading(true)
     }
     
-    const handleSigninMenu = (event) => {
-      setLoading(true);
-    };
+       const handleSigninMenu = (event) => {
+         setSigninMenu(true);
+       };
+
+    
 
 
   return (
@@ -76,7 +80,7 @@ function Appbar(props) {
                     <PersonIcon fontSize="large" />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="จัดการสินค้าและวัสด">
+                <Tooltip title="จัดการสินค้าและวัสดุ">
                   <IconButton
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
@@ -96,21 +100,21 @@ function Appbar(props) {
                 </Tooltip>
                 <Tooltip title="เข้าสู่ระบบ">
                   <IconButton
-                    onClick={handleCloseNavMenu}
+                    onClick={handleSigninMenu}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
                     <VpnKeyIcon fontSize="large" />
                   </IconButton>
                 </Tooltip>
-                          </Box>
-                          <Box sx={{ flexGrow: 0 }}>
-                              <h2>{props.user}</h2>
-                          </Box>
+              </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <h5>{props.user}</h5>
+              </Box>
             </Toolbar>
           </Container>
         </AppBar>
-        {loading === true ? <Signin /> : <></>}
+        
       </ThemeProvider>
     </React.Fragment>
   );
