@@ -41,6 +41,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ListUsers = () => {
+  const db = getFirestore(Firebase);
+
   const [data, setData] = React.useState([]);
   const [singleData, setSingleData] = React.useState(null)
   const [loading, setLoading] = React.useState(null)
@@ -48,7 +50,6 @@ const ListUsers = () => {
   const [getValue, setGetValue] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
-  const db = getFirestore(Firebase);
 
   const handleClickOpen = (id) => {
     setOpen(true);
