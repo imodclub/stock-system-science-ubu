@@ -6,6 +6,7 @@ import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
 import { CssBaseline } from '@mui/material';
 import { CurrencyYenTwoTone } from '@mui/icons-material';
+import AuthContext from './components/auth/Auth';
 
 
 function App() {
@@ -41,9 +42,11 @@ function App() {
 
   return (
     <Fragment>
-      <CssBaseline />
-      <Appbar user={user} />
-      <Container></Container>
+      <AuthContext.Provider value={ user }>
+        <CssBaseline />
+        <Appbar user={user} />
+        <Container></Container>
+      </AuthContext.Provider>
     </Fragment>
   );
 }

@@ -7,7 +7,7 @@ import {
   IconButton,
   Tooltip,
 } from '@mui/material';
-import { MenuIcon, AdbIcon } from '@mui/icons-material';
+import { MenuIcon, AdbIcon, SignalWifi0BarOutlined } from '@mui/icons-material';
 import PersonIcon from '@mui/icons-material/Person';
 import HomeIcon from '@mui/icons-material/Home';
 import AssessmentIcon from '@mui/icons-material/Assessment';
@@ -31,7 +31,8 @@ const theme = createTheme({
 function Appbar(props) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
-    const [singninMenu, setSigninMenu] = React.useState(false)
+  const [singninMenu, setSigninMenu] = React.useState(false);
+  const [num, setNum]=React.useState(0)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -48,7 +49,50 @@ function Appbar(props) {
          setSigninMenu(true);
        };
 
-    
+  function appbarPage(num) {
+    switch (num) {
+      case 0:
+        return (
+          <React.Fragment>
+            <></>
+          </React.Fragment>
+        );
+      case 1:
+        return (
+          <React.Fragment>
+            <></>
+          </React.Fragment>
+        );
+      case 2:
+        return (
+          <React.Fragment>
+            <></>
+          </React.Fragment>
+        );
+      case 3:
+        return (
+          <React.Fragment>
+            <></>
+          </React.Fragment>
+        );
+      case 4:
+        if (props.user) {
+          return (
+            <React.Fragment>
+              <SignOut />
+            </React.Fragment>
+          )
+        } else {
+          return (
+            <React.Fragment>
+              <Signin />
+            </React.Fragment>
+          )
+        }
+      default:
+        throw new Error('Unknow step');
+    }
+  }
 
 
   return (
@@ -64,7 +108,7 @@ function Appbar(props) {
               >
                 <Tooltip title="Home">
                   <IconButton
-                    onClick={handleHomeMenu}
+                    onClick={(e)=>{setNum(0)}}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
@@ -73,7 +117,7 @@ function Appbar(props) {
                 </Tooltip>
                 <Tooltip title="จัดการผู้ใช้">
                   <IconButton
-                    onClick={handleCloseNavMenu}
+                    onClick={(e)=>{setNum(1)}}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
@@ -82,7 +126,7 @@ function Appbar(props) {
                 </Tooltip>
                 <Tooltip title="จัดการสินค้าและวัสดุ">
                   <IconButton
-                    onClick={handleCloseNavMenu}
+                    onClick={(e)=>{setNum(2)}}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
@@ -91,7 +135,7 @@ function Appbar(props) {
                 </Tooltip>
                 <Tooltip title="รายงาน">
                   <IconButton
-                    onClick={handleSigninMenu}
+                    onClick={(e)=>{setNum(3)}}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
@@ -100,7 +144,9 @@ function Appbar(props) {
                 </Tooltip>
                 <Tooltip title="เข้าสู่ระบบ">
                   <IconButton
-                    onClick={handleSigninMenu}
+                    onClick={(e) => {
+                      setNum(4);
+                    }}
                     sx={{ my: 2, color: 'primary', display: 'block' }}
                     color="primary"
                   >
@@ -114,7 +160,7 @@ function Appbar(props) {
             </Toolbar>
           </Container>
         </AppBar>
-        
+        {appbarPage(num)}
       </ThemeProvider>
     </React.Fragment>
   );
