@@ -25,8 +25,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import  ProgressLoading from './ProgessLoading'
 
 //servie and database
-import { db } from '../../../services/firebase'
-import {collection, addDoc, serverTimestamp} from 'firebase/firestore'
+import Firebase from '../../../services/firebase'
+import {getFirestore,collection, addDoc, serverTimestamp} from 'firebase/firestore'
 import { useRef } from 'react';
 
 
@@ -68,6 +68,9 @@ export default function AddUser() {
   const [data, setData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState(null);
+
+  const db = getFirestore(Firebase);
+
 
   const handleClickOpen = () => {
     setOpen(true);

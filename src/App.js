@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
 
-import Firebase from './services/firebase'
 import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
 import { CssBaseline } from '@mui/material';
@@ -29,7 +28,6 @@ function App() {
     })
   },[])
 
-  console.log(user)
 
   return (
     <Fragment>
