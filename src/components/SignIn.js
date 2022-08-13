@@ -12,14 +12,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Copyright from '../copyright/Copyright';
 import {
-  signInWithGoogle,
-  signInWithEmailPasswordFromSignForm,
-} from '../../services/firebase';
-import AuthContext from '../auth/Auth';
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import AuthContext from './auth/Auth';
 import { useContext } from 'react';
-import Dashboard from '../usersDashboard/Dashboard';
+import Firebase from '../services/firebase';
+
 
 
 
@@ -28,8 +29,22 @@ import Dashboard from '../usersDashboard/Dashboard';
 const theme = createTheme();
 
 export default function SignIn() {
-  const chkAuth = useContext(AuthContext)
-   
+  const provider = new Firebase.auth.GoogleAuthProvider();
+  const auth = getAuth();
+  const signInWithGoogle = () =>
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = provider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = provider.credentialFromError(error);
+      });
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,14 +53,14 @@ export default function SignIn() {
     const password = data.get('password');
     const p = new Promise(function (resolve, reject) {
       setTimeout(function () {
-        resolve(signInWithEmailPasswordFromSignForm(email, password));
+        resolve(signInWithEmailAndPassword(auth,email, password));
         console.log('ส่งค่า Login สำเร็จ');
-      }, 1000);
+      }, 1000); 
        
     })
     p.then((userCredential) => {
       alert('ล็อกอินสำเร็จ ', userCredential);
-      <Dashboard />;
+      //<Dashboard />;
     }).cache((error) => {
       alert(error);
     });
@@ -95,7 +110,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-          
+
             <Button
               type="submit"
               fullWidth
@@ -118,7 +133,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

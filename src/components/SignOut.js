@@ -4,9 +4,19 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box'
 import { Card } from 'react-bootstrap';
 import AuthContext from './auth/Auth';
+import { signOut, getAuth } from 'firebase/auth';
 
 function SignOut() {
   const user = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOut(getAuth()).then(() => {
+      alert('ออกจากระบบสำเร็จ');
+    }).catch((error) => {
+      alert('ไม่สามารถออกจากระบบได้');
+    });
+  }
+
   return (
     <Box
       display="flex"
@@ -28,7 +38,7 @@ function SignOut() {
           >
             {user}
           </Typography>
-          <IconButton size="large">
+          <IconButton size="large" onClick={handleSignOut}>
             <LogoutIcon sx={{ fontSize: 40 }} color="primary" align="center" />
             <Typography
               variant="h5"

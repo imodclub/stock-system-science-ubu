@@ -1,25 +1,15 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import firebase from 'firebase/compat/app';
 import { getAuth } from 'firebase/auth'
 
+import Firebase from './services/firebase'
 import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
 import { CssBaseline } from '@mui/material';
-import { CurrencyYenTwoTone } from '@mui/icons-material';
+import Copyright from './components/copyright/Copyright';
 import AuthContext from './components/auth/Auth';
 
 
 function App() {
-  const firebaseConfig = {
-    apiKey: 'AIzaSyAo2KbSE7kaxH-__s5XTImyPWxlBuT27mQ',
-    authDomain: 'stock-240b7.firebaseapp.com',
-    projectId: 'stock-240b7',
-    storageBucket: 'stock-240b7.appspot.com',
-    messagingSenderId: '1094516188928',
-    appId: '1:1094516188928:web:bf6ad4775626af2a4af5e5',
-    measurementId: 'G-1V5E1JVNZE',
-  };
-  firebase.initializeApp(firebaseConfig);
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -39,13 +29,17 @@ function App() {
     })
   },[])
 
+  console.log(user)
 
   return (
     <Fragment>
-      <AuthContext.Provider value={ user }>
+      <AuthContext.Provider>
         <CssBaseline />
         <Appbar user={user} />
-        <Container></Container>
+        <Container>
+
+        </Container>
+        <Copyright />
       </AuthContext.Provider>
     </Fragment>
   );
