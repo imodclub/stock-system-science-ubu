@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 //service and database
-import firebase from '../../services/firebase';
-import { GetAuth, db } from '../../services/firebase';
+import firebase from '../../services/firebaseCopy';
+import { GetAuth, db } from '../../services/firebaseCopy';
 import { collection, doc, deleteDoc, getDocs, where,updateDoc } from 'firebase/firestore';
 
 import Table from '@mui/material/Table';

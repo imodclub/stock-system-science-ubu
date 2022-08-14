@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
 
+
 import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
 import { CssBaseline } from '@mui/material';
@@ -9,6 +10,7 @@ import AuthContext from './components/auth/Auth';
 
 
 function App() {
+ 
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)

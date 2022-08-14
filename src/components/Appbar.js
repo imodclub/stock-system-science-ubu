@@ -18,6 +18,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SignIn from './SignIn';
 import SignOut from './SignOut'
 import ListUsers from './ListUsers';
+import ButtonAddUser from './ButtonAddUser'
 
 const theme = createTheme({
   palette: {
@@ -61,6 +62,7 @@ function Appbar(props) {
       case 1:
         return (
           <React.Fragment>
+            <ButtonAddUser />
             <ListUsers />
           </React.Fragment>
         );
