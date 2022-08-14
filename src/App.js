@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
+import Router from './services/routes';
+import AddUsersForm from './components/AddUsersForm';
 
 
 import Appbar from './components/Appbar'
@@ -16,7 +18,6 @@ function App() {
   const [loading, setLoading] = useState(false)
 
 
-
  //check user local storage
   useEffect(() => {
     getAuth().onAuthStateChanged((authUser) => {
@@ -30,14 +31,15 @@ function App() {
     })
   },[])
 
+  
 
   return (
     <Fragment>
-      <AuthContext.Provider>
+      <AuthContext.Provider value={user} >
         <CssBaseline />
         <Appbar user={user} />
         <Container>
-
+          
         </Container>
         <Copyright />
       </AuthContext.Provider>
