@@ -43,6 +43,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ListUsers = () => {
+<<<<<<< HEAD
+=======
+  const db = getFirestore(Firebase);
+>>>>>>> parent of 82e7f92 (Add user button)
 
   const [data, setData] = React.useState([]);
   const [singleData, setSingleData] = React.useState(null)

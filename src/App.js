@@ -18,8 +18,11 @@ import { getAuth } from 'firebase/auth'
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 >>>>>>> parent of 84965a3 (check router)
 
+=======
+>>>>>>> parent of 82e7f92 (Add user button)
 import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
 import { CssBaseline } from '@mui/material';
