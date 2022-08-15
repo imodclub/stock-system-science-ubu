@@ -43,22 +43,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const ListUsers = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const user = React.useContext(AuthContext)
-=======
-  const db = getFirestore(Firebase);
 
->>>>>>> parent of 82e7f92 (Add user button)
-=======
-  const db = getFirestore(Firebase);
-
->>>>>>> parent of 82e7f92 (Add user button)
-=======
-  const db = getFirestore(Firebase);
-
->>>>>>> parent of 82e7f92 (Add user button)
   const [data, setData] = React.useState([]);
   const [singleData, setSingleData] = React.useState(null)
   const [loading, setLoading] = React.useState(null)
