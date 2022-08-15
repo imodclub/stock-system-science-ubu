@@ -1,16 +1,8 @@
 import * as React from 'react';
 
 //service and database
-import firebase from '../services/firebase';
-import { GetAuth, db } from '../services/firebase';
-import {
-  collection,
-  doc,
-  deleteDoc,
-  getDocs,
-  where,
-  updateDoc,
-} from 'firebase/firestore';
+import Firebase from '../services/firebase';
+import { getFirestore,collection, doc, deleteDoc, getDocs, where,updateDoc } from 'firebase/firestore';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -19,7 +11,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { keys } from '@mui/system';
 import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { Button } from '@mui/material';
@@ -38,27 +29,32 @@ import Slide from '@mui/material/Slide';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import ProgressLoading from './adminDashboard/Tools/ProgessLoading';
+import ProgressLoading from './adminDashboard/Tools/ButtonAddUser'
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+
 
 import ButtonAddUsers from './adminDashboard/Tools/ButtonAddUser';
 import { set } from 'react-hook-form';
+import AuthContext from './auth/Auth';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const ListUsers = () => {
+
   const [data, setData] = React.useState([]);
-  const [singleData, setSingleData] = React.useState(null);
-  const [loading, setLoading] = React.useState(null);
+  const [singleData, setSingleData] = React.useState(null)
+  const [loading, setLoading] = React.useState(null)
   const [dataOnClick, setDataOnClick] = React.useState(null);
   const [getValue, setGetValue] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
+
   const handleClickOpen = (id) => {
     setOpen(true);
-    setSingleData(id);
+    setSingleData(id)
   };
 
   const handleClose = () => {
@@ -78,10 +74,11 @@ const ListUsers = () => {
   };
   React.useEffect(() => {
     ReadData();
-    setData([]);
+    setData([])
   }, []);
   //Read Data to Table list user
 
+  
   //Edit user from button
   const EditUser = async () => {
     setOpen(false);
@@ -98,8 +95,8 @@ const ListUsers = () => {
       }
     });
     try {
-      const userRef = doc(db, 'User', dataID);
-      await updateDoc(userRef, { Name: 'น้องมาร์ช' });
+        const userRef = doc(db, 'User',dataID);
+        await updateDoc(userRef, { Name: 'น้องมาร์ช' });
       setTimeout(() => {
         window.location.reload();
         setLoading(false);
@@ -113,8 +110,8 @@ const ListUsers = () => {
 
   //Delete User
   const handleClickDelete = async (id) => {
-    setLoading(false);
-
+    setLoading(false)
+     
     var dataID;
     const checkIdUserFromCollection = await getDocs(
       collection(db, 'User'),
@@ -129,14 +126,14 @@ const ListUsers = () => {
     });
     if (dataID) {
       console.log('data id คือ ', dataID);
-      setLoading(false);
-      await deleteDoc(doc(db, 'User', dataID));
+        setLoading(false)
+        await deleteDoc(doc(db, 'User', dataID));
       setTimeout(() => {
-        setLoading(true);
-      }, 3000);
+         setLoading(true)
+       },3000)
       window.location.reload();
       setData([]);
-      setLoading(false);
+      setLoading(false)
     }
   };
 
@@ -184,8 +181,16 @@ const ListUsers = () => {
           noValidate
           autoComplete="off"
         >
-          <TextField required id="outlined-required" label="ระบุชื่อ" />
-          <TextField required id="outlined-required" label="นามสกุล" />
+          <TextField
+            required
+            id="outlined-required"
+            label="ระบุชื่อ"
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="นามสกุล"
+          />
         </Box>
         <Box
           component="form"
@@ -193,8 +198,16 @@ const ListUsers = () => {
           noValidate
           autoComplete="off"
         >
-          <TextField required id="outlined-required" label="ภาควิชา" />
-          <TextField required id="outlined-required" label="ตำแหน่ง" />
+          <TextField
+            required
+            id="outlined-required"
+            label="ภาควิชา"
+          />
+          <TextField
+            required
+            id="outlined-required"
+            label="ตำแหน่ง"
+          />
         </Box>
       </Dialog>
 
@@ -259,5 +272,7 @@ const ListUsers = () => {
     </React.Fragment>
   );
 };
+
+
 
 export default ListUsers;

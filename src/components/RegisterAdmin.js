@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { GetAuth } from '../services/firebase';
+import { GetAuth } from '../services/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import RegigterProfileAdminForm from './Layout/RegisterProfileAdminForm'
+import {Redirect} from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
@@ -8,13 +10,34 @@ import CardContent from '@mui/material/CardContent';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import {doc, setDoc} from 'firebase/firestore'
+import { async } from '@firebase/util';
 
-const ProfileAdmin = () => {
+
+
+
+const RegisterAdmin = () => {
   const [currentUserAdmin, setCurrentUserAdmin] = useState(null);
+  const [currentUID, setCurrentUID] = useState(null);
   const handleSubmit = (e) => {
-    e.preventDefault();
-    
-  };
+        e.preventDefault();
+        const { email, password } = e.target.elements
+        const Auth = GetAuth
+        createUserWithEmailAndPassword(Auth, email.value, password.value)
+          .then          
+          ((result) => {
+            console.log(result.user.uid);
+            setCurrentUID = result.user.uid
+           
+          })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+            })
+     if (currentUID) {
+     }
+  }
+ 
   return (
     <>
       <Container maxWidth="sm">
@@ -65,6 +88,9 @@ const ProfileAdmin = () => {
       </Container>
     </>
   );
-};
+}
 
-export default ProfileAdmin;
+
+
+
+export default RegisterAdmin

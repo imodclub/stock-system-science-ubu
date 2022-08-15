@@ -8,7 +8,7 @@ import ProfileUser from './components/ProfileUser';
 import RegisterAdmin from './components/register_admin/RegisterAdmin'
 import AdminDashBoard from './components/adminDashboard/Dashboard';
 import UsersDashBoard from './components/usersDashboard/Dashboard';
-import Home from './components/Home';
+import Home from './pages/Home';
 import ButtonAddUser from './components/adminDashboard/Tools/ButtonAddUser'
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { sendSignInLinkToEmail } from 'firebase/auth';
