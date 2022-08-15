@@ -17,6 +17,10 @@ function App() {
 =======
 import React, { Fragment, useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 84965a3 (check router)
 
 import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
@@ -31,6 +35,7 @@ function App() {
   const [loading, setLoading] = useState(false)
 
 
+<<<<<<< HEAD
 
  //check user local storage
 >>>>>>> parent of 82e7f92 (Add user button)
@@ -50,6 +55,34 @@ function App() {
         </AuthContext.Provider>
       </BrowserRouter>
     </div>
+=======
+
+ //check user local storage
+  useEffect(() => {
+    getAuth().onAuthStateChanged((authUser) => {
+      setLoading(false)
+      if (authUser) {
+        setUser(authUser.email)
+        setLoading(true)
+      } else {
+        setUser(null)
+      }
+    })
+  },[])
+
+
+  return (
+    <Fragment>
+      <AuthContext.Provider>
+        <CssBaseline />
+        <Appbar user={user} />
+        <Container>
+
+        </Container>
+        <Copyright />
+      </AuthContext.Provider>
+    </Fragment>
+>>>>>>> parent of 84965a3 (check router)
   );
 }
 
