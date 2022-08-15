@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect,useContext } from 'react';
 import Login from './components/Login';
 import HomeUser from './components/HomeUser';
@@ -14,7 +13,6 @@ import AuthContext from './components/Auth/Auth'
 function App() {
  const [user, setUser] = useState(null);
   //check user local storage
-=======
 import React, { Fragment, useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
 
@@ -33,7 +31,6 @@ function App() {
 
 
  //check user local storage
->>>>>>> parent of 82e7f92 (Add user button)
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
