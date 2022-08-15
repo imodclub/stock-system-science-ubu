@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
-import Router from './services/routes';
-import AddUsersForm from './components/AddUsersForm';
-
+import PageMain from './pages/PageMain'
+import Footer from './components/Footer';
 
 import Appbar from './components/Appbar'
 import { Container } from '@mui/system';
@@ -39,9 +38,9 @@ function App() {
         <CssBaseline />
         <Appbar user={user} />
         <Container>
-          
+          <PageMain />
         </Container>
-        <Copyright />
+        <Footer />
       </AuthContext.Provider>
     </Fragment>
   );

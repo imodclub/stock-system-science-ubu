@@ -43,12 +43,15 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 import ButtonAddUsers from './adminDashboard/Tools/ButtonAddUser';
 import { set } from 'react-hook-form';
+import AuthContext from './auth/Auth';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const ListUsers = () => {
+  const user = React.useContext(AuthContext)
   const [data, setData] = React.useState([]);
   const [singleData, setSingleData] = React.useState(null);
   const [loading, setLoading] = React.useState(null);
@@ -259,5 +262,7 @@ const ListUsers = () => {
     </React.Fragment>
   );
 };
+
+
 
 export default ListUsers;
